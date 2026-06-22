@@ -1,0 +1,16 @@
+{
+  "name": "Spanish Learning",
+  "short_name": "Español",
+  "description": "Learn Spanish offline — B1 & B2 advanced course with 30 lessons and 1,050+ vocabulary items",
+  "start_url": "/spanish/",
+  "scope": "/spanish/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8fafc",
+  "theme_color": "#1e40af",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/favicon-16.png", "sizes": "16x16", "type": "image/png" }
+  ]
+}
