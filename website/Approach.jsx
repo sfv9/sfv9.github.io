@@ -2,9 +2,9 @@
 const { Card, Eyebrow } = window.SFV9DesignSystem_636214;
 
 const STEPS = [
-  { n: '01', accent: 'blue', title: 'Map the terrain', body: 'We map your federal landscape — the agencies, programs, budgets, and buyers that actually matter for your category.' },
-  { n: '02', accent: 'coral', title: 'Sharpen positioning', body: 'We craft differentiated messaging that lands with federal buyers and mission stakeholders — not generic gov-speak.' },
-  { n: '03', accent: 'blue', title: 'Mobilize the motion', body: 'We broker prime and partner relationships and enable your team to run the plays that have already won.' },
+  { n: '01', accent: 'blue', title: 'Configured to your business', body: 'FRIS builds a revenue brain around your company — your capabilities, contract vehicles, and win themes — so every recommendation fits how you actually sell.' },
+  { n: '02', accent: 'coral', title: 'A proven research playbook', body: 'Start pursuing opportunities from day one. Battle-tested research and qualification plays mean no ramp-up — just the next move.' },
+  { n: '03', accent: 'blue', title: 'Opportunities pushed to you', body: 'The right pursuits land in your inbox pre-emptively — matched, scored, and briefed — before your competitors are even looking.' },
 ];
 
 function Approach() {
@@ -12,12 +12,12 @@ function Approach() {
   return (
     <section id="approach" style={{ padding: m ? '56px 20px' : '90px 60px', background: 'var(--paper)' }}>
       <div style={{ textAlign: 'center', marginBottom: m ? 40 : 56 }}>
-        <Eyebrow>How we work</Eyebrow>
+        <Eyebrow>Powered by FRIS</Eyebrow>
         <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: m ? 30 : 42, letterSpacing: '-0.5px', margin: '12px 0 0', color: 'var(--text-strong)' }}>
-          A proven approach, on retainer
+          A custom federal revenue engine
         </h2>
-        <p style={{ fontFamily: 'var(--font-body)', fontSize: m ? 16 : 18, color: 'var(--text-body)', maxWidth: 600, margin: '16px auto 0', lineHeight: 1.6 }}>
-          Twenty years of federal GTM distilled into a repeatable motion we run alongside your team.
+        <p style={{ fontFamily: 'var(--font-body)', fontSize: m ? 16 : 18, color: 'var(--text-body)', maxWidth: 620, margin: '16px auto 0', lineHeight: 1.6 }}>
+          Every retainer runs on FRIS — a federal revenue intelligence platform configured to your business — so you're going after real opportunities from day one.
         </p>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: m ? '1fr' : 'repeat(3, 1fr)', gap: 28, maxWidth: 1100, margin: '0 auto' }}>
