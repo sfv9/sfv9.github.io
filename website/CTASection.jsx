@@ -10,7 +10,7 @@ function CTASection({ onContact }) {
       borderRadius: 'var(--radius-xl)', background: 'var(--blue-50)',
       border: '1px solid var(--blue-100)',
     }}>
-      <Eyebrow>20-hour monthly retainer</Eyebrow>
+      <Eyebrow>Work with SFV9</Eyebrow>
       <h2 style={{
         fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: m ? 26 : 40,
         letterSpacing: '-0.5px', margin: '12px 0 16px', color: 'var(--text-strong)',
