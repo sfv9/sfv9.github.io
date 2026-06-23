@@ -7,12 +7,14 @@ const COLS = [
 ];
 
 function SiteFooter() {
+  const m = window.useIsMobile();
   return (
     <footer style={{
       background: 'var(--gradient-ink)', color: 'var(--text-on-dark)',
-      padding: '56px 60px', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.2fr', gap: 48,
+      padding: m ? '44px 24px' : '56px 60px', display: 'grid',
+      gridTemplateColumns: m ? '1fr 1fr' : '2fr 1fr 1fr 1.2fr', gap: m ? 28 : 48,
     }}>
-      <div>
+      <div style={{ gridColumn: m ? '1 / -1' : 'auto' }}>
         <Logo size={28} variant="light" lightSrc="assets/logo-mark-light.png" />
         <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--text-on-dark-dim)', margin: '16px 0 0', lineHeight: 1.6, maxWidth: 260 }}>
           GTM strategy consulting for venture-backed companies building federal verticals.

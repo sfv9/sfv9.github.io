@@ -8,15 +8,16 @@ const SERVICES = [
 ];
 
 function Services() {
+  const m = window.useIsMobile();
   return (
-    <section id="services" style={{ padding: '90px 60px', background: 'var(--ground)' }}>
-      <div style={{ textAlign: 'center', marginBottom: 56 }}>
+    <section id="services" style={{ padding: m ? '56px 20px' : '90px 60px', background: 'var(--ground)' }}>
+      <div style={{ textAlign: 'center', marginBottom: m ? 40 : 56 }}>
         <Eyebrow>What we do</Eyebrow>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 42, letterSpacing: '-0.5px', margin: '12px 0 0', color: 'var(--text-strong)' }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: m ? 30 : 42, letterSpacing: '-0.5px', margin: '12px 0 0', color: 'var(--text-strong)' }}>
           Federal GTM, end to end
         </h2>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28, maxWidth: 1100, margin: '0 auto' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: m ? '1fr' : 'repeat(3, 1fr)', gap: 28, maxWidth: 1100, margin: '0 auto' }}>
         {SERVICES.map((s) => (
           <Card key={s.title} accent={s.accent} hover padding="var(--space-6)">
             <div style={{

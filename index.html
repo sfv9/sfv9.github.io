@@ -39,6 +39,19 @@
 <script type="text/babel">
 const { Card, Button, Input, Logo } = window.SFV9DesignSystem_636214;
 
+window.useIsMobile = function (bp) {
+  const q = '(max-width: ' + (bp || 760) + 'px)';
+  const [m, setM] = React.useState(function () { return window.matchMedia(q).matches; });
+  React.useEffect(function () {
+    const mql = window.matchMedia(q);
+    const fn = function (e) { setM(e.matches); };
+    setM(mql.matches);
+    mql.addEventListener('change', fn);
+    return function () { mql.removeEventListener('change', fn); };
+  }, []);
+  return m;
+};
+
 function GoalsField({ label, placeholder }) {
   const [focus, setFocus] = React.useState(false);
   return (
