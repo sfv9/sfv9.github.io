@@ -1,7 +1,7 @@
 /* global React, SFV9DesignSystem_636214 */
 const { Logo, Button } = window.SFV9DesignSystem_636214;
 
-const NAV = ['Services', 'Approach', 'Apps'];
+const NAV = ['Services', 'Approach'];
 
 function SiteHeader({ onContact }) {
   const m = window.useIsMobile();
