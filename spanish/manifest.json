@@ -1,7 +1,7 @@
 {
-  "name": "Spanish Learning",
+  "name": "Spanish for Calella",
   "short_name": "Español",
-  "description": "Learn Spanish offline — B1 & B2 advanced course with 30 lessons and 1,050+ vocabulary items",
+  "description": "Practical Spanish for living in Calella — 20 situation-based lessons covering bars, restaurants, beach, shopping and more",
   "start_url": "/spanish/",
   "scope": "/spanish/",
   "display": "standalone",
