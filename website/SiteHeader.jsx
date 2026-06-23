@@ -12,7 +12,15 @@ function SiteHeader({ onContact }) {
       borderBottom: '1px solid var(--border-subtle)',
       position: 'sticky', top: 0, zIndex: 10,
     }}>
-      <Logo size={32} src="assets/logo-mark.png" />
+      <a href="/" aria-label="SFV9 — back to top"
+        onClick={(e) => {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (window.history.replaceState) window.history.replaceState(null, '', window.location.pathname);
+        }}
+        style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>
+        <Logo size={32} src="assets/logo-mark.png" />
+      </a>
       <nav style={{ display: 'flex', alignItems: 'center', gap: m ? 16 : 40 }}>
         {!m && NAV.map((n) => (
           <a key={n} href={'#' + n.toLowerCase()} style={{
