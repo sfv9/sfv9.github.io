@@ -73,6 +73,26 @@ function GoalsField({ label, placeholder }) {
 
 function ContactDialog({ onClose }) {
   const [sent, setSent] = React.useState(false);
+  function handleSend() {
+    const root = document.querySelector('.overlay');
+    const emailEl = root && root.querySelector('input[type="email"]');
+    const inputs = root ? Array.prototype.slice.call(root.querySelectorAll('input')) : [];
+    const companyEl = inputs.filter(function (i) { return i.type !== 'email'; })[0];
+    const email = emailEl ? emailEl.value.trim() : '';
+    const company = companyEl ? companyEl.value.trim() : '';
+    const goalsEl = document.getElementById('in-goals');
+    const goals = goalsEl ? goalsEl.value.trim() : '';
+    const subject = 'Federal GTM inquiry' + (company ? ' — ' + company : '');
+    const body = [
+      company ? 'Company: ' + company : null,
+      email ? 'Work email: ' + email : null,
+      '',
+      'Goals:',
+      goals || '(not specified)',
+    ].filter(function (l) { return l !== null; }).join('\n');
+    window.location.href = 'mailto:info@sfv9.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    setSent(true);
+  }
   return (
     <div className="overlay" onClick={onClose}>
       <Card onClick={(e) => e.stopPropagation()} accent="blue" padding="var(--space-8)"
@@ -81,7 +101,7 @@ function ContactDialog({ onClose }) {
           <div style={{ textAlign: 'center', padding: '12px 0' }}>
             <Logo size={40} wordmark={false} src="assets/logo-mark.png" />
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, margin: '18px 0 8px' }}>Course plotted.</h3>
-            <p style={{ color: 'var(--text-muted)', margin: '0 0 24px' }}>We'll be in touch within one business day.</p>
+            <p style={{ color: 'var(--text-muted)', margin: '0 0 24px' }}>Your email app should have opened with the details pre-filled — just hit send and we'll be in touch within one business day.</p>
             <Button full onClick={onClose}>Close</Button>
           </div>
         ) : (
@@ -92,7 +112,7 @@ function ContactDialog({ onClose }) {
               <Input label="Work email" type="email" placeholder="you@company.com" />
               <Input label="Company" placeholder="Acme Defense" />
               <GoalsField label="Your goals" placeholder="Where are you headed in the federal market?" />
-              <Button full iconRight="→" onClick={() => setSent(true)}>Send</Button>
+              <Button full iconRight="→" onClick={handleSend}>Send</Button>
             </div>
           </React.Fragment>
         )}
