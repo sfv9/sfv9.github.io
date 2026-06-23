@@ -24,8 +24,8 @@ function Hero({ onContact }) {
           fontFamily: 'var(--font-body)', fontSize: 18, lineHeight: 1.6,
           color: 'var(--text-body)', margin: '24px 0 36px', maxWidth: 520,
         }}>
-          Evidence-based go-to-market for seed-to-Series-B companies standing up a
-          federal practice. Twenty years of experience, on retainer.
+          Proven go-to-market playbooks for venture-backed companies standing up
+          federal verticals. Twenty years of experience, on retainer.
         </p>
         <div style={{ display: 'flex', gap: 16 }}>
           <Button iconRight="→" onClick={onContact}>Start a conversation</Button>
