@@ -1,0 +1,4 @@
+/* SFV9 webfonts — Space Grotesk (display) + Plus Jakarta Sans (body).
+   Both are Google Fonts; imported from the Google CSS endpoint which
+   declares the @font-face rules pointing at Google's font binaries. */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');

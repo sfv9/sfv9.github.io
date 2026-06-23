@@ -1,151 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SFV9</title>
-  <meta name="description" content="SFV9 LLC — internal applications">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      color: #0F172A;
-    }
-
-    #globe-loader-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: #F8F9FA;
-      opacity: 1;
-      transition: opacity 0.7s ease;
-      pointer-events: all;
-    }
-    #globe-loader-overlay.fade-out {
-      opacity: 0;
-      pointer-events: none;
-    }
-    #globe-loader-overlay iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 4rem 1rem;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      opacity: 0;
-      transition: opacity 0.7s ease;
-    }
-    .container.visible {
-      opacity: 1;
-    }
-
-    .logo-section {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .logo-section img {
-      height: 80px;
-      object-fit: contain;
-    }
-
-    .apps-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .app-link {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .app-box {
-      background: #60A5FA;
-      border-radius: 6px;
-      padding: 1.5rem;
-      text-align: center;
-      cursor: pointer;
-      transition: background 0.2s ease;
-      font-size: 18px;
-      font-weight: 500;
-      color: white;
-    }
-
-    .app-box:hover {
-      background: #3B82F6;
-    }
-
-    .footer {
-      margin-top: auto;
-      padding-top: 3rem;
-      text-align: center;
-      font-size: 13px;
-      color: #94A3B8;
-    }
-  </style>
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SFV9 — Federal GTM Strategy</title>
+<meta name="description" content="SFV9 — Evidence-based federal go-to-market strategy for seed-to-Series-B companies standing up a federal practice.">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="stylesheet" href="_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/colors.css">
+<link rel="stylesheet" href="_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/typography.css">
+<link rel="stylesheet" href="_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/effects.css">
+<link rel="stylesheet" href="_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/styles.css">
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font-body);background:var(--paper);color:var(--text-strong);}
+  .overlay{position:fixed;inset:0;background:rgba(15,15,15,0.45);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:50;animation:fade .2s var(--ease-out);}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/_ds_bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 </head>
 <body>
-  <div id="globe-loader-overlay">
-    <iframe src="globe-loader.html" title="Loading"></iframe>
-  </div>
+<div id="root"></div>
 
-  <div class="container">
-    <div class="logo-section">
-      <img src="logo.png" alt="SFV9">
+<script type="text/babel" src="website/SiteHeader.jsx"></script>
+<script type="text/babel" src="website/Hero.jsx"></script>
+<script type="text/babel" src="website/Services.jsx"></script>
+<script type="text/babel" src="website/StatStrip.jsx"></script>
+<script type="text/babel" src="website/AlliedMarkets.jsx"></script>
+<script type="text/babel" src="website/CTASection.jsx"></script>
+<script type="text/babel" src="website/SiteFooter.jsx"></script>
+
+<script type="text/babel">
+const { Card, Button, Input, Logo } = window.SFV9DesignSystem_636214;
+
+function GoalsField({ label, placeholder }) {
+  const [focus, setFocus] = React.useState(false);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      <label htmlFor="in-goals" style={{ fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 'var(--fw-semibold)', color: 'var(--text-strong)' }}>{label}</label>
+      <textarea id="in-goals" rows={3} placeholder={placeholder}
+        onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
+        style={{
+          fontFamily: 'var(--font-body)', fontSize: 15, color: 'var(--text-strong)',
+          padding: '11px 14px', background: 'var(--paper)',
+          border: `1px solid ${focus ? 'var(--accent)' : 'var(--border-default)'}`,
+          borderRadius: 'var(--radius-md)', outline: 'none', resize: 'vertical', minHeight: 84,
+          boxShadow: focus ? 'var(--focus-ring)' : 'none',
+          transition: 'border var(--dur-fast), box-shadow var(--dur-fast)',
+        }} />
     </div>
+  );
+}
 
-    <div class="apps-grid">
-      <a class="app-link" href="https://apps.sfv9.com/timesheet/">
-        <div class="app-box">Timesheet</div>
-      </a>
-      <a class="app-link" href="https://apps.sfv9.com/outreach">
-        <div class="app-box">Automated Outreach</div>
-      </a>
-      <a class="app-link" href="https://apps.sfv9.com/trading">
-        <div class="app-box">Options Income Tracker</div>
-      </a>
-      <a class="app-link" href="https://apps.sfv9.com/spanish/">
-        <div class="app-box">Spanish Learning</div>
-      </a>
-      <a class="app-link" href="https://apps.sfv9.com/FRIS">
-        <div class="app-box">FRIS</div>
-      </a>
+function ContactDialog({ onClose }) {
+  const [sent, setSent] = React.useState(false);
+  return (
+    <div className="overlay" onClick={onClose}>
+      <Card onClick={(e) => e.stopPropagation()} accent="blue" padding="var(--space-8)"
+        style={{ width: 440, maxWidth: '90vw', boxShadow: 'var(--shadow-xl)' }}>
+        {sent ? (
+          <div style={{ textAlign: 'center', padding: '12px 0' }}>
+            <Logo size={40} wordmark={false} src="assets/logo-mark.png" />
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, margin: '18px 0 8px' }}>Course plotted.</h3>
+            <p style={{ color: 'var(--text-muted)', margin: '0 0 24px' }}>We'll be in touch within one business day.</p>
+            <Button full onClick={onClose}>Close</Button>
+          </div>
+        ) : (
+          <React.Fragment>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, margin: '0 0 6px', letterSpacing: '-0.3px' }}>Start a conversation</h3>
+            <p style={{ color: 'var(--text-muted)', fontSize: 14, margin: '0 0 22px' }}>Tell us where you're headed in the federal market.</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <Input label="Work email" type="email" placeholder="you@company.com" />
+              <Input label="Company" placeholder="Acme Defense" />
+              <GoalsField label="Your goals" placeholder="Where are you headed in the federal market?" />
+              <Button full iconRight="→" onClick={() => setSent(true)}>Send</Button>
+            </div>
+          </React.Fragment>
+        )}
+      </Card>
     </div>
+  );
+}
 
-    <div class="footer">&copy; SFV9 LLC</div>
-  </div>
-
-  <script>
-    window.addEventListener('load', function () {
-      // Animation timeline: globe spins (2600ms), transitions to logo (3550ms),
-      // holds logo (4750ms), then resets. Dismiss at 4750ms so full animation plays.
-      setTimeout(function () {
-        var overlay = document.getElementById('globe-loader-overlay');
-        var content = document.querySelector('.container');
-        overlay.classList.add('fade-out');
-        content.classList.add('visible');
-        overlay.addEventListener('transitionend', function () {
-          overlay.remove();
-        }, { once: true });
-      }, 4750);
-    });
-  </script>
-</body>
-</html>
+function Site() {
+  const [contact, setContact] = React.useState(false);
+  const open = () => setContact(true);
+  return (
+    <React.Fragment>
+      <window.SiteHeader onContact={open} />
+      <window.Hero onContact={open} />
+      <window.Services />
+      <window.StatStrip />
+      <window.AlliedMarkets />
+      <window.CTASection onContact={open} />
+      <window.SiteFooter />
+      {contact && <ContactDialog onClose={() => setContact(false)} />}
+    </React.Fragment>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Site />);
+</script>
+<script src="website/globe-loader.js"></script>
+</body></html>

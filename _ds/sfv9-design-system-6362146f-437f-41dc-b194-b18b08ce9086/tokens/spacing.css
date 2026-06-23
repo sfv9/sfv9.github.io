@@ -1,0 +1,32 @@
+/* ============================================================
+   SFV9 — SPACING & RADII
+   8px base grid. Generous whitespace.
+   ============================================================ */
+:root {
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;   /* base unit */
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  40px;
+  --space-8:  48px;
+  --space-9:  56px;
+  --space-10: 64px;
+  --space-12: 80px;
+  --space-14: 100px; /* slide / section padding */
+
+  /* ---- Radii ---- */
+  --radius-sm:  4px;   /* badges, status pills, icon chips */
+  --radius-md:  6px;   /* buttons, inputs */
+  --radius-lg:  8px;   /* cards (canonical) */
+  --radius-xl:  12px;  /* large panels, feature sections */
+  --radius-2xl: 16px;
+  --radius-pill: 999px;
+
+  /* ---- Border widths ---- */
+  --bw-hairline: 1px;
+  --bw-accent:   3px;  /* top accent bar on cards */
+  --bw-focus:    2px;
+}

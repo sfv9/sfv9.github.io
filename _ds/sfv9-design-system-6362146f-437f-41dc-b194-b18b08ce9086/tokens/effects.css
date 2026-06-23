@@ -1,0 +1,28 @@
+/* ============================================================
+   SFV9 — EFFECTS: shadows, motion, focus
+   Depth via layered soft shadows. Lift on hover.
+   ============================================================ */
+:root {
+  /* ---- Elevation (soft, neutral) ---- */
+  --shadow-xs: 0 1px 2px rgba(15,15,15,0.05);
+  --shadow-sm: 0 4px 12px rgba(15,15,15,0.06);
+  --shadow-md: 0 8px 24px rgba(15,15,15,0.08);   /* canonical card */
+  --shadow-lg: 0 12px 32px rgba(15,15,15,0.12);  /* hover lift */
+  --shadow-xl: 0 20px 60px rgba(15,15,15,0.18);  /* modals, hero */
+
+  /* ---- Brand-tinted glows (CTA emphasis) ---- */
+  --shadow-blue:  0 8px 24px rgba(37,99,235,0.30);
+  --shadow-blue-lg: 0 12px 32px rgba(37,99,235,0.40);
+  --shadow-coral: 0 8px 24px rgba(232,93,109,0.28);
+
+  /* ---- Focus ring ---- */
+  --focus-ring: 0 0 0 3px rgba(37,99,235,0.35);
+
+  /* ---- Motion ---- */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --ease-std:   cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --dur-fast:   0.15s; /* @kind other */
+  --dur-normal: 0.3s; /* @kind other */
+  --lift:       translateY(-4px); /* @kind other */ /* card hover */
+  --lift-sm:    translateY(-2px); /* @kind other */ /* button hover */
+}
