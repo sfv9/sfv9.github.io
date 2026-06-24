@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>漢字配對 · Mandarin Matchup</title>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1e3a5f">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#f4f1ea; --surface:#fffdf8; --surface2:#f7f3ea;
+  --ink:#1c2733; --muted:#6b7280; --line:#e6ded0;
+  --jade:#0f766e; --jade-soft:#d6f3ee; --jade-ink:#0b5650;
+  --verm:#c0362c; --verm-soft:#fbe5e2;
+  --gold:#b5872a; --gold-soft:#f6ecd2;
+  --navy:#1e3a5f; --navy2:#2c4d75;
+  --shadow:0 1px 2px rgba(28,39,51,.06),0 4px 14px rgba(28,39,51,.07);
+  --shadow-lg:0 10px 40px rgba(28,39,51,.18);
+  --rad:16px; --rad-s:11px;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --hanzi:"PingFang TC","PingFang SC","Hiragino Sans GB","Heiti TC","Microsoft JhengHei",-apple-system,sans-serif;
+  --ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+[data-theme=dark]{
+  --bg:#0d1117; --surface:#161b22; --surface2:#1c232d;
+  --ink:#e6edf3; --muted:#9aa6b2; --line:#2a313c;
+  --jade:#2dd4bf; --jade-soft:#0e312d; --jade-ink:#5eead4;
+  --verm:#f8746a; --verm-soft:#36201e;
+  --gold:#e3b341; --gold-soft:#332a16;
+  --navy:#16263d; --navy2:#21385a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.4);
+  --shadow-lg:0 12px 44px rgba(0,0,0,.6);
+}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:var(--ui);background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.5;
+  background-image:radial-gradient(circle at 12% 8%,rgba(181,135,42,.05),transparent 42%),radial-gradient(circle at 88% 0%,rgba(15,118,110,.05),transparent 40%);
+  transition:background .3s,color .3s}
+#app{max-width:780px;margin:0 auto;padding:0 16px;padding-top:max(18px,env(safe-area-inset-top));padding-bottom:max(28px,env(safe-area-inset-bottom))}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.hide{display:none!important}
+
+/* ===== HOME ===== */
+.brand{display:flex;flex-direction:column;align-items:center;text-align:center;padding:22px 0 8px}
+.brand .seal{width:62px;height:62px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(150deg,var(--navy),var(--navy2));color:var(--gold);font-family:var(--hanzi);font-size:34px;font-weight:700;
+  box-shadow:var(--shadow);border:1.5px solid rgba(181,135,42,.45);margin-bottom:12px}
+.brand h1{font-family:var(--hanzi);font-size:30px;font-weight:700;letter-spacing:2px}
+.brand .en{font-family:var(--serif);font-size:15px;color:var(--muted);font-style:italic;margin-top:3px}
+.brand .tag{font-size:12px;color:var(--muted);margin-top:9px;max-width:30ch;line-height:1.45}
+
+.statbar{display:flex;gap:10px;margin:16px 0 4px}
+.stat{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:var(--rad-s);padding:11px 8px;text-align:center;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:21px;font-family:var(--serif);color:var(--jade)}
+.stat span{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+.section-h{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:22px 4px 10px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.optrow{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:var(--rad-s);padding:11px 13px;box-shadow:var(--shadow)}
+.optrow .lbl{font-size:13.5px;font-weight:600}
+.optrow .lbl small{display:block;font-weight:400;color:var(--muted);font-size:11px;margin-top:1px}
+.seg{display:flex;background:var(--surface2);border-radius:9px;padding:3px;border:1px solid var(--line)}
+.seg button{padding:6px 12px;border-radius:7px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;transition:.15s}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+[data-theme=dark] .seg button.on{background:var(--navy2);color:#fff}
+.toggles{display:flex;gap:9px;margin-top:2px}
+.tgl{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:var(--rad-s);padding:10px;font-size:12.5px;font-weight:600;color:var(--muted);box-shadow:var(--shadow);transition:.15s}
+.tgl.on{color:var(--jade);border-color:var(--jade);background:var(--jade-soft)}
+
+.decks{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.deck{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);padding:15px 14px 13px;box-shadow:var(--shadow);text-align:left;transition:transform .12s,box-shadow .2s,border-color .2s;overflow:hidden}
+.deck:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--gold)}
+.deck:active{transform:translateY(0)}
+.deck .emo{font-size:26px;line-height:1}
+.deck .cn{font-family:var(--hanzi);font-size:19px;font-weight:700;margin-top:8px;letter-spacing:1px}
+.deck .enn{font-size:11.5px;color:var(--muted);margin-top:1px;line-height:1.3}
+.deck .cnt{position:absolute;top:13px;right:13px;font-size:10px;font-weight:700;color:var(--gold);background:var(--gold-soft);padding:2px 7px;border-radius:20px}
+.deck .study{margin-top:9px;font-size:11px;font-weight:700;color:var(--jade);letter-spacing:.03em}
+.deck.mix{grid-column:1/-1;display:flex;align-items:center;gap:14px;background:linear-gradient(120deg,var(--navy),var(--navy2));border:none;color:#fff}
+.deck.mix .emo{font-size:30px}
+.deck.mix .cn{color:#fff;margin-top:0}
+.deck.mix .enn{color:rgba(255,255,255,.78)}
+.deck.mix .cnt{color:var(--gold);background:rgba(0,0,0,.25)}
+.deck.mix .study{color:var(--gold)}
+.deck.mix .txt{flex:1}
+
+.foot{text-align:center;font-size:11px;color:var(--muted);margin-top:24px;line-height:1.6}
+.foot b{color:var(--jade)}
+
+/* ===== GAME ===== */
+.ghead{display:flex;align-items:center;gap:10px;padding:10px 0 14px;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg) 72%,transparent)}
+.icbtn{width:38px;height:38px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:var(--shadow);flex-shrink:0}
+.icbtn:active{transform:scale(.92)}
+.gtitle{flex:1;min-width:0}
+.gtitle .cn{font-family:var(--hanzi);font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gtitle .meta{font-size:11px;color:var(--muted);margin-top:1px}
+.hud{display:flex;gap:7px}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 9px;text-align:center;min-width:46px;box-shadow:var(--shadow)}
+.chip b{display:block;font-size:15px;font-family:var(--serif);line-height:1}
+.chip span{font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.chip.streak{background:var(--gold-soft);border-color:var(--gold)}
+.chip.streak b{color:var(--gold)}
+
+#board{display:grid;gap:9px;margin-top:4px;perspective:1400px}
+.card{position:relative;aspect-ratio:1/1.16;border-radius:13px;cursor:pointer;transform-style:preserve-3d;transition:transform .42s cubic-bezier(.2,.7,.2,1)}
+.card.flipped{transform:rotateY(180deg)}
+.card.matched{cursor:default}
+.card .face{position:absolute;inset:0;border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:6px;text-align:center;overflow:hidden}
+.cover{background:linear-gradient(155deg,var(--navy),var(--navy2));border:1px solid rgba(181,135,42,.4);box-shadow:var(--shadow)}
+.cover .ring{width:50%;aspect-ratio:1;border-radius:50%;border:1.5px solid rgba(181,135,42,.55);display:flex;align-items:center;justify-content:center}
+.cover .ring span{font-family:var(--hanzi);color:rgba(181,135,42,.92);font-size:min(5.6vw,26px);font-weight:700}
+.cover::after{content:"";position:absolute;inset:5px;border-radius:9px;border:1px solid rgba(255,255,255,.06)}
+.front{transform:rotateY(180deg);background:var(--surface);border:1.5px solid var(--line);box-shadow:var(--shadow)}
+.card.hz .front{background:var(--surface)}
+.card.mn .front{background:var(--surface2)}
+.front .hzt{font-family:var(--hanzi);color:var(--verm);font-weight:700;line-height:1.08;word-break:break-all}
+.front .hz-py{font-family:var(--serif);font-style:italic;color:var(--jade-ink);font-size:clamp(9px,2.7vw,12px);line-height:1.15;margin-top:4px;opacity:.9;padding:0 3px}
+.front .mnt{font-family:var(--ui);color:var(--ink);font-weight:600;font-size:clamp(11px,3.3vw,15px);line-height:1.25}
+.front .pyt{font-family:var(--serif);color:var(--jade-ink);font-style:italic;font-size:clamp(11px,3.4vw,15px);line-height:1.2}
+.card.matched .front{background:var(--jade-soft);border-color:var(--jade)}
+.card.matched .hzt{color:var(--jade-ink)}
+.card.matched .front::before{content:"✓";position:absolute;top:5px;right:7px;color:var(--jade);font-size:12px;font-weight:800}
+.card.bad .front{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+/* open / vocabulary-match mode — all cards face-up */
+.card.open{transition:transform .14s,box-shadow .14s}
+.card.open .cover{display:none}
+.card.open .front{transform:none}
+.card.open.sel{transform:translateY(-3px)}
+.card.open.sel .front{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),var(--shadow-lg)}
+.card.open.matched{transform:none;cursor:default}
+.card.open.matched .front{opacity:.42}
+.hint{font-size:12.5px;color:var(--muted);text-align:center;margin:0 2px 11px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:9px 12px;line-height:1.45}
+.hint b{color:var(--verm);font-family:var(--hanzi);font-weight:700}
+.tag-dot{position:absolute;top:5px;left:6px;width:7px;height:7px;border-radius:50%}
+
+/* reveal toast */
+#toast{position:fixed;left:50%;top:max(14px,env(safe-area-inset-top));transform:translateX(-50%) translateY(-18px);z-index:60;
+  background:var(--surface);border:1px solid var(--jade);border-radius:14px;box-shadow:var(--shadow-lg);
+  padding:11px 16px;display:flex;align-items:center;gap:11px;opacity:0;pointer-events:none;transition:.28s;max-width:92vw}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast .tz{font-family:var(--hanzi);font-size:22px;font-weight:700;color:var(--verm)}
+#toast .ti{min-width:0}
+#toast .ti .py{font-family:var(--serif);font-style:italic;color:var(--jade-ink);font-size:13px}
+#toast .ti .en{font-size:13px;font-weight:600}
+#toast .ti .nt{font-size:10.5px;color:var(--muted)}
+.spk{width:30px;height:30px;border-radius:50%;background:var(--jade-soft);color:var(--jade-ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+
+/* ===== WIN ===== */
+.win{text-align:center;padding:14px 0}
+.win .big{font-family:var(--hanzi);font-size:40px;font-weight:700;color:var(--jade);letter-spacing:3px}
+.win .sub{font-family:var(--serif);font-style:italic;color:var(--muted);margin-top:2px}
+.stars{font-size:34px;letter-spacing:6px;margin:10px 0 4px}
+.newbest{display:inline-block;background:var(--gold-soft);color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 11px;border-radius:20px;margin-bottom:6px}
+.wstats{display:flex;gap:10px;margin:14px 0}
+.wstats .stat b{color:var(--ink)}
+.review{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);box-shadow:var(--shadow);text-align:left;margin-top:8px;overflow:hidden}
+.review .rh{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:12px 14px 6px}
+.rv{display:flex;align-items:center;gap:11px;padding:9px 14px;border-top:1px solid var(--line)}
+.rv .rz{font-family:var(--hanzi);font-size:20px;font-weight:700;color:var(--verm);min-width:2.4em}
+.rv .ri{flex:1;min-width:0}
+.rv .ri .py{font-family:var(--serif);font-style:italic;color:var(--jade-ink);font-size:12.5px}
+.rv .ri .en{font-size:13px;font-weight:600}
+.rv .ri .nt{font-size:10.5px;color:var(--muted)}
+.btns{display:flex;gap:10px;margin-top:16px}
+.btn{flex:1;padding:14px;border-radius:13px;font-size:15px;font-weight:700;box-shadow:var(--shadow);transition:transform .1s}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--jade);color:#fff}
+.btn.ghost{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+
+/* ===== BROWSE MODAL ===== */
+.modal{position:fixed;inset:0;z-index:80;background:rgba(20,28,38,.5);backdrop-filter:blur(3px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:.25s}
+.modal.show{opacity:1;pointer-events:auto}
+.sheet{background:var(--bg);width:100%;max-width:780px;max-height:86vh;border-radius:22px 22px 0 0;overflow:hidden;display:flex;flex-direction:column;transform:translateY(20px);transition:.28s;box-shadow:var(--shadow-lg)}
+.modal.show .sheet{transform:translateY(0)}
+.sheet .sh{display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+.sheet .sh .cn{font-family:var(--hanzi);font-size:19px;font-weight:700;flex:1}
+.sheet .sh .en{font-size:12px;color:var(--muted)}
+.sheet .body{overflow-y:auto;padding:4px 0 max(20px,env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch}
+.confetti{position:fixed;top:-12px;width:9px;height:14px;z-index:90;pointer-events:none;border-radius:2px}
+@media(min-width:560px){
+  .decks .deck .cn{font-size:20px}
+  .card .front .mnt,.card .front .pyt{font-size:15px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast"></div>
+<div class="modal" id="modal"><div class="sheet">
+  <div class="sh"><span class="cn" id="m-cn"></span><span class="en" id="m-en"></span><button class="icbtn" onclick="closeBrowse()">✕</button></div>
+  <div class="body" id="m-body"></div>
+</div></div>
+
+<script>
+/* =========================================================================
+   漢字配對 · Mandarin Matchup
+   Curated professional Mandarin for the China hand: military, diplomacy,
+   technology, cross-Strait affairs, industry, intelligence, strategic idioms.
+   Fields: t=Traditional  s=Simplified  p=pinyin(TW reading)  sp=PRC pinyin
+           e=English  n=note (usage / TW-PRC nuance)
+   ========================================================================= */
+const DECKS = [
+  { id:'mil', emo:'🪖', cn:'軍事', en:'Military & Defense', words:[
+    {t:'國防',s:'国防',p:'guófáng',e:'national defense'},
+    {t:'軍隊',s:'军队',p:'jūnduì',e:'armed forces'},
+    {t:'威懾',s:'威慑',p:'wēishè',e:'deterrence',n:'Taiwan also: 嚇阻 xiàzǔ'},
+    {t:'演習',s:'演习',p:'yǎnxí',e:'military exercise / drill'},
+    {t:'部署',s:'部署',p:'bùshǔ',e:'deployment'},
+    {t:'飛彈',s:'飞弹',p:'fēidàn',e:'missile',n:'Taiwan term; PRC: 導彈 dǎodàn'},
+    {t:'潛艇',s:'潜艇',p:'qiántǐng',e:'submarine'},
+    {t:'戰機',s:'战机',p:'zhànjī',e:'fighter jet'},
+    {t:'航空母艦',s:'航空母舰',p:'hángkōng mǔjiàn',e:'aircraft carrier'},
+    {t:'後勤',s:'后勤',p:'hòuqín',e:'logistics'},
+    {t:'戰略',s:'战略',p:'zhànlüè',e:'strategy'},
+    {t:'戰術',s:'战术',p:'zhànshù',e:'tactics'},
+    {t:'預備役',s:'预备役',p:'yùbèiyì',e:'(military) reserves',n:'Your world — the Army Reserve'},
+    {t:'同盟',s:'同盟',p:'tóngméng',e:'alliance'},
+    {t:'防禦',s:'防御',p:'fángyù',e:'defense (to defend)'},
+    {t:'指揮',s:'指挥',p:'zhǐhuī',e:'to command'},
+  ]},
+  { id:'dip', emo:'🤝', cn:'外交', en:'Diplomacy & Statecraft', words:[
+    {t:'外交',s:'外交',p:'wàijiāo',e:'diplomacy'},
+    {t:'大使',s:'大使',p:'dàshǐ',e:'ambassador'},
+    {t:'武官',s:'武官',p:'wǔguān',e:'military attaché',n:'Your former post in Taipei'},
+    {t:'使館',s:'使馆',p:'shǐguǎn',e:'embassy'},
+    {t:'領事館',s:'领事馆',p:'lǐngshìguǎn',e:'consulate'},
+    {t:'談判',s:'谈判',p:'tánpàn',e:'negotiation'},
+    {t:'條約',s:'条约',p:'tiáoyuē',e:'treaty'},
+    {t:'制裁',s:'制裁',p:'zhìcái',e:'sanctions'},
+    {t:'主權',s:'主权',p:'zhǔquán',e:'sovereignty'},
+    {t:'雙邊',s:'双边',p:'shuāngbiān',e:'bilateral'},
+    {t:'峰會',s:'峰会',p:'fēnghuì',e:'summit'},
+    {t:'協議',s:'协议',p:'xiéyì',e:'agreement / accord'},
+    {t:'邦交',s:'邦交',p:'bāngjiāo',e:'diplomatic relations'},
+    {t:'斡旋',s:'斡旋',p:'wòxuán',e:'mediation / good offices'},
+    {t:'外交部',s:'外交部',p:'wàijiāobù',e:'foreign ministry'},
+    {t:'結盟',s:'结盟',p:'jiéméng',e:'to form an alliance'},
+  ]},
+  { id:'tech', emo:'🤖', cn:'科技', en:'Technology & AI', words:[
+    {t:'人工智慧',s:'人工智能',p:'réngōng zhìhuì',sp:'réngōng zhìnéng',e:'artificial intelligence',n:'Taiwan: 智慧 · PRC: 智能'},
+    {t:'演算法',s:'算法',p:'yǎnsuànfǎ',sp:'suànfǎ',e:'algorithm',n:'Taiwan: 演算法 · PRC: 算法'},
+    {t:'數據',s:'数据',p:'shùjù',e:'data'},
+    {t:'晶片',s:'芯片',p:'jīngpiàn',sp:'xīnpiàn',e:'chip / microchip',n:'Taiwan: 晶片 · PRC: 芯片'},
+    {t:'無人機',s:'无人机',p:'wúrénjī',e:'drone / UAV'},
+    {t:'網路',s:'网络',p:'wǎnglù',sp:'wǎngluò',e:'network / internet',n:'Taiwan: 網路 · PRC: 网络'},
+    {t:'軟體',s:'软件',p:'ruǎntǐ',sp:'ruǎnjiàn',e:'software',n:'Taiwan: 軟體 · PRC: 软件'},
+    {t:'硬體',s:'硬件',p:'yìngtǐ',sp:'yìngjiàn',e:'hardware'},
+    {t:'量子',s:'量子',p:'liàngzǐ',e:'quantum'},
+    {t:'機器學習',s:'机器学习',p:'jīqì xuéxí',e:'machine learning'},
+    {t:'雲端',s:'云端',p:'yúnduān',e:'cloud (computing)'},
+    {t:'加密',s:'加密',p:'jiāmì',e:'encryption'},
+    {t:'自動化',s:'自动化',p:'zìdònghuà',e:'automation'},
+    {t:'雷達',s:'雷达',p:'léidá',e:'radar'},
+    {t:'衛星',s:'卫星',p:'wèixīng',e:'satellite'},
+    {t:'監控',s:'监控',p:'jiānkòng',e:'surveillance / monitoring'},
+  ]},
+  { id:'strait', emo:'🌊', cn:'台海', en:'Taiwan Strait', words:[
+    {t:'台灣海峽',s:'台湾海峡',p:'Táiwān Hǎixiá',e:'Taiwan Strait'},
+    {t:'兩岸',s:'两岸',p:'liǎng’àn',e:'cross-strait',n:'Lit. "the two shores"'},
+    {t:'統一',s:'统一',p:'tǒngyī',e:'unification'},
+    {t:'獨立',s:'独立',p:'dúlì',e:'independence'},
+    {t:'民主',s:'民主',p:'mínzhǔ',e:'democracy'},
+    {t:'現狀',s:'现状',p:'xiànzhuàng',e:'status quo'},
+    {t:'一中政策',s:'一中政策',p:'yì zhōng zhèngcè',e:'One China policy'},
+    {t:'緊張',s:'紧张',p:'jǐnzhāng',e:'tension'},
+    {t:'衝突',s:'冲突',p:'chōngtū',e:'conflict'},
+    {t:'升級',s:'升级',p:'shēngjí',e:'escalation'},
+    {t:'危機',s:'危机',p:'wéijī',e:'crisis'},
+    {t:'穩定',s:'稳定',p:'wěndìng',e:'stability'},
+    {t:'嚇阻',s:'吓阻',p:'xiàzǔ',e:'deterrence',n:'Taiwan usage; PRC: 威懾 wēishè'},
+    {t:'防空識別區',s:'防空识别区',p:'fángkōng shìbiéqū',e:'ADIZ',n:'Air Defense Identification Zone'},
+    {t:'灰色地帶',s:'灰色地带',p:'huīsè dìdài',e:'gray zone'},
+    {t:'軍機',s:'军机',p:'jūnjī',e:'military aircraft'},
+  ]},
+  { id:'ind', emo:'🏭', cn:'產業', en:'Industry & Semiconductors', words:[
+    {t:'供應鏈',s:'供应链',p:'gōngyìngliàn',e:'supply chain'},
+    {t:'半導體',s:'半导体',p:'bàndǎotǐ',e:'semiconductor'},
+    {t:'晶圓',s:'晶圆',p:'jīngyuán',e:'(silicon) wafer'},
+    {t:'出口管制',s:'出口管制',p:'chūkǒu guǎnzhì',e:'export controls'},
+    {t:'製造',s:'制造',p:'zhìzào',e:'manufacturing'},
+    {t:'台積電',s:'台积电',p:'Táijīdiàn',e:'TSMC',n:"Taiwan's chipmaking giant"},
+    {t:'投資',s:'投资',p:'tóuzī',e:'investment'},
+    {t:'關稅',s:'关税',p:'guānshuì',e:'tariff'},
+    {t:'貿易',s:'贸易',p:'màoyì',e:'trade'},
+    {t:'韌性',s:'韧性',p:'rènxìng',e:'resilience'},
+    {t:'創新',s:'创新',p:'chuàngxīn',e:'innovation'},
+    {t:'競爭',s:'竞争',p:'jìngzhēng',e:'competition'},
+    {t:'脫鉤',s:'脱钩',p:'tuōgōu',e:'decoupling'},
+    {t:'補貼',s:'补贴',p:'bǔtiē',e:'subsidy'},
+    {t:'產能',s:'产能',p:'chǎnnéng',e:'production capacity'},
+    {t:'關鍵技術',s:'关键技术',p:'guānjiàn jìshù',e:'critical technology'},
+  ]},
+  { id:'intel', emo:'🛰️', cn:'情報', en:'Intelligence & Security', words:[
+    {t:'情報',s:'情报',p:'qíngbào',e:'intelligence'},
+    {t:'偵察',s:'侦察',p:'zhēnchá',e:'reconnaissance'},
+    {t:'監視',s:'监视',p:'jiānshì',e:'surveillance'},
+    {t:'反間諜',s:'反间谍',p:'fǎn jiàndié',e:'counterintelligence'},
+    {t:'機密',s:'机密',p:'jīmì',e:'classified / secret'},
+    {t:'滲透',s:'渗透',p:'shèntòu',e:'infiltration'},
+    {t:'網路戰',s:'网络战',p:'wǎnglùzhàn',sp:'wǎngluòzhàn',e:'cyber warfare'},
+    {t:'資安',s:'资安',p:'zī’ān',e:'cybersecurity',n:'Taiwan short form of 資訊安全'},
+    {t:'假訊息',s:'假信息',p:'jiǎ xùnxí',e:'disinformation',n:'Taiwan: 訊息 · PRC: 信息'},
+    {t:'認知作戰',s:'认知作战',p:'rènzhī zuòzhàn',e:'cognitive warfare'},
+    {t:'預警',s:'预警',p:'yùjǐng',e:'early warning'},
+    {t:'威脅',s:'威胁',p:'wēixié',e:'threat'},
+    {t:'評估',s:'评估',p:'pínggū',e:'assessment'},
+    {t:'破解',s:'破解',p:'pòjiě',e:'to crack / decipher'},
+    {t:'監聽',s:'监听',p:'jiāntīng',e:'signals interception'},
+    {t:'來源',s:'来源',p:'láiyuán',e:'source'},
+  ]},
+  { id:'idiom', emo:'📜', cn:'成語', en:'Strategic Idioms', words:[
+    {t:'知己知彼',s:'知己知彼',p:'zhī jǐ zhī bǐ',e:'know yourself & your enemy'},
+    {t:'居安思危',s:'居安思危',p:'jū ān sī wēi',e:'in safety, prepare for danger'},
+    {t:'未雨綢繆',s:'未雨绸缪',p:'wèi yǔ chóumóu',e:'prepare before it rains'},
+    {t:'兵不厭詐',s:'兵不厌诈',p:'bīng bù yàn zhà',e:'in war, deception is fair'},
+    {t:'高瞻遠矚',s:'高瞻远瞩',p:'gāo zhān yuǎn zhǔ',e:'far-sighted; strategic vision'},
+    {t:'運籌帷幄',s:'运筹帷幄',p:'yùn chóu wéi wò',e:'strategize behind the lines'},
+    {t:'審時度勢',s:'审时度势',p:'shěn shí duó shì',e:'read the situation'},
+    {t:'防患未然',s:'防患未然',p:'fáng huàn wèi rán',e:'prevent trouble before it starts'},
+    {t:'同舟共濟',s:'同舟共济',p:'tóng zhōu gòng jì',e:'in the same boat together'},
+    {t:'臨危不亂',s:'临危不乱',p:'lín wēi bù luàn',e:'stay composed in a crisis'},
+    {t:'出奇制勝',s:'出奇制胜',p:'chū qí zhì shèng',e:'win by surprise'},
+    {t:'厚積薄發',s:'厚积薄发',p:'hòu jī bó fā',e:'build up, release sparingly'},
+    {t:'韜光養晦',s:'韬光养晦',p:'tāo guāng yǎng huì',e:'hide strength, bide time',n:"Deng Xiaoping's famous dictum"},
+    {t:'水到渠成',s:'水到渠成',p:'shuǐ dào qú chéng',e:'success when conditions ripen'},
+    {t:'一觸即發',s:'一触即发',p:'yì chù jí fā',e:'on a hair-trigger'},
+    {t:'大智若愚',s:'大智若愚',p:'dà zhì ruò yú',e:'great wisdom seems foolish'},
+  ]},
+];
+DECKS.forEach(d=>d.lvl='pro');
+
+/* ----- Foundational level: high-frequency everyday vocabulary -----
+   The general-fluency range a rusty specialist loses first (HSK ~3-4). */
+const BASIC_DECKS = [
+  { id:'b_verb', emo:'🏃', cn:'動詞', en:'Everyday Verbs', words:[
+    {t:'覺得',s:'觉得',p:'juédé',e:'to feel / think'},
+    {t:'希望',s:'希望',p:'xīwàng',e:'to hope'},
+    {t:'決定',s:'决定',p:'juédìng',e:'to decide'},
+    {t:'認為',s:'认为',p:'rènwéi',e:'to believe / consider'},
+    {t:'發現',s:'发现',p:'fāxiàn',e:'to discover'},
+    {t:'解決',s:'解决',p:'jiějué',e:'to solve'},
+    {t:'參加',s:'参加',p:'cānjiā',e:'to take part in'},
+    {t:'準備',s:'准备',p:'zhǔnbèi',e:'to prepare'},
+    {t:'改變',s:'改变',p:'gǎibiàn',e:'to change'},
+    {t:'影響',s:'影响',p:'yǐngxiǎng',e:'to affect / influence'},
+    {t:'同意',s:'同意',p:'tóngyì',e:'to agree'},
+    {t:'完成',s:'完成',p:'wánchéng',e:'to complete'},
+    {t:'介紹',s:'介绍',p:'jièshào',e:'to introduce'},
+    {t:'選擇',s:'选择',p:'xuǎnzé',e:'to choose'},
+    {t:'需要',s:'需要',p:'xūyào',e:'to need'},
+    {t:'幫助',s:'帮助',p:'bāngzhù',e:'to help'},
+  ]},
+  { id:'b_adj', emo:'🎨', cn:'形容詞', en:'Common Adjectives', words:[
+    {t:'重要',s:'重要',p:'zhòngyào',e:'important'},
+    {t:'容易',s:'容易',p:'róngyì',e:'easy'},
+    {t:'困難',s:'困难',p:'kùnnán',e:'difficult'},
+    {t:'簡單',s:'简单',p:'jiǎndān',e:'simple'},
+    {t:'複雜',s:'复杂',p:'fùzá',e:'complex'},
+    {t:'安全',s:'安全',p:'ānquán',e:'safe'},
+    {t:'危險',s:'危险',p:'wēixiǎn',e:'dangerous'},
+    {t:'方便',s:'方便',p:'fāngbiàn',e:'convenient'},
+    {t:'嚴重',s:'严重',p:'yánzhòng',e:'serious / severe'},
+    {t:'普通',s:'普通',p:'pǔtōng',e:'ordinary'},
+    {t:'特別',s:'特别',p:'tèbié',e:'special'},
+    {t:'主要',s:'主要',p:'zhǔyào',e:'main / primary'},
+    {t:'明顯',s:'明显',p:'míngxiǎn',e:'obvious'},
+    {t:'適合',s:'适合',p:'shìhé',e:'suitable'},
+    {t:'滿意',s:'满意',p:'mǎnyì',e:'satisfied'},
+    {t:'相同',s:'相同',p:'xiāngtóng',e:'the same / identical'},
+  ]},
+  { id:'b_noun', emo:'📦', cn:'名詞', en:'Daily Nouns', words:[
+    {t:'問題',s:'问题',p:'wèntí',e:'problem / question'},
+    {t:'機會',s:'机会',p:'jīhuì',e:'opportunity'},
+    {t:'經驗',s:'经验',p:'jīngyàn',e:'experience'},
+    {t:'環境',s:'环境',p:'huánjìng',e:'environment'},
+    {t:'社會',s:'社会',p:'shèhuì',e:'society'},
+    {t:'文化',s:'文化',p:'wénhuà',e:'culture'},
+    {t:'經濟',s:'经济',p:'jīngjì',e:'economy'},
+    {t:'政府',s:'政府',p:'zhèngfǔ',e:'government'},
+    {t:'教育',s:'教育',p:'jiàoyù',e:'education'},
+    {t:'健康',s:'健康',p:'jiànkāng',e:'health'},
+    {t:'消息',s:'消息',p:'xiāoxí',e:'news / message'},
+    {t:'結果',s:'结果',p:'jiéguǒ',e:'result'},
+    {t:'原因',s:'原因',p:'yuányīn',e:'reason / cause'},
+    {t:'條件',s:'条件',p:'tiáojiàn',e:'condition'},
+    {t:'計劃',s:'计划',p:'jìhuà',e:'plan'},
+    {t:'目標',s:'目标',p:'mùbiāo',e:'goal / target'},
+  ]},
+  { id:'b_time', emo:'⏰', cn:'時間', en:'Time & Frequency', words:[
+    {t:'現在',s:'现在',p:'xiànzài',e:'now'},
+    {t:'以前',s:'以前',p:'yǐqián',e:'before / formerly'},
+    {t:'以後',s:'以后',p:'yǐhòu',e:'after / later'},
+    {t:'最近',s:'最近',p:'zuìjìn',e:'recently'},
+    {t:'將來',s:'将来',p:'jiānglái',e:'(in the) future'},
+    {t:'經常',s:'经常',p:'jīngcháng',e:'often'},
+    {t:'偶爾',s:'偶尔',p:'ǒu’ěr',e:'occasionally'},
+    {t:'突然',s:'突然',p:'túrán',e:'suddenly'},
+    {t:'立刻',s:'立刻',p:'lìkè',e:'immediately'},
+    {t:'已經',s:'已经',p:'yǐjīng',e:'already'},
+    {t:'一直',s:'一直',p:'yìzhí',e:'continuously / all along'},
+    {t:'終於',s:'终于',p:'zhōngyú',e:'finally / at last'},
+    {t:'暫時',s:'暂时',p:'zànshí',e:'temporarily'},
+    {t:'永遠',s:'永远',p:'yǒngyuǎn',e:'forever'},
+    {t:'平常',s:'平常',p:'píngcháng',e:'usually'},
+    {t:'從來',s:'从来',p:'cónglái',e:'ever / (never)'},
+  ]},
+  { id:'b_comm', emo:'💬', cn:'溝通', en:'Communication', words:[
+    {t:'解釋',s:'解释',p:'jiěshì',e:'to explain'},
+    {t:'討論',s:'讨论',p:'tǎolùn',e:'to discuss'},
+    {t:'建議',s:'建议',p:'jiànyì',e:'to suggest'},
+    {t:'表示',s:'表示',p:'biǎoshì',e:'to express / indicate'},
+    {t:'報告',s:'报告',p:'bàogào',e:'to report'},
+    {t:'通知',s:'通知',p:'tōngzhī',e:'to notify'},
+    {t:'聯絡',s:'联络',p:'liánluò',e:'to contact'},
+    {t:'回答',s:'回答',p:'huídá',e:'to answer'},
+    {t:'提供',s:'提供',p:'tígōng',e:'to provide'},
+    {t:'表達',s:'表达',p:'biǎodá',e:'to express'},
+    {t:'翻譯',s:'翻译',p:'fānyì',e:'to translate'},
+    {t:'描述',s:'描述',p:'miáoshù',e:'to describe'},
+    {t:'承認',s:'承认',p:'chéngrèn',e:'to admit'},
+    {t:'強調',s:'强调',p:'qiángdiào',e:'to emphasize'},
+    {t:'提醒',s:'提醒',p:'tíxǐng',e:'to remind'},
+    {t:'商量',s:'商量',p:'shāngliáng',e:'to consult / talk over'},
+  ]},
+];
+BASIC_DECKS.forEach(d=>d.lvl='basic');
+const ALL_DECKS = DECKS.concat(BASIC_DECKS);
+const decksFor = lvl => ALL_DECKS.filter(d=>d.lvl===lvl);
+const DECK_BY_ID = Object.fromEntries(ALL_DECKS.map(d=>[d.id,d]));
+
+/* ---------- persistence ---------- */
+const LS='mm_v1';
+const def={level:'basic',play:'match',script:'trad',against:'en',pinyinHint:'on',pairs:8,sound:true,voice:true,theme:'light'};
+let S=Object.assign({},def,load('settings'));
+let STAT=Object.assign({games:0,matches:0,best:{},dailyStreak:0,lastDay:null},load('stats'));
+function load(k){try{return JSON.parse(localStorage.getItem(LS+'_'+k))||{}}catch(e){return{}}}
+function save(k,v){try{localStorage.setItem(LS+'_'+k,JSON.stringify(v))}catch(e){}}
+function saveAll(){save('settings',S);save('stats',STAT)}
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const glyph=w=>S.script==='simp'?(w.s||w.t):w.t;
+const pin=w=>S.script==='simp'?(w.sp||w.p):w.p;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function todayStr(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+function fmtTime(ms){const s=Math.floor(ms/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+
+/* ---------- audio (Web Audio SFX) ---------- */
+let actx;
+function tone(freq,dur,type,when,gain){
+  if(!S.sound)return;
+  try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();
+  const o=actx.createOscillator(),g=actx.createGain(),t=actx.currentTime+(when||0);
+  o.type=type||'sine';o.frequency.value=freq;o.connect(g);g.connect(actx.destination);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(gain||.18,t+.01);
+  g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.start(t);o.stop(t+dur);}catch(e){}
+}
+const sfxFlip=()=>tone(440,.08,'triangle',0,.1);
+const sfxMatch=()=>{[523.25,659.25,783.99].forEach((f,i)=>tone(f,.22,'sine',i*.07,.16))};
+const sfxBad=()=>{tone(220,.18,'sawtooth',0,.08);tone(180,.2,'sawtooth',.06,.07)};
+const sfxWin=()=>{[523,659,784,1046].forEach((f,i)=>tone(f,.4,'sine',i*.12,.18))};
+
+/* ---------- TTS ---------- */
+let voices=[];
+function loadVoices(){voices=window.speechSynthesis?speechSynthesis.getVoices():[]}
+if(window.speechSynthesis){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}
+function speak(text,force){
+  if(!window.speechSynthesis||(!S.voice&&!force))return;
+  try{speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  const lang=S.script==='simp'?'zh-CN':'zh-TW';
+  u.lang=lang;u.rate=.82;
+  const v=voices.find(v=>v.lang===lang)||voices.find(v=>v.lang.replace('_','-').toLowerCase().startsWith(S.script==='simp'?'zh-cn':'zh-tw'))||voices.find(v=>v.lang.toLowerCase().startsWith('zh'));
+  if(v)u.voice=v;
+  speechSynthesis.speak(u);}catch(e){}
+}
+
+/* =========================================================================
+   GAME STATE
+   ========================================================================= */
+let G=null;
+function buildBoard(deckId){
+  let pool;
+  if(deckId==='mix'){pool=[];decksFor(S.level).forEach(d=>pool=pool.concat(d.words.map(w=>Object.assign({_deck:d.id},w))))}
+  else{const d=DECK_BY_ID[deckId];pool=d.words.map(w=>Object.assign({_deck:d.id},w))}
+  const picked=shuffle(pool).slice(0,Math.min(S.pairs,pool.length));
+  const cards=[];
+  picked.forEach((w,i)=>{
+    cards.push({pid:i,face:'hz',w});
+    cards.push({pid:i,face:'mn',w});
+  });
+  return {deckId,words:picked,cards:shuffle(cards)};
+}
+function colsFor(n){
+  const mobile=window.matchMedia('(max-width:559px)').matches;
+  if(mobile)return n<=12?3:4;
+  return n<=12?4:(n<=16?4:5);
+}
+const deckColor=id=>({mil:'#c0362c',dip:'#b5872a',tech:'#0f766e',strait:'#1e3a5f',ind:'#9333ea',intel:'#0369a1',idiom:'#b45309'}[id]||'#6b7280');
+
+function startGame(deckId){
+  G=buildBoard(deckId);
+  G.flipped=[];G.matched=new Set();G.moves=0;G.streak=0;G.bestStreak=0;G.lock=false;G.started=null;G.timer=null;G.sel=null;
+  renderGame();
+}
+function renderGame(){
+  const dk=G.deckId==='mix'?{cn:'綜合',en:'Mixed deck',emo:'🎲'}:DECK_BY_ID[G.deckId];
+  const total=G.words.length;
+  const open=S.play==='match';
+  const against=S.against==='en'?'中 → English':'中 → 拼音';
+  app.innerHTML=`
+   <div class="ghead">
+     <button class="icbtn" onclick="goHome()">‹</button>
+     <div class="gtitle"><div class="cn">${G.deckId==='mix'?'🎲 綜合':dk.emo+' '+dk.cn}</div>
+       <div class="meta">${dk.en} · ${against}</div></div>
+     <div class="hud">
+       <div class="chip"><b id="h-match">0/${total}</b><span>Pairs</span></div>
+       <div class="chip"><b id="h-moves">0</b><span>Moves</span></div>
+       <div class="chip"><b id="h-time">0:00</b><span>Time</span></div>
+     </div>
+     <button class="icbtn" onclick="startGame(G.deckId)" title="Restart">↻</button>
+   </div>
+   ${open
+     ? `<div class="hint">Tap a <b>字</b> character, then tap its ${S.against==='en'?'English meaning':'拼音'}. All ${total} pairs are face-up — match by meaning, not memory.</div>`
+     : `<div class="hint">Flip two cards to find a character and its meaning — remember where they are.</div>`}
+   <div id="board"></div>`;
+  const board=$('#board');
+  board.style.gridTemplateColumns=`repeat(${colsFor(G.cards.length)},1fr)`;
+  G.cards.forEach((c,idx)=>{
+    const el=document.createElement('div');
+    el.className='card '+c.face+(open?' open':'');el.dataset.idx=idx;
+    const g=glyph(c.w);
+    const hzSize=g.length>=4?'clamp(15px,5vw,24px)':g.length===3?'clamp(19px,6.5vw,30px)':'clamp(24px,9vw,40px)';
+    const showPy=S.pinyinHint==='on'&&S.against==='en';
+    const content=c.face==='hz'
+      ? `<span class="hzt" style="font-size:${hzSize}">${g}</span>${showPy?`<span class="hz-py">${pin(c.w)}</span>`:''}`
+      : (S.against==='en'?`<span class="mnt">${c.w.e}</span>`:`<span class="pyt">${pin(c.w)}</span>`);
+    const front=`<div class="face front"><span class="tag-dot" style="background:${deckColor(c.w._deck)}"></span>${content}</div>`;
+    el.innerHTML=open?front:`<div class="face cover"><div class="ring"><span>${c.face==='hz'?'字':'文'}</span></div></div>${front}`;
+    board.appendChild(el);
+  });
+  board.onclick=e=>{const card=e.target.closest('.card');if(!card)return;const i=+card.dataset.idx;open?onPick(i):onFlip(i)};
+}
+
+/* open / vocabulary-match mode: cards visible, select a character then its meaning */
+function onPick(idx){
+  if(G.lock||G.matched.has(idx))return;
+  if(G.started===null){G.started=Date.now();G.timer=setInterval(updTime,1000)}
+  const el=$(`.card[data-idx="${idx}"]`);
+  if(G.sel===idx){el.classList.remove('sel');G.sel=null;return}
+  if(G.sel===null){
+    G.sel=idx;el.classList.add('sel');sfxFlip();
+    const c=G.cards[idx];if(c.face==='hz')speak(glyph(c.w));
+    return;
+  }
+  const a=G.sel,b=idx;G.sel=null;
+  const ca=G.cards[a],cb=G.cards[b];
+  $(`.card[data-idx="${a}"]`).classList.remove('sel');
+  G.moves++;$('#h-moves').textContent=G.moves;
+  if(ca.pid===cb.pid){
+    G.streak++;G.bestStreak=Math.max(G.bestStreak,G.streak);
+    [a,b].forEach(i=>$(`.card[data-idx="${i}"]`).classList.add('matched'));
+    sfxMatch();speak(glyph(ca.w));showToast(ca.w);
+    G.matched.add(a);G.matched.add(b);STAT.matches++;saveAll();
+    $('#h-match').textContent=(G.matched.size/2)+'/'+G.words.length;updStreak();
+    if(G.matched.size===G.cards.length)setTimeout(win,520);
+  }else{
+    G.streak=0;updStreak();sfxBad();G.lock=true;
+    [a,b].forEach(i=>$(`.card[data-idx="${i}"]`).classList.add('bad'));
+    setTimeout(()=>{[a,b].forEach(i=>$(`.card[data-idx="${i}"]`).classList.remove('bad'));G.lock=false},560);
+  }
+}
+function onFlip(idx){
+  if(G.lock)return;
+  const c=G.cards[idx];
+  if(G.matched.has(idx)||G.flipped.includes(idx))return;
+  if(G.flipped.length>=2)return;
+  if(G.started===null){G.started=Date.now();G.timer=setInterval(updTime,1000)}
+  const el=$(`.card[data-idx="${idx}"]`);
+  el.classList.add('flipped');
+  G.flipped.push(idx);
+  sfxFlip();
+  if(c.face==='hz')speak(glyph(c.w));
+  if(G.flipped.length===2)evaluate();
+}
+function evaluate(){
+  G.lock=true;G.moves++;$('#h-moves').textContent=G.moves;
+  const [a,b]=G.flipped;
+  const ca=G.cards[a],cb=G.cards[b];
+  if(ca.pid===cb.pid){
+    G.streak++;G.bestStreak=Math.max(G.bestStreak,G.streak);
+    setTimeout(()=>{
+      [a,b].forEach(i=>{G.matched.add(i);$(`.card[data-idx="${i}"]`).classList.add('matched')});
+      sfxMatch();speak(glyph(ca.w));showToast(ca.w);
+      STAT.matches++;saveAll();
+      G.flipped=[];G.lock=false;
+      $('#h-match').textContent=(G.matched.size/2)+'/'+G.words.length;
+      updStreak();
+      if(G.matched.size===G.cards.length)setTimeout(win,560);
+    },360);
+  }else{
+    G.streak=0;updStreak();sfxBad();
+    [a,b].forEach(i=>$(`.card[data-idx="${i}"]`).classList.add('bad'));
+    setTimeout(()=>{
+      [a,b].forEach(i=>{const el=$(`.card[data-idx="${i}"]`);el.classList.remove('flipped','bad')});
+      G.flipped=[];G.lock=false;
+    },820);
+  }
+}
+function updTime(){if(G&&G.started)$('#h-time').textContent=fmtTime(Date.now()-G.started)}
+function updStreak(){
+  const hud=document.querySelector('.hud');
+  let s=document.getElementById('h-streak-chip');
+  if(G.streak>=2){
+    if(!s){s=document.createElement('div');s.id='h-streak-chip';s.className='chip streak';hud.insertBefore(s,hud.firstChild)}
+    s.innerHTML=`<b>🔥${G.streak}</b><span>Streak</span>`;
+  }else if(s){s.remove()}
+}
+function showToast(w){
+  const t=$('#toast');
+  t.innerHTML=`<span class="tz">${glyph(w)}</span><div class="ti">
+    <div class="py">${pin(w)}</div><div class="en">${w.e}</div>${w.n?`<div class="nt">${w.n}</div>`:''}</div>
+    <button class="spk" onclick="speak('${glyph(w)}',true)">🔊</button>`;
+  t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+/* =========================================================================
+   WIN
+   ========================================================================= */
+function win(){
+  clearInterval(G.timer);
+  const ms=Date.now()-G.started;
+  const perfect=G.words.length;
+  const stars=G.moves<=Math.ceil(perfect*1.45)?3:G.moves<=Math.ceil(perfect*2.1)?2:1;
+  const acc=Math.round(perfect/G.moves*100);
+  sfxWin();confetti();
+  // best tracking
+  const key=G.deckId+'_'+G.words.length;
+  const prev=STAT.best[key];
+  let isBest=false;
+  if(!prev||ms<prev.ms){STAT.best[key]={ms,moves:G.moves,stars};isBest=!!prev}
+  STAT.games++;
+  // daily streak
+  const td=todayStr();
+  if(STAT.lastDay!==td){
+    const y=new Date();y.setDate(y.getDate()-1);
+    const yd=y.getFullYear()+'-'+(y.getMonth()+1)+'-'+y.getDate();
+    STAT.dailyStreak=(STAT.lastDay===yd)?STAT.dailyStreak+1:1;
+    STAT.lastDay=td;
+  }
+  saveAll();
+  const dk=G.deckId==='mix'?{cn:'綜合',en:'Mixed'}:DECK_BY_ID[G.deckId];
+  app.innerHTML=`
+    <div class="win">
+      <div class="big">完成</div><div class="sub">Complete · ${dk.en}</div>
+      <div class="stars">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
+      ${isBest?'<div class="newbest">✦ New best time</div>':''}
+      <div class="wstats">
+        <div class="stat"><b>${fmtTime(ms)}</b><span>Time</span></div>
+        <div class="stat"><b>${G.moves}</b><span>Moves</span></div>
+        <div class="stat"><b>${acc}%</b><span>Accuracy</span></div>
+        <div class="stat"><b>🔥${G.bestStreak}</b><span>Best run</span></div>
+      </div>
+      <div class="review">
+        <div class="rh">Terms reviewed — tap 🔊 to hear</div>
+        ${G.words.map(w=>`<div class="rv"><span class="rz">${glyph(w)}</span>
+          <div class="ri"><span class="py">${pin(w)}</span> · <span class="en">${w.e}</span>${w.n?`<div class="nt">${w.n}</div>`:''}</div>
+          <button class="spk" onclick="speak('${glyph(w)}',true)">🔊</button></div>`).join('')}
+      </div>
+      <div class="btns">
+        <button class="btn ghost" onclick="goHome()">Choose deck</button>
+        <button class="btn primary" onclick="startGame('${G.deckId}')">Play again</button>
+      </div>
+    </div>`;
+  window.scrollTo(0,0);
+}
+function confetti(){
+  const cols=['#c0362c','#b5872a','#0f766e','#1e3a5f','#e3b341'];
+  for(let i=0;i<80;i++){
+    const d=document.createElement('div');d.className='confetti';
+    d.style.left=Math.random()*100+'vw';
+    d.style.background=cols[i%cols.length];
+    d.style.transform='rotate('+Math.random()*360+'deg)';
+    const dur=2200+Math.random()*1600,dx=(Math.random()-.5)*240;
+    document.body.appendChild(d);
+    d.animate([{transform:`translate(0,0) rotate(0)`,opacity:1},
+      {transform:`translate(${dx}px,${window.innerHeight+40}px) rotate(${Math.random()*720}deg)`,opacity:.9}],
+      {duration:dur,easing:'cubic-bezier(.3,.6,.5,1)'}).onfinish=()=>d.remove();
+  }
+}
+
+/* =========================================================================
+   HOME
+   ========================================================================= */
+function seg(field,opts){
+  return `<div class="seg">${opts.map(o=>`<button class="${S[field]===o.v?'on':''}" onclick="setOpt('${field}','${o.v}')">${o.l}</button>`).join('')}</div>`;
+}
+function renderHome(){
+  G=null;
+  app.innerHTML=`
+   <div class="brand">
+     <div class="seal">字</div>
+     <h1>漢字配對</h1>
+     <div class="en">Mandarin Matchup</div>
+     <div class="tag">Keep your Mandarin sharp — defense, diplomacy, technology, cross-Strait affairs &amp; strategic idioms.</div>
+   </div>
+   <div class="statbar">
+     <div class="stat"><b>${STAT.dailyStreak||0}</b><span>Day streak</span></div>
+     <div class="stat"><b>${STAT.matches||0}</b><span>Pairs matched</span></div>
+     <div class="stat"><b>${STAT.games||0}</b><span>Rounds</span></div>
+   </div>
+
+   <div class="section-h">Setup</div>
+   <div class="opts">
+     <div class="optrow"><div class="lbl">Level<small>Foundational everyday vs. professional</small></div>
+       ${seg('level',[{v:'basic',l:'基礎'},{v:'pro',l:'專業'}])}</div>
+     <div class="optrow"><div class="lbl">Game mode<small>Open match (see all) · or flip-memory</small></div>
+       ${seg('play',[{v:'match',l:'Match'},{v:'memory',l:'Memory'}])}</div>
+     <div class="optrow"><div class="lbl">Script<small>Taiwan vs. mainland characters</small></div>
+       ${seg('script',[{v:'trad',l:'繁體'},{v:'simp',l:'简体'}])}</div>
+     <div class="optrow"><div class="lbl">Match against<small>What the partner card shows</small></div>
+       ${seg('against',[{v:'en',l:'English'},{v:'pinyin',l:'拼音'}])}</div>
+     <div class="optrow"><div class="lbl">Pinyin hints<small>Pronunciation under characters (when matching English)</small></div>
+       ${seg('pinyinHint',[{v:'on',l:'On'},{v:'off',l:'Off'}])}</div>
+     <div class="optrow"><div class="lbl">Board size<small>Pairs per round</small></div>
+       ${seg('pairs',[{v:6,l:'6'},{v:8,l:'8'},{v:10,l:'10'}])}</div>
+     <div class="toggles">
+       <button class="tgl ${S.voice?'on':''}" onclick="setOpt('voice',!S.voice)">🔊 ${S.voice?'Voice on':'Voice off'}</button>
+       <button class="tgl ${S.sound?'on':''}" onclick="setOpt('sound',!S.sound)">🎵 ${S.sound?'Sound on':'Sound off'}</button>
+       <button class="tgl ${S.theme==='dark'?'on':''}" onclick="toggleTheme()">${S.theme==='dark'?'🌙 Dark':'☀️ Light'}</button>
+     </div>
+   </div>
+
+   <div class="section-h">Choose a deck — ${S.level==='basic'?'基礎 Foundational':'專業 Professional'}</div>
+   <div class="decks">
+     <button class="deck mix" onclick="startGame('mix')">
+       <span class="emo">🎲</span><div class="txt"><div class="cn">綜合 · Mixed</div>
+       <div class="enn">A random draw from this level</div><div class="study">Play ▸</div></div>
+       <span class="cnt">${decksFor(S.level).reduce((n,d)=>n+d.words.length,0)}</span>
+     </button>
+     ${decksFor(S.level).map(d=>`<button class="deck" onclick="startGame('${d.id}')">
+        <span class="cnt">${d.words.length}</span>
+        <span class="emo">${d.emo}</span>
+        <div class="cn">${d.cn}</div><div class="enn">${d.en}</div>
+        <div class="study" onclick="event.stopPropagation();browse('${d.id}')">Study list ▸</div>
+      </button>`).join('')}
+   </div>
+   <div class="foot">Built for the China hand — <b>軍事 · 外交 · 科技 · 台海</b><br>Vocabulary at a professional level. 加油!</div>`;
+}
+
+/* ---------- options ---------- */
+function setOpt(f,v){
+  if(f==='pairs')v=+v;
+  S[f]=v;saveAll();
+  if(!G)renderHome();
+}
+function toggleTheme(){S.theme=S.theme==='dark'?'light':'dark';applyTheme();saveAll();renderHome()}
+function applyTheme(){document.documentElement.setAttribute('data-theme',S.theme==='dark'?'dark':'light')}
+
+/* ---------- browse / study list ---------- */
+function browse(id){
+  const d=DECK_BY_ID[id];
+  $('#m-cn').textContent=d.emo+' '+d.cn;
+  $('#m-en').textContent=d.en;
+  $('#m-body').innerHTML=d.words.map(w=>`<div class="rv"><span class="rz">${glyph(w)}</span>
+     <div class="ri"><span class="py">${pin(w)}</span> · <span class="en">${w.e}</span>${w.n?`<div class="nt">${w.n}</div>`:''}</div>
+     <button class="spk" onclick="speak('${glyph(w)}',true)">🔊</button></div>`).join('');
+  $('#modal').classList.add('show');
+}
+function closeBrowse(){$('#modal').classList.remove('show')}
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeBrowse()});
+
+/* ---------- nav ---------- */
+function goHome(){if(G&&G.timer)clearInterval(G.timer);renderHome();window.scrollTo(0,0)}
+window.addEventListener('resize',()=>{const b=$('#board');if(b&&G)b.style.gridTemplateColumns=`repeat(${colsFor(G.cards.length)},1fr)`});
+
+/* ---------- boot ---------- */
+applyTheme();
+renderHome();
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+</script>
+</body>
+</html>
