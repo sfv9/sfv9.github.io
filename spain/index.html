@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>¡Vámonos! · Familia España</title>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="España">
+<meta name="theme-color" content="#d8412f">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./favicon-16.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#fff7ef; --surface:#ffffff; --surface2:#fdf0e4;
+  --ink:#2c1d14; --muted:#6a5848; --line:#f1e4d5;
+  --red:#d8412f; --red-soft:#fde7e2; --red-ink:#a52a1c;
+  --blue:#1b6ec2; --blue-soft:#e3f0fb; --blue-ink:#155596;
+  --gold:#ef9f00; --gold-soft:#fef0d2; --gold-ink:#9a6800;
+  --green:#3a9d5d; --green-soft:#e3f5e9; --green-ink:#27764a;
+  --purple:#7c5cd6; --purple-soft:#ede7fb;
+  --shadow:0 1px 2px rgba(90,45,20,.06),0 4px 16px rgba(90,45,20,.07);
+  --shadow-lg:0 14px 44px rgba(90,45,20,.20);
+  --rad:18px; --rad-s:12px;
+  --ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --disp:"Trebuchet MS","Segoe UI",sans-serif;
+}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:var(--ui);background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.5;
+  background-image:radial-gradient(circle at 8% 2%,rgba(239,159,0,.10),transparent 38%),radial-gradient(circle at 95% 4%,rgba(27,110,194,.08),transparent 36%);}
+#app{max-width:760px;margin:0 auto;min-height:100vh}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:var(--blue-ink)}
+.hide{display:none!important}
+.main{padding:14px 16px 96px;}
+
+/* ===== bottom nav ===== */
+.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.4) blur(10px);
+  border-top:1px solid var(--line);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom);max-width:760px;margin:0 auto}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 2px 8px;color:var(--muted);
+  font-size:10px;font-weight:700;letter-spacing:.02em;transition:.15s;border-top:2px solid transparent}
+.nb svg{width:23px;height:23px}
+.nb.on{color:var(--red);border-top-color:var(--red)}
+
+/* ===== hero / headers ===== */
+.hero{background:linear-gradient(140deg,#e0492f,#f0a500);color:#fff;border-radius:22px;padding:20px 20px 22px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;margin-top:6px}
+.hero::after{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero::before{content:"";position:absolute;right:34px;top:42px;width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.13)}
+.hero h1{font-family:var(--disp);font-size:27px;font-weight:800;letter-spacing:.3px;line-height:1.1}
+.hero .sub{font-size:13px;opacity:.95;margin-top:5px;font-weight:600}
+.hero .who{font-size:12px;opacity:.9;margin-top:9px;background:rgba(255,255,255,.18);display:inline-block;padding:4px 11px;border-radius:20px;font-weight:700}
+
+.cd{display:flex;gap:8px;margin-top:16px;position:relative;z-index:1}
+.cd .u{flex:1;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:10px 4px;text-align:center}
+.cd .u b{display:block;font-size:26px;font-weight:800;font-family:var(--disp);line-height:1}
+.cd .u span{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.9;font-weight:700}
+.cd-note{text-align:center;font-size:12px;color:var(--muted);margin-top:10px;font-weight:600}
+
+.sect-h{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:800;margin:24px 4px 11px;display:flex;align-items:center;gap:8px}
+.sect-h .ln{flex:1;height:1px;background:var(--line)}
+
+/* ===== journey strip ===== */
+.journey{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);padding:16px 14px;box-shadow:var(--shadow)}
+.jrow{display:flex;align-items:stretch}
+.jstop{flex:1;text-align:center;position:relative;min-width:0}
+.jstop .dot{width:46px;height:46px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:23px;
+  background:var(--blue-soft);border:2px solid var(--blue);box-shadow:var(--shadow)}
+.jstop.s0 .dot{background:var(--red-soft);border-color:var(--red)}
+.jstop.s2 .dot{background:var(--gold-soft);border-color:var(--gold)}
+.jstop .nm{font-size:13px;font-weight:800;margin-top:7px}
+.jstop .mt{font-size:10.5px;color:var(--muted);margin-top:1px;font-weight:600}
+.jlink{flex:0 0 58px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:11px;color:var(--muted)}
+.jlink .ic{font-size:18px}
+.jlink .ds{font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;margin-top:2px;text-align:center;line-height:1.2}
+.jlink .dl{width:100%;height:2px;background:repeating-linear-gradient(90deg,var(--line) 0 6px,transparent 6px 11px);margin-top:8px}
+
+/* ===== stat chips ===== */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:14px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad-s);padding:12px 6px;text-align:center;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:22px;font-weight:800;font-family:var(--disp);line-height:1;color:var(--red)}
+.stat span{font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:4px;display:block}
+
+/* ===== generic card ===== */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);padding:15px 16px;box-shadow:var(--shadow);margin-bottom:11px}
+.card h3{font-size:16px;font-weight:800}
+.lead{font-size:13.5px;color:var(--muted);font-weight:600}
+
+/* ===== checklist ===== */
+.chk{display:flex;align-items:flex-start;gap:12px;padding:12px 13px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--rad-s);box-shadow:var(--shadow);margin-bottom:8px;cursor:pointer;transition:.12s}
+.chk:active{transform:scale(.99)}
+.chk .box{width:24px;height:24px;border-radius:7px;border:2px solid var(--line);flex-shrink:0;display:flex;align-items:center;
+  justify-content:center;font-size:14px;color:#fff;transition:.15s;margin-top:1px;background:var(--surface2)}
+.chk.on .box{background:var(--green);border-color:var(--green)}
+.chk .ct{flex:1;min-width:0}
+.chk .ct b{font-size:14px;font-weight:700;display:block}
+.chk.on .ct b{text-decoration:line-through;color:var(--muted)}
+.chk .ct small{font-size:12px;color:var(--muted);display:block;margin-top:2px;line-height:1.45}
+.chk .pr{flex-shrink:0;font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:20px;margin-top:2px}
+.pr-now{background:var(--red-soft);color:var(--red-ink)}
+.pr-soon{background:var(--gold-soft);color:var(--gold-ink)}
+
+/* ===== leg tabs ===== */
+.legtabs{display:flex;gap:7px;background:var(--surface2);border-radius:13px;padding:4px;margin:2px 0 14px;border:1px solid var(--line)}
+.legtab{flex:1;text-align:center;padding:9px 4px;border-radius:10px;font-size:12.5px;font-weight:800;color:var(--muted);transition:.15s;line-height:1.15}
+.legtab small{display:block;font-weight:600;font-size:10px;opacity:.85;margin-top:1px}
+.legtab.on{background:var(--surface);color:var(--red);box-shadow:var(--shadow)}
+
+/* ===== day cards ===== */
+.day{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);box-shadow:var(--shadow);margin-bottom:11px;overflow:hidden}
+.day .dh{display:flex;align-items:center;gap:12px;padding:13px 15px}
+.day .demo{width:44px;height:44px;border-radius:12px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:23px;flex-shrink:0}
+.day.travel .demo{background:var(--gold-soft)}
+.day .dti{flex:1;min-width:0}
+.day .ddate{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--red)}
+.day .dttl{font-size:15px;font-weight:800;margin-top:1px}
+.day .dsub{font-size:12px;color:var(--muted);font-weight:600;margin-top:1px}
+.day .dbody{padding:0 15px 14px}
+.tl{list-style:none;margin-top:2px}
+.tl li{display:flex;gap:11px;padding:7px 0;font-size:13.5px;line-height:1.45}
+.tl li .tm{flex:0 0 52px;font-size:11px;font-weight:800;color:var(--blue-ink);padding-top:2px}
+.tl li .tx{flex:1}
+.tl li .tx b{font-weight:700}
+.tl li .tx em{font-style:normal;color:var(--muted);font-size:12px;display:block;margin-top:1px}
+
+/* ===== place / getaway cards ===== */
+.filters{display:flex;gap:7px;overflow-x:auto;padding:2px 0 12px;margin:0 -2px;-webkit-overflow-scrolling:touch}
+.filters::-webkit-scrollbar{display:none}
+.fchip{flex:0 0 auto;padding:7px 13px;border-radius:20px;font-size:12.5px;font-weight:700;background:var(--surface);
+  border:1px solid var(--line);color:var(--muted);box-shadow:var(--shadow);white-space:nowrap}
+.fchip.on{background:var(--red);color:#fff;border-color:var(--red)}
+.place{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);box-shadow:var(--shadow);margin-bottom:11px;overflow:hidden}
+.place .ph{display:flex;align-items:flex-start;gap:13px;padding:14px 15px}
+.place .pemo{width:46px;height:46px;border-radius:13px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:25px;flex-shrink:0}
+.place .pi{flex:1;min-width:0}
+.place .pnm{font-size:15.5px;font-weight:800;line-height:1.2}
+.place .pmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag{font-size:10px;font-weight:800;letter-spacing:.02em;padding:3px 8px;border-radius:20px;background:var(--surface2);color:var(--muted)}
+.tag.kid{background:var(--gold-soft);color:var(--gold-ink)}
+.tag.drv{background:var(--blue-soft);color:var(--blue-ink)}
+.tag.book{background:var(--red-soft);color:var(--red-ink)}
+.place .pwhy{font-size:13px;color:var(--ink);padding:0 15px 4px;line-height:1.5}
+.place .ptip{font-size:12.5px;color:var(--green-ink);background:var(--green-soft);margin:8px 15px 14px;padding:9px 11px;border-radius:10px;line-height:1.45}
+.place .ptip b{color:var(--green-ink)}
+.exp-toggle{font-size:12px;font-weight:800;color:var(--blue-ink);padding:0 15px 13px;display:flex;align-items:center;gap:5px}
+
+/* ===== kids ===== */
+.kidwrap{}
+.kidhero{background:linear-gradient(135deg,#7c5cd6,#1b6ec2);color:#fff;border-radius:22px;padding:18px;box-shadow:var(--shadow);margin-top:6px;position:relative;overflow:hidden}
+.kidhero::after{content:"⭐";position:absolute;right:14px;top:10px;font-size:60px;opacity:.18}
+.kidhero h1{font-family:var(--disp);font-size:23px;font-weight:800}
+.kidhero p{font-size:12.5px;opacity:.95;margin-top:3px;font-weight:600;max-width:30ch}
+.rankbar{display:flex;align-items:center;gap:12px;margin-top:14px;background:rgba(255,255,255,.16);border-radius:14px;padding:11px 13px}
+.rankbar .rk{font-size:30px}
+.rankbar .ri{flex:1;min-width:0}
+.rankbar .ri b{font-size:15px;font-weight:800;display:block}
+.rankbar .ri .pmini{height:7px;background:rgba(255,255,255,.25);border-radius:5px;margin-top:6px;overflow:hidden}
+.rankbar .ri .pmini i{display:block;height:100%;background:var(--gold);border-radius:5px;transition:.4s}
+.rankbar .ri small{font-size:11px;opacity:.95;font-weight:600}
+.rankbar .stars{text-align:center;flex-shrink:0}
+.rankbar .stars b{font-size:24px;font-weight:800;display:block;line-height:1}
+.rankbar .stars span{font-size:9px;letter-spacing:.06em;text-transform:uppercase;opacity:.9;font-weight:700}
+
+.ageseg{display:flex;background:var(--surface2);border-radius:12px;padding:4px;border:1px solid var(--line);margin:14px 0 4px}
+.ageseg button{flex:1;padding:9px 4px;border-radius:9px;font-size:12.5px;font-weight:800;color:var(--muted);line-height:1.15;transition:.15s}
+.ageseg button small{display:block;font-weight:600;font-size:10px}
+.ageseg button.on{background:var(--purple);color:#fff;box-shadow:var(--shadow)}
+
+.passport{background:var(--surface);border:1px dashed var(--gold);border-radius:var(--rad);padding:14px;box-shadow:var(--shadow)}
+.stampgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:10px}
+.stamp{aspect-ratio:1;border-radius:14px;background:var(--surface2);border:2px dashed var(--line);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:4px;position:relative;transition:.2s}
+.stamp .se{font-size:24px;filter:grayscale(1);opacity:.35;transition:.2s}
+.stamp .sl{font-size:9px;font-weight:800;color:var(--muted);margin-top:3px;line-height:1.1}
+.stamp.got{background:var(--gold-soft);border:2px solid var(--gold);transform:rotate(-3deg)}
+.stamp.got .se{filter:none;opacity:1}
+.stamp.got .sl{color:var(--gold-ink)}
+.stamp.got::after{content:"✓";position:absolute;top:3px;right:5px;font-size:11px;font-weight:900;color:var(--green)}
+
+.decks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px}
+.deck{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);padding:14px;box-shadow:var(--shadow);
+  text-align:left;position:relative;transition:transform .12s,box-shadow .2s,border-color .2s;overflow:hidden}
+.deck:active{transform:scale(.98)}
+.deck .demo{font-size:30px}
+.deck .dnm{font-size:15px;font-weight:800;margin-top:7px}
+.deck .den{font-size:11px;color:var(--muted);font-weight:600;margin-top:1px}
+.deck .dct{position:absolute;top:12px;right:12px;font-size:10px;font-weight:800;color:var(--purple);background:var(--purple-soft);padding:2px 8px;border-radius:20px}
+.deck.mastered{border-color:var(--gold)}
+.deck.mastered .dct{background:var(--gold-soft);color:var(--gold-ink)}
+
+/* deck detail */
+.gamebtns{display:flex;flex-direction:column;gap:9px;margin:4px 0 16px}
+.gbtn{display:flex;align-items:center;gap:13px;background:var(--surface);border:1px solid var(--line);border-radius:var(--rad-s);
+  padding:13px 15px;box-shadow:var(--shadow);text-align:left;transition:.12s}
+.gbtn:active{transform:scale(.99)}
+.gbtn .ge{width:42px;height:42px;border-radius:11px;background:var(--purple-soft);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.gbtn .gi{flex:1}
+.gbtn .gi b{font-size:14.5px;font-weight:800;display:block}
+.gbtn .gi small{font-size:12px;color:var(--muted);font-weight:600}
+.gbtn .arr{color:var(--muted);font-size:18px}
+
+.wordrow{display:flex;align-items:center;gap:13px;padding:11px 4px;border-bottom:1px solid var(--line)}
+.wordrow:last-child{border-bottom:none}
+.wordrow .we{font-size:28px;width:40px;text-align:center}
+.wordrow .wi{flex:1}
+.wordrow .wes{font-size:16px;font-weight:800;color:var(--red)}
+.wordrow .wen{font-size:12px;color:var(--muted);font-weight:600}
+.spk{width:40px;height:40px;border-radius:50%;background:var(--blue-soft);color:var(--blue-ink);display:flex;align-items:center;
+  justify-content:center;font-size:18px;flex-shrink:0;border:1px solid var(--blue);box-shadow:var(--shadow)}
+.spk:active{transform:scale(.9)}
+
+/* flashcard */
+.fc-wrap{display:flex;flex-direction:column;align-items:center;padding:8px 0}
+.flashcard{width:100%;max-width:330px;aspect-ratio:3/3.6;perspective:1200px;margin:6px auto 4px}
+.flashcard .inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d;cursor:pointer}
+.flashcard.flip .inner{transform:rotateY(180deg)}
+.flashcard .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--shadow-lg);padding:20px;text-align:center}
+.flashcard .front{background:linear-gradient(150deg,#fff,var(--surface2));border:2px solid var(--gold)}
+.flashcard .front .big{font-size:96px;line-height:1}
+.flashcard .front .hint{font-size:13px;color:var(--muted);font-weight:700;margin-top:14px}
+.flashcard .back{background:linear-gradient(150deg,var(--purple),var(--blue));color:#fff;transform:rotateY(180deg)}
+.flashcard .back .es{font-size:38px;font-weight:800;font-family:var(--disp)}
+.flashcard .back .en{font-size:17px;opacity:.95;margin-top:6px;font-weight:600}
+.flashcard .back .sayit{margin-top:16px;background:rgba(255,255,255,.2);border-radius:20px;padding:8px 16px;font-size:13px;font-weight:800}
+.fc-ctrls{display:flex;gap:10px;width:100%;max-width:330px;margin-top:12px}
+.fc-ctrls button{flex:1;padding:13px;border-radius:13px;font-size:14px;font-weight:800;box-shadow:var(--shadow)}
+.fc-nav{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.fc-know{background:var(--green);color:#fff}
+.fc-count{font-size:12px;color:var(--muted);font-weight:700;margin-top:12px}
+
+/* listen & match game */
+.gtop{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.gtop .gprog{flex:1}
+.gtop .gprog .bar{height:9px;background:var(--surface2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.gtop .gprog .bar i{display:block;height:100%;background:var(--green);border-radius:6px;transition:.3s}
+.gtop .gprog small{font-size:11px;font-weight:700;color:var(--muted);margin-top:3px;display:block}
+.gtop .gstar{background:var(--gold-soft);color:var(--gold-ink);font-weight:800;font-size:14px;padding:6px 12px;border-radius:20px;border:1px solid var(--gold)}
+.bigplay{width:100%;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border-radius:18px;padding:22px;
+  font-size:18px;font-weight:800;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px}
+.bigplay .pic{font-size:30px}
+.bigplay:active{transform:scale(.99)}
+.opts4{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.opt{aspect-ratio:1.35;background:var(--surface);border:2px solid var(--line);border-radius:18px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;font-size:48px;box-shadow:var(--shadow);transition:.15s;position:relative}
+.opt .ol{font-size:13px;font-weight:800;margin-top:4px;color:var(--ink)}
+.opt:active{transform:scale(.96)}
+.opt.right{border-color:var(--green);background:var(--green-soft);animation:pop .4s}
+.opt.wrong{border-color:var(--red);background:var(--red-soft);opacity:.7}
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+/* match grid */
+.matchgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:4px}
+.mcard{aspect-ratio:1/1.18;border-radius:14px;cursor:pointer;position:relative;transform-style:preserve-3d;transition:transform .4s}
+.mcard.flip{transform:rotateY(180deg)}
+.mcard .mf{position:absolute;inset:0;border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:5px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:var(--shadow)}
+.mcard .cover{background:linear-gradient(150deg,var(--red),var(--gold));color:#fff;font-size:24px;border:2px solid rgba(255,255,255,.3)}
+.mcard .reveal{transform:rotateY(180deg);background:var(--surface);border:2px solid var(--line)}
+.mcard .reveal .em{font-size:34px}
+.mcard .reveal .tx{font-size:11px;font-weight:800;color:var(--red);line-height:1.08;word-break:break-word;padding:2px}
+.mcard.done .reveal{border-color:var(--green);background:var(--green-soft)}
+.mcard.miss .reveal{border-color:var(--red)}
+
+/* celebrate */
+.celebrate{text-align:center;padding:30px 16px}
+.celebrate .big{font-size:72px}
+.celebrate h2{font-size:24px;font-weight:800;margin-top:6px;color:var(--red)}
+.celebrate p{font-size:14px;color:var(--muted);font-weight:600;margin-top:6px}
+.celebrate .got{font-size:14px;font-weight:800;color:var(--gold-ink);background:var(--gold-soft);display:inline-block;
+  padding:8px 16px;border-radius:20px;margin-top:14px}
+
+/* phrasebook / info */
+.ph-item{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line)}
+.ph-item:last-child{border-bottom:none}
+.ph-item .pt{flex:1;min-width:0}
+.ph-item .pes{font-size:15px;font-weight:800;color:var(--ink)}
+.ph-item .pen{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:1px}
+.ph-item .pph{font-size:11px;color:var(--blue-ink);font-style:italic;margin-top:1px}
+.info-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);box-shadow:var(--shadow);margin-bottom:11px;overflow:hidden}
+.info-card .ih{display:flex;align-items:center;gap:12px;padding:14px 15px;border-bottom:1px solid var(--line)}
+.info-card .iemo{width:42px;height:42px;border-radius:11px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:22px}
+.info-card .ih b{font-size:15px;font-weight:800}
+.info-card .ih small{font-size:11.5px;color:var(--muted);font-weight:600;display:block}
+.info-card .ib{padding:13px 15px;font-size:13px;line-height:1.55}
+.info-card .ib .kv{display:flex;gap:8px;padding:4px 0}
+.info-card .ib .kv span{flex:0 0 86px;color:var(--muted);font-weight:700;font-size:12px}
+.info-card .ib .kv b{flex:1;font-weight:700}
+.btn-link{display:inline-flex;align-items:center;gap:7px;background:var(--blue);color:#fff;font-weight:800;font-size:13px;
+  padding:10px 15px;border-radius:11px;margin-top:8px;box-shadow:var(--shadow)}
+.btn-ghost{display:block;width:100%;text-align:center;background:var(--surface);border:1px solid var(--line);color:var(--ink);
+  font-weight:800;font-size:13.5px;padding:13px;border-radius:13px;box-shadow:var(--shadow);margin-top:4px}
+
+/* sub header (for game/deck screens) */
+.subhdr{display:flex;align-items:center;gap:11px;padding:6px 0 12px}
+.subhdr .bk{width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:flex;
+  align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow);flex-shrink:0}
+.subhdr .bk:active{transform:scale(.92)}
+.subhdr .st{flex:1;min-width:0}
+.subhdr .st b{font-size:18px;font-weight:800;display:block;line-height:1.1}
+.subhdr .st small{font-size:12px;color:var(--muted);font-weight:600}
+
+.foot{text-align:center;font-size:11px;color:var(--muted);margin:22px 0 4px;line-height:1.6;font-weight:600}
+.foot b{color:var(--red)}
+.pill-note{font-size:12px;color:var(--muted);background:var(--surface2);border:1px solid var(--line);border-radius:11px;padding:10px 13px;margin-bottom:12px;line-height:1.5}
+.confetti{position:fixed;top:-10px;width:10px;height:14px;z-index:300;pointer-events:none;border-radius:2px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   ¡VÁMONOS! — Familia Vaughn · Spain, July–August 2026
+   Single-file PWA · vanilla JS · mirrors the sfv9 "Spanish for Calella" app
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────── TRIP DATA ─────────────── */
+const TRIP = {
+  departISO: '2026-07-05',
+  landISO:   '2026-07-06',
+  trainISO:  '2026-07-10',
+  endISO:    '2026-08-02',
+  airbnb: 'C. de la Madera, 16, Centro, 28004 Madrid',
+};
+
+const DAYS = [
+  { iso:'2026-07-05', city:'Travel', emoji:'✈️', cls:'travel', title:'Fly to Spain', sub:'Overnight flight — ¡buen viaje!',
+    items:[
+      {tm:'PM', tx:'<b>Depart for Madrid.</b> Overnight transatlantic — try to sleep on the plane to beat jet lag.', em:'Tablets loaded, snacks packed, kids in comfy clothes.'},
+      {tm:'Tip', tx:'Have the kids start the <b>¡Niños! Spanish games</b> on the plane — “Saludos” and “Viaje” decks are perfect for the flight.'},
+    ]},
+  { iso:'2026-07-06', city:'Madrid', emoji:'🛬', title:'Land + gentle first day', sub:'Don’t over-plan — fight the jet lag with sun & a nap',
+    items:[
+      {tm:'AM', tx:'<b>Land in Madrid (MAD).</b> Taxi/Uber/Cabify to the Airbnb (~30 min, ~€33 fixed-rate taxi from airport to centre).', em:'Drop bags even if the room isn’t ready — ask the host to stash luggage.'},
+      {tm:'Late AM', tx:'Walk your <b>Malasaña</b> neighborhood — you’re 3 min from Gran Vía. Grab a relaxed lunch + first churros.'},
+      {tm:'PM', tx:'<b>Parque del Retiro</b> — rent a rowboat on the lake, let the kids run. Easy win for tired legs.', em:'Puppet shows (Teatro de Títeres) on summer weekends near the lake.'},
+      {tm:'Eve', tx:'<b>Templo de Debod</b> at sunset — a real Egyptian temple with the best sunset in Madrid. Early dinner, early bed.'},
+    ]},
+  { iso:'2026-07-07', city:'Madrid', emoji:'👑', title:'Royal Madrid + churros', sub:'Palace, plazas & the famous chocolate',
+    items:[
+      {tm:'AM', tx:'<b>Palacio Real</b> (Royal Palace) — the Armory (Real Armería) full of knights’ armor is a 5 & 7-yo magnet. Changing of the guard outside on Weds.', em:'Buy tickets online to skip the line; go right at opening (10:00).'},
+      {tm:'Noon', tx:'<b>Plaza Mayor</b> → <b>Mercado de San Miguel</b> for a graze-y tapas lunch (croquetas, jamón, fruit cups for the kids).'},
+      {tm:'PM', tx:'<b>Chocolatería San Ginés</b> — churros con chocolate, open since 1894. A non-negotiable kid moment.', em:'Then wander Puerta del Sol — find the “Km 0” plaque and the bear-and-strawberry-tree statue (Madrid’s symbol!).'},
+      {tm:'Eve', tx:'<b>Plaza de España</b> playground + a stroll. Dinner in Malasaña.'},
+    ]},
+  { iso:'2026-07-08', city:'Madrid', emoji:'🏰', title:'Castle day trip', sub:'Segovia (knights & a Disney-style castle) — 30 min by train',
+    items:[
+      {tm:'AM', tx:'<b>Day trip to Segovia</b> — 28 min on the Avant high-speed train from Chamartín. The <b>Alcázar de Segovia</b> looks like a fairy-tale castle (it helped inspire Disney’s).', em:'Climb the tower; the kids will love the moat, drawbridge & armor.'},
+      {tm:'Noon', tx:'Walk under the giant <b>Roman Aqueduct</b> — 2,000 years old, no mortar. Great “whoa” moment for a 7-yo.'},
+      {tm:'Lunch', tx:'Casual Castilian lunch (Segovia is famous for roast suckling pig — or just patatas + pollo for the peques).'},
+      {tm:'Alt', tx:'Prefer dragons & swords? Swap Segovia for <b>Toledo</b> (33 min train) — medieval walled city, knights, marzipan.', em:'Pick one — both are easy half/full-day trips from Madrid.'},
+    ]},
+  { iso:'2026-07-09', city:'Madrid', emoji:'🦁', title:'Animals or art + last Madrid evening', sub:'Choose your adventure',
+    items:[
+      {tm:'Kids’ pick', tx:'<b>Zoo Aquarium de Madrid</b> or <b>Faunia</b> (nature park with a penguin house & dome ecosystems). A full, happy kid day in Casa de Campo.', em:'Reach the Zoo via the <b>Teleférico</b> cable car for extra fun.'},
+      {tm:'Parents’ pick', tx:'<b>Museo del Prado</b> — do a short, kid-framed visit: hunt for animals & monsters in Bosch’s “Garden of Earthly Delights”. Free entry 18:00–20:00.'},
+      {tm:'PM', tx:'Last <b>Retiro</b> run + ice cream. Pack tonight — early-ish start for the train tomorrow.'},
+      {tm:'Tip', tx:'Confirm your <b>AVE/Iryo train</b> seats for tomorrow and screenshot the tickets.'},
+    ]},
+  { iso:'2026-07-10', city:'→ Barcelona → Calella', emoji:'🚄', cls:'travel', title:'High-speed train + pick up the car', sub:'Madrid → Barcelona (2h30) → drive to Calella',
+    items:[
+      {tm:'AM', tx:'Check out. <b>Atocha station → Barcelona-Sants</b> on the AVE / Iryo / Ouigo (~2h30, often the fastest 320 km/h trains in Europe).', em:'Kids love watching the speed on the carriage display hit 300+.'},
+      {tm:'Midday', tx:'Optional first taste of <b>Barcelona</b> (drop bags / quick lunch near Sants) — or head straight to the car.'},
+      {tm:'PM', tx:'<b>Pick up rental car.</b> Have your IDP + booster seats sorted (see Info → Rental car). Drive Barcelona → <b>Calella</b> (~50 min up the C-32 coast road).'},
+      {tm:'Eve', tx:'Settle into Calella — your beach base camp for the next ~3 weeks. First gelato on the passeig. 🍦'},
+    ]},
+];
+
+const MADRID_RECS = [
+  { emoji:'🌳', nm:'Parque del Retiro', kid:5, tags:['Free','Boats','Playground'], why:'Madrid’s great green heart — rowboats on the lake, the glass Crystal Palace, peacocks, puppet shows, and endless room to run.', tip:'Rent a rowboat (≈€6, 45 min). Weekend mornings have free puppet theatre near the lake.' },
+  { emoji:'🍫', nm:'Chocolatería San Ginés', kid:5, tags:['Churros','Iconic','Cheap'], why:'The legendary churros-con-chocolate spot since 1894, tucked down an alley near Sol. Thick dipping chocolate the kids will remember forever.', tip:'Open very late. Less crowded mid-afternoon than after dinner.' },
+  { emoji:'👑', nm:'Palacio Real + Armería', kid:4, tags:['Tickets','Castle','Armor'], why:'Europe’s largest royal palace by floor area. The Royal Armory’s knight & horse armor is the highlight for kids.', tip:'Book timed tickets online. Changing of the Guard: Wednesdays (and first Wed = full ceremony).' },
+  { emoji:'🏛️', nm:'Templo de Debod', kid:4, tags:['Free','Sunset'], why:'A genuine 2,200-year-old Egyptian temple gifted to Spain, reflecting in its pools. Madrid’s top sunset.', tip:'Go ~30 min before sunset. Free but timed-entry to go inside.' },
+  { emoji:'🐧', nm:'Faunia', kid:5, tags:['Animals','Half-day'], why:'Nature park with themed biomes — a penguin house, polar dome, tropical jungle with free-flying birds. Less zoo, more immersion.', tip:'Buy tickets online; check the penguin & sea-lion feeding times when you arrive.' },
+  { emoji:'🎢', nm:'Parque Warner / Zoo', kid:4, tags:['Big day','Optional'], why:'If you want one big theme-park day: Parque Warner (~30 min out) for rides, or Zoo Aquarium (in town, reachable by cable car).', tip:'Warner is a full day & gets hot — go early, bring swimsuits for the water zone in summer.' },
+  { emoji:'🥘', nm:'Mercado de San Miguel', kid:3, tags:['Food','Tapas'], why:'A gorgeous iron-and-glass gourmet market by Plaza Mayor — graze tapas, fruit, croquetas. Great for picky-but-curious kids.', tip:'Busy & a bit pricey; go for the experience + a few bites, then sit-down dinner elsewhere.' },
+];
+
+const BCN_RECS = [
+  { emoji:'⛪', nm:'Sagrada Família', kid:4, tags:['Tickets!','Gaudí'], why:'Gaudí’s still-unfinished basilica — like stepping inside a rainbow forest. Genuinely awe-inspiring for all ages.', tip:'BOOK timed tickets weeks ahead — it sells out. The tower lifts have a minimum age (~6).' },
+  { emoji:'🦎', nm:'Park Güell', kid:5, tags:['Tickets','Mosaics'], why:'Gaudí’s candy-colored hilltop park — the mosaic dragon, wavy benches and gingerbread gatehouses feel made for kids.', tip:'Book the Monumental Zone online. The surrounding park is free; go early to beat heat & crowds.' },
+  { emoji:'⛲', nm:'Magic Fountain of Montjuïc', kid:5, tags:['Free','Evening'], why:'A huge fountain that dances to music & light after dark. Spread out a blanket — pure free joy for kids.', tip:'Summer shows run select evenings (check the schedule). Arrive 20 min early for a good spot.' },
+  { emoji:'🔬', nm:'CosmoCaixa Science Museum', kid:5, tags:['Hands-on','Indoor'], why:'Brilliant kids’ science museum with a real flooded Amazon rainforest inside (sloths, fish, storms). Perfect hot-day refuge.', tip:'The Flooded Forest & Planetarium can need a timed slot — grab them first.' },
+  { emoji:'🏖️', nm:'Barceloneta Beach', kid:4, tags:['Free','Beach'], why:'City beach with a boardwalk, playgrounds and easy lunch spots — a relaxed half-day between sights.', tip:'Watch belongings; keep valuables minimal. Showers & toilets along the promenade.' },
+  { emoji:'🎡', nm:'Tibidabo Amusement Park', kid:5, tags:['Rides','Views'], why:'Charming century-old mountaintop fair — gentle vintage rides for little ones plus the best view over Barcelona.', tip:'Check open days (mainly weekends/summer). The funicular up is half the fun.' },
+];
+
+const CALELLA = {
+  intro: 'Your home base for ~3 weeks (Jul 10 – early Aug). A friendly Maresme-coast beach town: a long sandy beach, a pedestrian promenade, a lighthouse to hike to, and — crucially — the R1 train line straight into Barcelona plus quick highway access for getaways.',
+  rhythm: [
+    {emoji:'🌅', t:'Slow mornings', d:'Bakery + the beach before it gets hot. Spanish kids stay up late & nap — lean into it.'},
+    {emoji:'🏖️', t:'Beach days', d:'Calella’s long sandy beach has lifeguards & rentals. Promenade for evening strolls & gelato.'},
+    {emoji:'🚆', t:'Car-free Barcelona', d:'Hop the R1 “rodalies” train into the city (~1h) — no parking stress.'},
+    {emoji:'🗺️', t:'Getaway days', d:'Use the rental car for the day trips in the Explore tab — Girona, Tossa, Montserrat, wine country & more.'},
+    {emoji:'💧', t:'Water-park breaks', d:'Marineland (Palafolls, 15 min) & Illa Fantasia (25 min) for guaranteed kid-happiness on hot days.'},
+    {emoji:'🌃', t:'Festa Major', d:'Look out for summer town festivals — fireworks, correfocs & gegants (giants) thrill kids. Ask your host what’s on.'},
+  ],
+};
+
+const GETAWAYS = [
+  { emoji:'🌈', nm:'Girona', cat:'culture', drive:'~45 min', kid:4, tags:['Old town','Easy'],
+    why:'A jewel-box medieval city: rainbow houses over the river, a cathedral with the widest Gothic nave in the world (and Game-of-Thrones fame), and a walkable old town with ice-cream stops.',
+    tip:'Walk the city walls (Passeig de la Muralla) — kids love the towers & views. Combine with Banyoles lake to cool off.' },
+  { emoji:'🏖️', nm:'Tossa de Mar', cat:'beach', drive:'~30 min', kid:5, tags:['Castle','Coves'],
+    why:'A walled medieval town wrapped around a turquoise cove — you can swim beneath the castle and explore the ramparts. The best “wow” beach day near Calella.',
+    tip:'Take a glass-bottom boat to nearby coves. Parking fills early in summer — arrive before 10:30.' },
+  { emoji:'⛪', nm:'Montserrat', cat:'mountains', drive:'~1h15', kid:4, tags:['Cable car','Monastery'],
+    why:'A surreal saw-toothed mountain with a famous monastery clinging to it. The rack railway (cremallera) and cable car up are a thrill; short kid-friendly trails at the top.',
+    tip:'Take the cremallera or cable car instead of driving the last bit. The boys’ choir (Escolania) usually sings around 13:00.' },
+  { emoji:'🍇', nm:'Penedès wine country', cat:'wine', drive:'~1h', kid:3, tags:['Cava','Family tour'],
+    why:'Spain’s sparkling-wine (cava) heartland around Sant Sadurní d’Anoia. Some bodegas are family-friendly — Codorníu’s Gaudí-era cellars even have a little train ride through the caves.',
+    tip:'Book a family-oriented tour in advance; kids often get grape juice. Designate a driver — it’s the rental car.' },
+  { emoji:'⛰️', nm:'Andorra', cat:'mountains', drive:'~2h45', kid:4, tags:['Overnight','Mountains'],
+    why:'A tiny Pyrenees country of mountains, spa pools and summer adventure parks. Naturlandia has a 5km mountain toboggan run & animal park; Caldea is a giant thermal spa.',
+    tip:'Too far for a comfortable day — do one overnight. Bring passports (it’s outside the EU, so there are customs checks & cheaper shopping).' },
+  { emoji:'🎢', nm:'PortAventura World', cat:'theme', drive:'~1h30', kid:5, tags:['Theme park','Big day'],
+    why:'One of Europe’s top theme parks, with a whole SésamoAventura kids’ land for the 5-yo plus bigger coasters and Ferrari Land for the 7-yo (and you).',
+    tip:'Buy tickets online & arrive at opening. In peak summer add the adjacent Caribe Aquatic Park for the afternoon.' },
+  { emoji:'🎨', nm:'Figueres — Dalí Museum', cat:'culture', drive:'~1h15', kid:4, tags:['Surreal','Quirky'],
+    why:'Salvador Dalí’s wonderfully bizarre Theatre-Museum — giant eggs on the roof, a rainy Cadillac, melting faces. Kids find it gloriously weird and fun.',
+    tip:'Combine with the pretty seaside town of Cadaqués / Cap de Creus if you want a coast + culture day.' },
+  { emoji:'🌊', nm:'Calella de Palafrugell & Costa Brava coves', cat:'beach', drive:'~1h15', kid:4, tags:['Coves','Scenic'],
+    why:'The postcard Costa Brava: tiny whitewashed fishing villages (Calella de Palafrugell, Llafranc, Tamariu) tucked into pine-fringed turquoise coves. Calm, shallow swimming.',
+    tip:'Don’t confuse it with your Calella! This is the small Costa Brava namesake ~1h15 north — worth the drive for a dreamy beach day.' },
+  { emoji:'🏰', nm:'Besalú', cat:'culture', drive:'~1h', kid:3, tags:['Medieval','Quick'],
+    why:'A perfectly preserved medieval village entered across a dramatic fortified Romanesque bridge over the river. Small, atmospheric, easy to combine with Girona.',
+    tip:'Great morning stop en route to/from the Pyrenees. Let the kids “defend the bridge.”' },
+  { emoji:'💦', nm:'Marineland & water parks', cat:'theme', drive:'~15 min', kid:5, tags:['Water','Close'],
+    why:'Closest guaranteed kid-win on a hot day: Marineland in Palafolls mixes water slides with dolphin & parrot shows; Illa Fantasia (25 min) is a big pure water park.',
+    tip:'Bring water shoes, reef-safe sunscreen & a shaded base. Go on a forecast-hot day to maximize the splash payoff.' },
+];
+
+const EX_FILTERS = [
+  {k:'all', l:'All'}, {k:'beach', l:'🏖️ Beach'}, {k:'mountains', l:'⛰️ Mountains'},
+  {k:'culture', l:'🏰 Culture'}, {k:'wine', l:'🍇 Wine'}, {k:'theme', l:'🎢 Parks'},
+];
+
+/* ─────────────── KIDS SPANISH DECKS ─────────────── */
+/* each word: [spanish, english, emoji] */
+const DECKS = {
+  saludos:{ emoji:'👋', nm:'Saludos', en:'Hello & manners', words:[
+    ['hola','hello','👋'],['adiós','bye','✌️'],['buenos días','good morning','🌅'],['buenas noches','good night','🌙'],
+    ['por favor','please','🙏'],['gracias','thank you','😊'],['sí','yes','✅'],['no','no','🚫'] ]},
+  numeros:{ emoji:'🔢', nm:'Números', en:'Numbers 1–10', words:[
+    ['uno','one','1️⃣'],['dos','two','2️⃣'],['tres','three','3️⃣'],['cuatro','four','4️⃣'],['cinco','five','5️⃣'],
+    ['seis','six','6️⃣'],['siete','seven','7️⃣'],['ocho','eight','8️⃣'],['nueve','nine','9️⃣'],['diez','ten','🔟'] ]},
+  colores:{ emoji:'🎨', nm:'Colores', en:'Colors', words:[
+    ['rojo','red','🔴'],['azul','blue','🔵'],['amarillo','yellow','🟡'],['verde','green','🟢'],
+    ['naranja','orange','🟠'],['morado','purple','🟣'],['rosa','pink','🌸'],['blanco','white','⚪'],['negro','black','⚫'] ]},
+  comida:{ emoji:'🍦', nm:'Comida', en:'Food & drink', words:[
+    ['helado','ice cream','🍦'],['agua','water','💧'],['pan','bread','🍞'],['leche','milk','🥛'],['pizza','pizza','🍕'],
+    ['patatas','fries/potatoes','🍟'],['pollo','chicken','🍗'],['manzana','apple','🍎'],['zumo','juice','🧃'],['queso','cheese','🧀'] ]},
+  animales:{ emoji:'🐶', nm:'Animales', en:'Animals', words:[
+    ['perro','dog','🐶'],['gato','cat','🐱'],['pájaro','bird','🐦'],['pez','fish','🐟'],['caballo','horse','🐴'],
+    ['vaca','cow','🐮'],['toro','bull','🐂'],['león','lion','🦁'],['oso','bear','🐻'] ]},
+  playa:{ emoji:'🏖️', nm:'La Playa', en:'At the beach', words:[
+    ['playa','beach','🏖️'],['sol','sun','☀️'],['mar','sea','🌊'],['arena','sand','🏝️'],['pelota','ball','⚽'],
+    ['concha','shell','🐚'],['barco','boat','⛵'],['helado','ice cream','🍦'] ]},
+  familia:{ emoji:'👨‍👩‍👧‍👦', nm:'Familia', en:'Family', words:[
+    ['mamá','mom','👩'],['papá','dad','👨'],['hermano','brother','👦'],['hermana','sister','👧'],
+    ['abuelo','grandpa','👴'],['abuela','grandma','👵'],['bebé','baby','👶'] ]},
+  viaje:{ emoji:'✈️', nm:'Viaje', en:'Travel', words:[
+    ['avión','airplane','✈️'],['tren','train','🚆'],['coche','car','🚗'],['maleta','suitcase','🧳'],
+    ['mapa','map','🗺️'],['hotel','hotel','🏨'],['pasaporte','passport','🛂'],['playa','beach','🏖️'] ]},
+  utiles:{ emoji:'⭐', nm:'¡Útiles!', en:'Handy words', words:[
+    ['baño','bathroom','🚽'],['ayuda','help','🆘'],['tengo hambre','I’m hungry','😋'],['me gusta','I like it','❤️'],
+    ['¿cuánto?','how much?','💶'],['uno más','one more','➕'],['vamos','let’s go','🏃'] ]},
+};
+const DECK_ORDER = ['saludos','numeros','colores','comida','animales','playa','familia','viaje','utiles'];
+
+const KID_PHRASES = [
+  ['¿Cómo te llamas?','What’s your name?'],['Me llamo…','My name is…'],['Tengo cinco años','I am five'],
+  ['¡Qué guay!','How cool!'],['¿Dónde está el baño?','Where’s the bathroom?'],['Quiero un helado, por favor','I want an ice cream, please'],
+  ['¡Mira!','Look!'],['Tengo sed','I’m thirsty'],['¡Vamos a la playa!','Let’s go to the beach!'],
+];
+
+const PASSPORT_PLACES = [
+  {k:'madrid', emoji:'🐻', l:'Madrid'},
+  {k:'segovia', emoji:'🏰', l:'Castle'},
+  {k:'barcelona', emoji:'🦎', l:'Barcelona'},
+  {k:'calella', emoji:'🏖️', l:'Calella'},
+  {k:'girona', emoji:'🌈', l:'Girona'},
+  {k:'tossa', emoji:'🌊', l:'Costa Brava'},
+  {k:'montserrat', emoji:'⛪', l:'Montserrat'},
+  {k:'andorra', emoji:'⛰️', l:'Andorra'},
+];
+
+/* ─────────────── PREP / PACKING / PHRASES / INFO ─────────────── */
+const PREP = [
+  {k:'idp', pr:'now', t:'Get International Driving Permits', d:'Spain expects an IDP alongside your US license to rent & drive. Get one at AAA (~$20, done same-day, no appointment) before you fly.'},
+  {k:'ave', pr:'now', t:'Book the Madrid→Barcelona train', d:'Reserve AVE / Iryo / Ouigo seats for Jul 10 now — prices climb and good times sell out. Aim for a mid-morning departure from Atocha.'},
+  {k:'car', pr:'now', t:'Reserve rental car + booster seats', d:'Book the Barcelona pickup for Jul 10. In Spain kids under 135 cm legally need a booster — reserve seats now, or (cheaper & cleaner) bring your own travel boosters.'},
+  {k:'sagrada', pr:'soon', t:'Pre-book Sagrada Família & Park Güell', d:'Both use timed tickets and sell out days ahead. Book your Barcelona day before you leave home.'},
+  {k:'esim', pr:'soon', t:'Sort phones / eSIM', d:'Add an EU eSIM (Airalo/Holafly) or confirm your carrier’s Europe pass so maps & tickets work the moment you land.'},
+  {k:'docs', pr:'soon', t:'Passports + copies + cards', d:'Check everyone’s passport has 3+ months validity past Aug. Photo all passports to your phone. Tell your bank you’ll be in Spain.'},
+  {k:'airbnb', pr:'soon', t:'Message the Madrid host', d:'Confirm the C. de la Madera check-in time & early bag drop (you land in the morning). Save the door/keypad instructions offline.'},
+  {k:'meds', pr:'soon', t:'Kids’ meds & sun kit', d:'Pack child paracetamol/ibuprofen, any prescriptions, and high-SPF sunscreen + hats — July sun is strong.'},
+];
+
+const PACKING = {
+  'Flight survival':['Tablets + headphones (kid splitter)','Chargers + battery pack','Snacks & empty water bottles','Comfort toy / blanket','Change of clothes in carry-on'],
+  'Sun & beach':['SPF 50 sunscreen (×2)','Sun hats for everyone','Sunglasses','Swimsuits + rash guards','Water shoes (rocky coves)','Quick-dry towels','Goggles + a beach ball'],
+  'Kids':['Travel booster seats (or reserve in car)','Reusable water bottles','Small backpack each','Wet wipes & hand sanitizer','A few familiar snacks for picky moments'],
+  'Tech & docs':['EU plug adapters (Type C/F)','Passports + photocopies','IDP + driver license','Insurance / EHIC-equivalent info','Offline maps downloaded'],
+  'Health':['Child paracetamol & ibuprofen','Band-aids + antiseptic','Motion-sickness tablets (mountain roads)','Any prescriptions + a copy'],
+};
+
+const PARENT_PHRASES = [
+  ['Una mesa para cuatro, por favor','A table for four, please','OO-na MEH-sa PA-ra KWA-tro'],
+  ['¿Tienen una trona?','Do you have a high chair?','TYEH-nen OO-na TRO-na'],
+  ['La cuenta, por favor','The check, please','la KWEN-ta por fa-VOR'],
+  ['¿Dónde está el baño?','Where is the bathroom?','DON-de es-TA el BA-nyo'],
+  ['Sin frutos secos, es alérgico','No nuts, he’s allergic','seen FROO-tos SEH-kos'],
+  ['¿Me ayuda, por favor?','Can you help me, please?','me a-YOO-da por fa-VOR'],
+  ['Necesito una farmacia','I need a pharmacy','ne-se-SEE-to OO-na far-MA-sya'],
+  ['¿Cuánto cuesta?','How much is it?','KWAN-to KWES-ta'],
+  ['¿Acepta tarjeta?','Do you take card?','a-SEP-ta tar-HEH-ta'],
+  ['Dos cafés con leche, por favor','Two coffees with milk, please','dos ka-FES kon LEH-che'],
+];
+
+const INFO_CARDS = [
+  { emoji:'🏠', t:'Madrid Airbnb', sub:'Jul 6–10 · 4 nights', rows:[
+      ['Address','C. de la Madera, 16, Centro, 28004 Madrid'],['Area','Malasaña — central, walkable, lively'],
+      ['From MAD','~30 min by taxi (~€33 fixed) / Metro line 8 + transfer'],['Nearby','Gran Vía 3 min · Retiro ~15 min walk · Sol 8 min'] ],
+      link:{u:'https://maps.google.com/?q=C.+de+la+Madera+16,+28004+Madrid', l:'Open in Maps'} },
+  { emoji:'🚄', t:'Madrid → Barcelona train', sub:'Jul 10 · high-speed', rows:[
+      ['From','Madrid–Puerta de Atocha'],['To','Barcelona-Sants'],['Time','~2h30 (AVE / Iryo / Ouigo)'],
+      ['Booking','renfe.com, iryo.eu, ouigo.com — book early'],['With kids','Reserved seats; big luggage racks; bring snacks'] ],
+      link:{u:'https://www.renfe.com/es/en', l:'Renfe tickets'} },
+  { emoji:'🚗', t:'Rental car (Barcelona)', sub:'Pick up Jul 10', rows:[
+      ['Need','US license + International Driving Permit (IDP)'],['Car seats','Under 135 cm = booster required by law'],
+      ['Drive','BCN → Calella ~50 min (C-32 toll coast road)'],['Fuel','Mostly self-serve; diesel = “gasóleo/gasoil”'],
+      ['Tolls','C-32 has tolls — keep a card handy'] ] },
+  { emoji:'🏖️', t:'Calella base camp', sub:'Jul 10 – early Aug', rows:[
+      ['Where','Maresme coast, ~50 km NE of Barcelona'],['Train','R1 rodalies → Barcelona ~1h (car-free days)'],
+      ['Beach','Long sandy beach + promenade, lifeguards in summer'],['Getaways','See the Explore tab for day trips'] ] },
+  { emoji:'🚑', t:'Emergencies & health', sub:'Save these offline', rows:[
+      ['Emergency','112 (police / ambulance / fire — English spoken)'],['Pharmacy','“Farmacia” (green cross) — great for minor stuff'],
+      ['US Embassy','Madrid: C. de Serrano 75 · +34 91 587 2200'],['Tap water','Safe to drink in Madrid, Barcelona & Calella'] ] },
+];
+
+/* ─────────────── STATE ─────────────── */
+const LS = 'spain_trip_v1';
+let ST = { view:'trip', leg:'madrid', exFilter:'all', age:'7',
+           stars:0, mastered:{}, checks:{}, stamps:{}, packing:{}, expanded:{} };
+function save(){
+  try { localStorage.setItem(LS, JSON.stringify({
+    stars:ST.stars, mastered:ST.mastered, checks:ST.checks, stamps:ST.stamps, packing:ST.packing, age:ST.age
+  })); } catch(e){}
+}
+function load(){
+  try { const d = JSON.parse(localStorage.getItem(LS)||'{}'); Object.assign(ST, d);
+    ST.mastered=ST.mastered||{}; ST.checks=ST.checks||{}; ST.stamps=ST.stamps||{}; ST.packing=ST.packing||{}; ST.expanded={};
+  } catch(e){}
+}
+
+/* ─────────────── TTS (es-ES) — mirrors the Calella app ─────────────── */
+let ttsVoice = null;
+function initTTS(){
+  if(!window.speechSynthesis) return;
+  function find(){ const vs=speechSynthesis.getVoices(); ttsVoice = vs.find(v=>v.lang && v.lang.startsWith('es')) || null; }
+  find(); speechSynthesis.onvoiceschanged = find;
+}
+initTTS();
+function speak(txt){
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(txt);
+  u.lang='es-ES'; if(ttsVoice) u.voice=ttsVoice; u.rate=0.82; u.pitch=1.06;
+  speechSynthesis.speak(u);
+}
+
+/* ─────────────── HELPERS ─────────────── */
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function todayMid(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
+function parseISO(s){ const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
+function fmtDate(iso){ return parseISO(iso).toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'}); }
+function isoOf(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function daysBetween(a,b){ return Math.round((parseISO(b)-a)/86400000); }
+function nights(aIso,bIso){ return Math.round((parseISO(bIso)-parseISO(aIso))/86400000); }
+function totalWords(){ return DECK_ORDER.reduce((a,k)=>a+DECKS[k].words.length,0); }
+function masteredCount(){ return Object.values(ST.mastered).reduce((a,o)=>a+Object.keys(o||{}).length,0); }
+function deckMastered(k){ const o=ST.mastered[k]||{}; return Object.keys(o).length>=DECKS[k].words.length; }
+function rankFor(stars){
+  if(stars>=120) return {e:'🏆', n:'¡Campeón!', next:null, base:120};
+  if(stars>=60)  return {e:'🌟', n:'Viajero', next:120, base:60};
+  if(stars>=20)  return {e:'🗺️', n:'Aventurero', next:60, base:20};
+  return {e:'🧭', n:'Explorador', next:20, base:0};
+}
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function addStars(n){ ST.stars+=n; save(); }
+function masterWord(deck,wi){ ST.mastered[deck]=ST.mastered[deck]||{}; if(!ST.mastered[deck][wi]){ ST.mastered[deck][wi]=1; } save(); }
+
+/* ─────────────── ICONS ─────────────── */
+function ic(n){
+  const s='<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+  const I={
+    trip:s+'<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+    plan:s+'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>',
+    explore:s+'<circle cx="12" cy="12" r="10"/><polygon points="16.2 7.8 13 13 7.8 16.2 11 11 16.2 7.8"/></svg>',
+    kids:s+'<polygon points="12 2 15 9 22 9.5 16.5 14 18.5 21 12 17 5.5 21 7.5 14 2 9.5 9 9 12 2"/></svg>',
+    info:s+'<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+  };
+  return I[n]||'';
+}
+
+/* ─────────────── BOTTOM NAV ─────────────── */
+function navBar(){
+  const items=[ ['trip','Trip'],['plan','Plan'],['explore','Explore'],['kids','¡Niños!'],['info','Info'] ];
+  const map={ trip:'trip', plan:'plan', explore:'explore', kids:'kids', deck:'kids', game:'kids', info:'info' };
+  const cur=map[ST.view]||'trip';
+  return '<nav class="nav">'+items.map(([v,l])=>
+    `<button class="nb${cur===v?' on':''}" onclick="goto('${v}')">${ic(v==='kids'?'kids':v)}<span>${l}</span></button>`
+  ).join('')+'</nav>';
+}
+
+/* ═══════════════ VIEWS ═══════════════ */
+function viewTrip(){
+  const today=todayMid();
+  const todayISO=isoOf(today);
+  const totalNights=nights(TRIP.landISO,TRIP.endISO);
+  // seed the countdown from the SAME 18:00 target the live ticker uses (no first-paint flash)
+  const tgt=new Date(2026,6,5,18,0,0);
+  let secs=Math.max(0,Math.floor((tgt-new Date())/1000));
+  const pad2=n=>String(n).padStart(2,'0');
+  const counter=`<div class="cd">
+      <div class="u"><b id="cd-d">${Math.floor(secs/86400)}</b><span>days</span></div>
+      <div class="u"><b id="cd-h">${pad2(Math.floor(secs%86400/3600))}</b><span>hours</span></div>
+      <div class="u"><b id="cd-m">${pad2(Math.floor(secs%3600/60))}</b><span>min</span></div>
+      <div class="u"><b id="cd-s">${pad2(secs%60)}</b><span>sec</span></div>
+    </div>`;
+  let cd;
+  if(todayISO < TRIP.departISO){
+    cd=counter+`<div class="cd-note">until you fly to España 🇪🇸</div>`;
+  } else if(todayISO < TRIP.landISO){
+    // departure day — in the air, landing Madrid mañana; keep the live countdown ticking
+    cd=counter+`<div class="cd-note">✈️ En route to España — ¡Madrid por la mañana!</div>`;
+  } else if(todayISO <= TRIP.endISO){
+    const dayN=daysBetween(parseISO(TRIP.landISO),todayISO)+1;
+    cd=`<div class="cd-note" style="color:#fff;font-size:14px;margin-top:14px">¡Ya estáis en España! Day ${dayN} of the adventure 🎉</div>`;
+  } else {
+    cd=`<div class="cd-note" style="color:#fff;margin-top:14px">¡Qué viaje! Hope it was unforgettable. 💛</div>`;
+  }
+
+  const journey=`
+  <div class="journey">
+    <div class="jrow">
+      <div class="jstop s0"><div class="dot">🏙️</div><div class="nm">Madrid</div><div class="mt">Jul 6–10</div></div>
+      <div class="jlink"><div class="ic">🚄</div><div class="ds">AVE train</div><div class="dl"></div></div>
+      <div class="jstop s1"><div class="dot">🌆</div><div class="nm">Barcelona</div><div class="mt">Jul 10 · car</div></div>
+      <div class="jlink"><div class="ic">🚗</div><div class="ds">50 min</div><div class="dl"></div></div>
+      <div class="jstop s2"><div class="dot">🏖️</div><div class="nm">Calella</div><div class="mt">→ early Aug</div></div>
+    </div>
+  </div>`;
+
+  const stats=`<div class="stats">
+    <div class="stat"><b>${totalNights}</b><span>Nights</span></div>
+    <div class="stat"><b>3</b><span>Home bases</span></div>
+    <div class="stat"><b>${GETAWAYS.length}</b><span>Getaways</span></div>
+    <div class="stat"><b>${totalWords()}</b><span>Spanish words</span></div>
+  </div>`;
+
+  const prepLeft=PREP.filter(p=>!ST.checks[p.k]).length;
+  const prepCard=`
+    <div class="sect-h">Before you go <span class="ln"></span><span style="color:var(--red)">${prepLeft} left</span></div>
+    ${PREP.slice(0,4).map(p=>chkRow(p)).join('')}
+    <button class="btn-ghost" onclick="goto('info')">See all ${PREP.length} prep items & packing →</button>`;
+
+  return `<div class="main">
+    <div class="hero">
+      <h1>¡Vámonos a España!</h1>
+      <div class="sub">Madrid · Barcelona · Calella — July 2026</div>
+      <div class="who">👨‍👩‍👧‍👦 The Vaughn family adventure</div>
+      ${cd}
+    </div>
+    <div class="sect-h">Your journey <span class="ln"></span></div>
+    ${journey}
+    ${stats}
+    ${prepCard}
+    <div class="sect-h">Jump in <span class="ln"></span></div>
+    <div class="decks">
+      <button class="deck" onclick="goto('plan')"><div class="demo">🗓️</div><div class="dnm">The Plan</div><div class="den">Day-by-day itinerary</div></button>
+      <button class="deck" onclick="goto('explore')"><div class="demo">🧭</div><div class="dnm">Explore</div><div class="den">Sights & getaways</div></button>
+      <button class="deck" onclick="goto('kids')"><div class="demo">⭐</div><div class="dnm">¡Niños!</div><div class="den">Spanish games</div></button>
+      <button class="deck" onclick="goto('info')"><div class="demo">🧳</div><div class="dnm">Info</div><div class="den">Logistics & packing</div></button>
+    </div>
+    <div class="foot">Hecho con 💛 para la familia · <b>¡Buen viaje!</b></div>
+  </div>`;
+}
+
+function chkRow(p){
+  const on=!!ST.checks[p.k];
+  const pr = p.pr==='now' ? '<span class="pr pr-now">do now</span>' : (p.pr==='soon'?'<span class="pr pr-soon">soon</span>':'');
+  return `<div class="chk${on?' on':''}" role="checkbox" tabindex="0" aria-checked="${on}" onclick="toggleCheck('${p.k}')">
+    <div class="box">${on?'✓':''}</div>
+    <div class="ct"><b>${esc(p.t)}</b><small>${esc(p.d)}</small></div>
+    ${pr}
+  </div>`;
+}
+
+/* ── PLAN ── */
+function viewPlan(){
+  const legs=[ ['madrid','Madrid','Jul 6–10'],['barcelona','Barcelona','Jul 10'],['calella','Calella','→ Aug'] ];
+  const tabs=`<div class="legtabs">${legs.map(([k,l,s])=>
+    `<button class="legtab${ST.leg===k?' on':''}" onclick="setLeg('${k}')">${l}<small>${s}</small></button>`).join('')}</div>`;
+  let body='';
+  if(ST.leg==='madrid'){
+    body=DAYS.filter(d=>['Madrid','Travel'].includes(d.city)).map(dayCard).join('');
+  } else if(ST.leg==='barcelona'){
+    body = dayCard(DAYS.find(d=>d.iso==='2026-07-10'))
+      + `<div class="sect-h">Best of Barcelona <span class="ln"></span></div>`
+      + `<div class="pill-note">📍 Barcelona is a quick R1 train from Calella too — spread these across a couple of day trips.</div>`
+      + BCN_RECS.map((p,i)=>placeCard(p,'bcn'+i)).join('');
+  } else {
+    body = `<div class="card"><h3>🏖️ Calella — base camp</h3><p class="lead" style="margin-top:6px">${esc(CALELLA.intro)}</p></div>`
+      + `<div class="sect-h">A good rhythm <span class="ln"></span></div>`
+      + CALELLA.rhythm.map(r=>`<div class="chk" style="cursor:default"><div class="box" style="background:var(--surface2);border-color:var(--line);font-size:20px;color:var(--ink)">${r.emoji}</div><div class="ct"><b>${esc(r.t)}</b><small>${esc(r.d)}</small></div></div>`).join('')
+      + `<button class="btn-ghost" onclick="goto('explore')">Plan your getaway days →</button>`;
+  }
+  return `<div class="main">
+    <div class="hero" style="background:linear-gradient(140deg,#1b6ec2,#3a9d5d)"><h1>The Plan</h1><div class="sub">Your day-by-day itinerary</div></div>
+    <div style="height:14px"></div>
+    ${tabs}${body}
+    <div class="foot">Tip: tap any sight in <b>Explore</b> for the why & a pro tip.</div>
+  </div>`;
+}
+function dayCard(d){
+  if(!d) return '';
+  return `<div class="day ${d.cls||''}">
+    <div class="dh"><div class="demo">${d.emoji}</div><div class="dti">
+      <div class="ddate">${fmtDate(d.iso)}</div><div class="dttl">${esc(d.title)}</div><div class="dsub">${esc(d.sub)}</div>
+    </div></div>
+    <div class="dbody"><ul class="tl">${d.items.map(it=>
+      `<li><span class="tm">${esc(it.tm)}</span><span class="tx">${it.tx}${it.em?`<em>${it.em}</em>`:''}</span></li>`).join('')}</ul></div>
+  </div>`;
+}
+
+/* ── EXPLORE ── */
+function viewExplore(){
+  const filt=`<div class="filters">${EX_FILTERS.map(f=>
+    `<button class="fchip${ST.exFilter===f.k?' on':''}" onclick="setFilter('${f.k}')">${f.l}</button>`).join('')}</div>`;
+  const list=GETAWAYS.filter(g=>ST.exFilter==='all'||g.cat===ST.exFilter);
+  const cards=list.map((g,i)=>placeCard(g,'gw'+i,true)).join('');
+  return `<div class="main">
+    <div class="hero" style="background:linear-gradient(140deg,#3a9d5d,#1b6ec2)"><h1>Explore</h1><div class="sub">Getaways from Calella — drive times & kid ratings</div></div>
+    <div style="height:14px"></div>
+    <div class="pill-note">🚗 Drive times are from <b>Calella</b>. ⭐ ratings are how much a 5 &amp; 7-yo will love it. Tap a card for the full scoop.</div>
+    ${filt}
+    ${cards || '<div class="card lead">Nothing in this filter — try “All”.</div>'}
+    <div class="foot">Also great from Calella: <b>Barcelona</b> by R1 train, plus Vic, Banyoles &amp; the Pyrenees if you go far.</div>
+  </div>`;
+}
+function placeCard(p,id,showDrive){
+  const open=!!ST.expanded[id];
+  const stars='⭐'.repeat(p.kid||0);
+  const meta=[
+    showDrive&&p.drive?`<span class="tag drv">🚗 ${p.drive}</span>`:'',
+    p.kid?`<span class="tag kid">${stars} kids</span>`:'',
+    ...(p.tags||[]).map(t=>`<span class="tag${/Tickets|Book/i.test(t)?' book':''}">${esc(t)}</span>`)
+  ].filter(Boolean).join('');
+  return `<div class="place">
+    <div class="ph" role="button" tabindex="0" aria-expanded="${open}" onclick="toggleExp('${id}')">
+      <div class="pemo">${p.emoji}</div>
+      <div class="pi"><div class="pnm">${esc(p.nm)}</div><div class="pmeta">${meta}</div></div>
+    </div>
+    ${open?`<div class="pwhy">${esc(p.why)}</div><div class="ptip">💡 <b>Tip:</b> ${esc(p.tip)}</div>`:
+      `<button class="exp-toggle" onclick="toggleExp('${id}')">Why go & pro tip ▾</button>`}
+  </div>`;
+}
+
+/* ── KIDS ── */
+function viewKids(){
+  const rank=rankFor(ST.stars);
+  const pct = rank.next ? Math.round((ST.stars-rank.base)/(rank.next-rank.base)*100) : 100;
+  const mc=masteredCount();
+  const skillStamps=DECK_ORDER.filter(deckMastered).length;
+
+  const rankbar=`<div class="rankbar">
+    <div class="rk">${rank.e}</div>
+    <div class="ri"><b>${rank.n}</b>
+      <div class="pmini"><i style="width:${Math.min(100,pct)}%"></i></div>
+      <small>${rank.next?`${rank.next-ST.stars} stars to next rank`:'Top rank — ¡increíble!'}</small>
+    </div>
+    <div class="stars"><b>${ST.stars}</b><span>⭐ stars</span></div>
+  </div>`;
+
+  const age=`<div class="ageseg">
+    <button class="${ST.age==='5'?'on':''}" onclick="setAge('5')">🧒 Peques<small>age 5 · listen & tap</small></button>
+    <button class="${ST.age==='7'?'on':''}" onclick="setAge('7')">👦 Grandes<small>age 7 · read & match</small></button>
+  </div>`;
+
+  // passport: places (tap to stamp) + skills
+  const placeStamps=PASSPORT_PLACES.map(s=>{
+    const got=!!ST.stamps[s.k];
+    return `<button class="stamp${got?' got':''}" onclick="toggleStamp('${s.k}')"><div class="se">${s.emoji}</div><div class="sl">${esc(s.l)}</div></button>`;
+  }).join('');
+
+  const phrase=KID_PHRASES[ (todayMid().getDate()) % KID_PHRASES.length ];
+
+  const decks=DECK_ORDER.map(k=>{
+    const d=DECKS[k]; const done=Object.keys(ST.mastered[k]||{}).length; const tot=d.words.length;
+    const mast=deckMastered(k);
+    return `<button class="deck${mast?' mastered':''}" onclick="openDeck('${k}')">
+      <div class="dct">${mast?'★ done':done+'/'+tot}</div>
+      <div class="demo">${d.emoji}</div><div class="dnm">${esc(d.nm)}</div><div class="den">${esc(d.en)}</div>
+    </button>`;
+  }).join('');
+
+  return `<div class="main">
+    <div class="kidhero">
+      <h1>¡A jugar en español!</h1>
+      <p>Tap, listen and play — earn stars and stamp your passport across Spain.</p>
+      ${rankbar}
+    </div>
+    ${age}
+    <div class="sect-h">🛂 Trip passport <span class="ln"></span><span style="color:var(--gold-ink)">${PASSPORT_PLACES.filter(s=>ST.stamps[s.k]).length}/${PASSPORT_PLACES.length} + ${skillStamps}★</span></div>
+    <div class="passport">
+      <div class="lead" style="font-size:12.5px">Tap a place when you’ve been there to stamp it! Word decks you master earn a ★ too.</div>
+      <div class="stampgrid">${placeStamps}</div>
+    </div>
+    <div class="card" style="margin-top:14px;display:flex;align-items:center;gap:13px">
+      <div style="font-size:30px">💬</div>
+      <div style="flex:1"><div style="font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Phrase of the day</div>
+        <div style="font-size:17px;font-weight:800;color:var(--red)">${esc(phrase[0])}</div>
+        <div style="font-size:12.5px;color:var(--muted);font-weight:600">${esc(phrase[1])}</div></div>
+      <button class="spk" aria-label="Escuchar" onclick="speak('${esc(phrase[0]).replace(/&#39;/g,"\\'")}')">🔊</button>
+    </div>
+    <div class="sect-h">Word decks <span class="ln"></span><span style="color:var(--purple)">${mc}/${totalWords()} learned</span></div>
+    <div class="decks">${decks}</div>
+    <div class="foot">Grown-ups: the full <b>Spanish for Calella</b> course lives in your other app.</div>
+  </div>`;
+}
+
+/* deck detail */
+function viewDeck(){
+  const k=ST.deckKey, d=DECKS[k]; if(!d) return viewKids();
+  const words=d.words.map((w,i)=>{
+    const known=!!(ST.mastered[k]||{})[i];
+    return `<div class="wordrow">
+      <div class="we">${w[2]}</div>
+      <div class="wi"><div class="wes">${esc(w[0])}${known?' <span style="color:var(--gold)">★</span>':''}</div><div class="wen">${esc(w[1])}</div></div>
+      <button class="spk" aria-label="Escuchar" onclick="speak('${esc(w[0]).replace(/&#39;/g,"\\'")}')">🔊</button>
+    </div>`;
+  }).join('');
+  const peque = ST.age==='5';
+  return `<div class="main">
+    <div class="subhdr"><button class="bk" aria-label="Atrás" onclick="goto('kids')">←</button>
+      <div class="st"><b>${d.emoji} ${esc(d.nm)}</b><small>${esc(d.en)} · ${d.words.length} words</small></div></div>
+    <div class="gamebtns">
+      <button class="gbtn" onclick="startListen('${k}')"><div class="ge">👂</div><div class="gi"><b>Escucha y toca</b><small>Hear it, tap the picture ${peque?'· best for age 5':''}</small></div><div class="arr">›</div></button>
+      ${!peque?`<button class="gbtn" onclick="startMatch('${k}')"><div class="ge">🃏</div><div class="gi"><b>Encuentra la pareja</b><small>Match word to picture (memory)</small></div><div class="arr">›</div></button>`:''}
+      <button class="gbtn" onclick="startFlash('${k}')"><div class="ge">📖</div><div class="gi"><b>Mira las tarjetas</b><small>Flip cards & say each word</small></div><div class="arr">›</div></button>
+    </div>
+    <div class="card"><div style="font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">All the words</div>${words}</div>
+  </div>`;
+}
+
+/* ═══════════════ GAMES ═══════════════ */
+let GAME=null;
+
+/* Flashcards */
+function startFlash(k){ GAME={type:'flash',k,i:0,flip:false}; ST.view='game'; render(); }
+function viewFlash(){
+  const k=GAME.k, d=DECKS[k], w=d.words[GAME.i];
+  return `<div class="main">
+    <div class="subhdr"><button class="bk" aria-label="Atrás" onclick="openDeck('${k}')">←</button>
+      <div class="st"><b>📖 ${esc(d.nm)}</b><small>Tap the card to flip</small></div></div>
+    <div class="fc-wrap">
+      <div class="flashcard${GAME.flip?' flip':''}" role="button" tabindex="0" aria-label="Flip card" onclick="flipCard()">
+        <div class="inner">
+          <div class="face front"><div class="big">${w[2]}</div><div class="hint">¿Qué es? Tap to see</div></div>
+          <div class="face back"><div class="es">${esc(w[0])}</div><div class="en">${esc(w[1])}</div><div class="sayit">🔊 ¡Escucha!</div></div>
+        </div>
+      </div>
+      <div class="fc-count">${GAME.i+1} / ${d.words.length}</div>
+      <div class="fc-ctrls">
+        <button class="fc-nav" onclick="flashNav(-1)">← Atrás</button>
+        <button class="fc-know" onclick="flashKnow()">¡Lo sé! ⭐</button>
+        <button class="fc-nav" onclick="flashNav(1)">Sig. →</button>
+      </div>
+    </div>
+  </div>`;
+}
+function flipCard(){ GAME.flip=!GAME.flip; if(GAME.flip) speak(DECKS[GAME.k].words[GAME.i][0]); render(); }
+function flashNav(dir){ const n=DECKS[GAME.k].words.length; GAME.i=(GAME.i+dir+n)%n; GAME.flip=false; render(); }
+function flashKnow(){ masterWord(GAME.k,GAME.i); addStars(1); checkDeckStamp(GAME.k); const n=DECKS[GAME.k].words.length;
+  if(GAME.i<n-1){ GAME.i++; GAME.flip=false; render(); } else { celebrate(GAME.k,'flash'); } }
+
+/* Listen & Tap */
+function startListen(k){
+  const d=DECKS[k]; const order=shuffle(d.words.map((_,i)=>i)).slice(0,Math.min(6,d.words.length));
+  GAME={type:'listen',k,order,round:0,score:0,answered:false};
+  ST.view='game'; render(); setTimeout(()=>speak(d.words[order[0]][0]),420);
+}
+function viewListen(){
+  const k=GAME.k, d=DECKS[k];
+  const targetIdx=GAME.order[GAME.round]; const target=d.words[targetIdx];
+  if(!GAME.opts){
+    const others=shuffle(d.words.map((_,i)=>i).filter(i=>i!==targetIdx)).slice(0,3);
+    GAME.opts=shuffle([targetIdx,...others]);
+  }
+  const total=GAME.order.length;
+  const opts=GAME.opts.map(i=>{
+    const w=d.words[i]; let cls='';
+    if(GAME.answered){ if(i===targetIdx) cls=' right'; else if(i===GAME.picked) cls=' wrong'; }
+    return `<button class="opt${cls}" onclick="pickListen(${i})">${w[2]}<div class="ol">${GAME.answered?esc(w[0]):'&nbsp;'}</div></button>`;
+  }).join('');
+  return `<div class="main">
+    <div class="subhdr"><button class="bk" aria-label="Atrás" onclick="openDeck('${k}')">←</button>
+      <div class="st"><b>👂 ${esc(d.nm)}</b><small>Listen, then tap the picture</small></div></div>
+    <div class="gtop">
+      <div class="gprog"><div class="bar"><i style="width:${Math.round(GAME.round/total*100)}%"></i></div><small>Round ${GAME.round+1} of ${total}</small></div>
+      <div class="gstar">⭐ ${GAME.score}</div>
+    </div>
+    <button class="bigplay" onclick="speak('${esc(target[0]).replace(/&#39;/g,"\\'")}')"><span class="pic">🔊</span> ¡Escucha otra vez!</button>
+    <div class="opts4">${opts}</div>
+  </div>`;
+}
+function pickListen(i){
+  if(GAME.answered) return;
+  const k=GAME.k, d=DECKS[k]; const targetIdx=GAME.order[GAME.round];
+  GAME.answered=true; GAME.picked=i;
+  if(i===targetIdx){ GAME.score++; addStars(2); masterWord(k,targetIdx); confetti(8); speak(d.words[targetIdx][0]); }
+  else { if(navigator.vibrate) navigator.vibrate(120); speak(d.words[targetIdx][0]); }
+  render();
+  setTimeout(()=>{
+    GAME.round++; GAME.answered=false; GAME.picked=null; GAME.opts=null;
+    if(GAME.round>=GAME.order.length){ checkDeckStamp(k); celebrate(k,'listen',GAME.score,GAME.order.length); }
+    else { render(); setTimeout(()=>speak(DECKS[k].words[GAME.order[GAME.round]][0]),350); }
+  },1150);
+}
+
+/* Match (memory) */
+function startMatch(k){
+  const d=DECKS[k]; const pick=shuffle(d.words.map((_,i)=>i)).slice(0,Math.min(6,d.words.length));
+  let cards=[];
+  pick.forEach(i=>{ cards.push({wi:i,kind:'es'}); cards.push({wi:i,kind:'emo'}); });
+  cards=shuffle(cards).map((c,idx)=>({...c,id:idx,flip:false,done:false}));
+  GAME={type:'match',k,cards,first:null,lock:false,matched:0,tries:0};
+  ST.view='game'; render();
+}
+function viewMatch(){
+  const k=GAME.k, d=DECKS[k];
+  const grid=GAME.cards.map(c=>{
+    const w=d.words[c.wi];
+    const face = c.kind==='emo' ? `<div class="em">${w[2]}</div>` : `<div class="tx">${esc(w[0])}</div>`;
+    const show = c.flip||c.done;
+    return `<div class="mcard${show?' flip':''}${c.done?' done':''}" onclick="flipMatch(${c.id})">
+      <div class="mf cover">?</div>
+      <div class="mf reveal">${face}</div>
+    </div>`;
+  }).join('');
+  const pairs=GAME.cards.length/2;
+  return `<div class="main">
+    <div class="subhdr"><button class="bk" aria-label="Atrás" onclick="openDeck('${k}')">←</button>
+      <div class="st"><b>🃏 ${esc(d.nm)}</b><small>Find the word + picture pairs</small></div></div>
+    <div class="gtop">
+      <div class="gprog"><div class="bar"><i style="width:${Math.round(GAME.matched/pairs*100)}%"></i></div><small>${GAME.matched} / ${pairs} pairs · ${GAME.tries} tries</small></div>
+      <div class="gstar">⭐ ${GAME.matched}</div>
+    </div>
+    <div class="matchgrid">${grid}</div>
+  </div>`;
+}
+function flipMatch(id){
+  if(GAME.lock) return;
+  const c=GAME.cards.find(x=>x.id===id); if(!c||c.flip||c.done) return;
+  c.flip=true;
+  if(c.kind==='es') speak(DECKS[GAME.k].words[c.wi][0]);
+  if(GAME.first===null){ GAME.first=id; render(); return; }
+  const f=GAME.cards.find(x=>x.id===GAME.first); GAME.tries++;
+  if(f.wi===c.wi){
+    f.done=c.done=true; GAME.matched++; GAME.first=null; addStars(2); masterWord(GAME.k,c.wi); confetti(6);
+    render();
+    if(GAME.matched===GAME.cards.length/2){ checkDeckStamp(GAME.k); setTimeout(()=>celebrate(GAME.k,'match'),650); }
+  } else {
+    GAME.lock=true; render();
+    setTimeout(()=>{ f.flip=c.flip=false; GAME.first=null; GAME.lock=false; render(); },950);
+  }
+}
+
+/* deck stamp + celebration */
+function checkDeckStamp(k){ if(deckMastered(k) && !ST.stamps['skill_'+k]){ ST.stamps['skill_'+k]=1; save(); } }
+function celebrate(k,mode,score,total){
+  const d=DECKS[k]; const gotStamp=deckMastered(k);
+  let msg = mode==='listen' ? `You got ${score}/${total}! ` : (mode==='match'?'All pairs matched! ':'¡Bien hecho! ');
+  GAME={type:'celebrate',k};
+  document.getElementById('app').innerHTML = `<div class="main">
+    <div class="celebrate">
+      <div class="big">${gotStamp?'🏅':'🎉'}</div>
+      <h2>¡Muy bien!</h2>
+      <p>${esc(msg)}You earned stars for <b>${esc(d.nm)}</b>.</p>
+      ${gotStamp?`<div class="got">🏅 Deck mastered — passport stamp earned!</div>`:''}
+      <div style="display:flex;gap:10px;max-width:330px;margin:22px auto 0">
+        <button class="fc-nav" style="flex:1;padding:13px;border-radius:13px;font-weight:800;border:1px solid var(--line);background:var(--surface)" onclick="openDeck('${k}')">Play again</button>
+        <button class="fc-know" style="flex:1;padding:13px;border-radius:13px;font-weight:800;color:#fff" onclick="goto('kids')">¡Más juegos! →</button>
+      </div>
+    </div>${navBar()}</div>`;
+  confetti(40);
+}
+
+function viewGame(){
+  if(!GAME) return viewKids();
+  if(GAME.type==='flash') return viewFlash();
+  if(GAME.type==='listen') return viewListen();
+  if(GAME.type==='match') return viewMatch();
+  return viewKids();
+}
+
+/* ── INFO ── */
+function viewInfo(){
+  const cards=INFO_CARDS.map(c=>`
+    <div class="info-card">
+      <div class="ih"><div class="iemo">${c.emoji}</div><div><b>${esc(c.t)}</b><small>${esc(c.sub)}</small></div></div>
+      <div class="ib">${c.rows.map(r=>`<div class="kv"><span>${esc(r[0])}</span><b>${esc(r[1])}</b></div>`).join('')}
+        ${c.link?`<a class="btn-link" href="${c.link.u}" target="_blank" rel="noopener">🔗 ${esc(c.link.l)}</a>`:''}</div>
+    </div>`).join('');
+
+  const prep=PREP.map(p=>chkRow(p)).join('');
+
+  const packing=Object.entries(PACKING).map(([cat,items])=>`
+    <div class="info-card"><div class="ih"><div class="iemo">🎒</div><div><b>${esc(cat)}</b><small>${items.filter((_,i)=>ST.packing[cat+'_'+i]).length}/${items.length} packed</small></div></div>
+      <div class="ib" style="padding-top:6px">${items.map((it,i)=>{
+        const on=!!ST.packing[cat+'_'+i];
+        return `<div class="chk" role="checkbox" tabindex="0" aria-checked="${on}" style="margin-bottom:6px" onclick="togglePack('${esc(cat).replace(/'/g,"\\'")}',${i})"><div class="box">${on?'✓':''}</div><div class="ct"><b style="${on?'text-decoration:line-through;color:var(--muted)':''}">${esc(it)}</b></div></div>`;
+      }).join('')}</div></div>`).join('');
+
+  const phrases=PARENT_PHRASES.map(p=>`
+    <div class="ph-item"><div class="pt"><div class="pes">${esc(p[0])}</div><div class="pen">${esc(p[1])}</div><div class="pph">${esc(p[2])}</div></div>
+      <button class="spk" aria-label="Escuchar" onclick="speak('${esc(p[0]).replace(/&#39;/g,"\\'")}')">🔊</button></div>`).join('');
+
+  return `<div class="main">
+    <div class="hero" style="background:linear-gradient(140deg,#7c5cd6,#1b6ec2)"><h1>Info & logistics</h1><div class="sub">Everything in one place</div></div>
+    <div class="sect-h">Before you go <span class="ln"></span></div>
+    ${prep}
+    <div class="sect-h">Logistics <span class="ln"></span></div>
+    ${cards}
+    <div class="sect-h">Packing list <span class="ln"></span></div>
+    ${packing}
+    <div class="sect-h">Parent survival phrases <span class="ln"></span></div>
+    <div class="info-card"><div class="ib">${phrases}
+      <a class="btn-link" href="https://apps.sfv9.com/spanish/" target="_blank" rel="noopener">📚 Open your full “Spanish for Calella” course</a>
+    </div></div>
+    <div class="foot">112 = emergencies · Agua del grifo is safe to drink · <b>¡Buen viaje, familia!</b></div>
+  </div>`;
+}
+
+/* ═══════════════ RENDER & ACTIONS ═══════════════ */
+function render(){
+  let html;
+  switch(ST.view){
+    case 'plan': html=viewPlan(); break;
+    case 'explore': html=viewExplore(); break;
+    case 'kids': html=viewKids(); break;
+    case 'deck': html=viewDeck(); break;
+    case 'game': html=viewGame(); break;
+    case 'info': html=viewInfo(); break;
+    default: html=viewTrip();
+  }
+  document.getElementById('app').innerHTML = html + navBar();
+  if(ST.view==='trip') startCountdown();
+  else if(cdTimer){ clearInterval(cdTimer); cdTimer=null; }
+}
+function goto(v){ if(window.speechSynthesis) speechSynthesis.cancel(); ST.view=v; save(); render(); window.scrollTo(0,0); }
+function setLeg(k){ ST.leg=k; render(); window.scrollTo(0,0); }
+function setFilter(k){ ST.exFilter=k; render(); }
+function setAge(a){ ST.age=a; save(); render(); }
+function toggleCheck(k){ ST.checks[k]=!ST.checks[k]; save(); render(); }
+function togglePack(cat,i){ const key=cat+'_'+i; ST.packing[key]=!ST.packing[key]; save(); render(); }
+function toggleExp(id){ ST.expanded[id]=!ST.expanded[id]; render(); }
+function toggleStamp(k){ if(ST.stamps[k]) delete ST.stamps[k]; else { ST.stamps[k]=1; confetti(14); } save(); render(); }
+function openDeck(k){ ST.deckKey=k; ST.view='deck'; GAME=null; save(); render(); window.scrollTo(0,0); }
+
+/* countdown */
+let cdTimer=null;
+function startCountdown(){
+  if(cdTimer) clearInterval(cdTimer);
+  const elD=document.getElementById('cd-d'); if(!elD) return;
+  function tick(){
+    const now=new Date(); const target=new Date(2026,6,5,18,0,0); // Jul 5 2026, ~6pm departure
+    let diff=Math.floor((target-now)/1000);
+    if(diff<0){ clearInterval(cdTimer); return; }
+    const d=Math.floor(diff/86400); diff-=d*86400;
+    const h=Math.floor(diff/3600); diff-=h*3600;
+    const m=Math.floor(diff/60); const s=diff-m*60;
+    const set=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
+    set('cd-d',d); set('cd-h',h); set('cd-m',String(m).padStart(2,'0')); set('cd-s',String(s).padStart(2,'0'));
+  }
+  tick(); cdTimer=setInterval(tick,1000);
+}
+
+/* confetti */
+function confetti(n){
+  const colors=['#d8412f','#ef9f00','#1b6ec2','#3a9d5d','#7c5cd6','#f0a500'];
+  for(let i=0;i<n;i++){
+    const c=document.createElement('div'); c.className='confetti';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.transform=`rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(c);
+    const fall=600+Math.random()*900;
+    c.animate([{transform:`translateY(-10px) rotate(0deg)`,opacity:1},
+               {transform:`translateY(${window.innerHeight+40}px) rotate(${360+Math.random()*360}deg)`,opacity:.9}],
+      {duration:fall,easing:'cubic-bezier(.3,.6,.6,1)'}).onfinish=()=>c.remove();
+  }
+}
+
+/* ── INIT ── */
+load();
+render();
+
+// keyboard a11y: Enter/Space activates the role=button / role=checkbox rows
+document.addEventListener('keydown', e=>{
+  if(e.key!=='Enter' && e.key!==' ') return;
+  const el=e.target;
+  if(el && el.matches && el.matches('[role="button"],[role="checkbox"]') && el.hasAttribute('onclick')){
+    e.preventDefault(); el.click();
+  }
+});
+
+if('serviceWorker' in navigator){
+  let refreshing=false;
+  const hadController=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(refreshing) return; refreshing=true;
+    if(hadController) location.reload();   // auto-reload on UPDATES, not on first install
+  });
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js').then(reg=>{
+      document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') reg.update(); });
+    }).catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
