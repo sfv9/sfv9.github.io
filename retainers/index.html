@@ -1,0 +1,290 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SFV9 — Federal GTM Retainers</title>
+<meta name="description" content="SFV9 Federal GTM Retainers — three engagement levels built to move dual-use and critical-infrastructure companies from market interest to qualified U.S. government pipeline.">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/fonts.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/colors.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/typography.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/spacing.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/effects.css?v=1">
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font-body);background:var(--ground);color:var(--text-strong);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  h1,h2,h3,h4{font-family:var(--font-display);margin:0;}
+
+  /* ---- Header ---- */
+  .site-header{display:flex;justify-content:space-between;align-items:center;padding:20px 60px;background:var(--paper);border-bottom:1px solid var(--border-subtle);position:sticky;top:0;z-index:10;}
+  .brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:inherit;}
+  .brand img{height:32px;width:auto;display:block;}
+  .brand b{font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:-0.3px;}
+  .header-cta{font-family:var(--font-display);font-weight:600;font-size:14px;color:#fff;background:var(--accent);padding:10px 18px;border-radius:var(--radius-md);text-decoration:none;box-shadow:var(--shadow-blue);transition:transform var(--dur-normal) var(--ease-out),box-shadow var(--dur-normal);}
+  .header-cta:hover{transform:var(--lift-sm);box-shadow:var(--shadow-blue-lg);}
+
+  /* ---- Layout ---- */
+  .wrap{max-width:1140px;margin:0 auto;padding:0 60px;}
+  .sheet{padding:56px 0 24px;}
+
+  /* ---- Hero ---- */
+  .eyebrow{font-family:var(--font-display);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--accent);}
+  .hero h1{font-weight:700;font-size:42px;line-height:1.1;letter-spacing:-0.5px;margin:12px 0 0;max-width:880px;}
+  .hero h1 .grad{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero .lead{font-size:18px;line-height:1.6;color:var(--text-body);margin:18px 0 0;max-width:720px;}
+
+  /* ---- Offer / best-for band ---- */
+  .band{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;margin-top:32px;}
+  .band .panel{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:22px 24px;border-left:3px solid var(--accent);}
+  .band .panel.signal{border-left-color:var(--signal);}
+  .band .label{font-family:var(--font-display);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--text-muted);margin:0 0 8px;}
+  .band p{margin:0;font-size:15px;line-height:1.6;color:var(--text-body);}
+
+  /* ---- Tier cards ---- */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;}
+  .tier{position:relative;background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);padding:28px 24px 26px;overflow:hidden;display:flex;flex-direction:column;transition:transform var(--dur-normal) var(--ease-out),box-shadow var(--dur-normal);}
+  .tier:hover{transform:var(--lift);box-shadow:var(--shadow-lg);}
+  .tier::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);}
+  .tier.coral::before{background:var(--signal);}
+  .tier .lvl{font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--text-muted);}
+  .tier.coral .lvl{color:var(--signal-hover);}
+  .tier.blue .lvl{color:var(--accent);}
+  .tier h3{font-size:23px;font-weight:700;letter-spacing:-0.3px;margin:6px 0 0;}
+  .tier .tag{font-size:13.5px;color:var(--text-muted);line-height:1.5;margin:8px 0 0;min-height:40px;}
+  .tier .meta{display:flex;align-items:baseline;gap:10px;margin:16px 0 4px;padding-top:16px;border-top:1px solid var(--border-subtle);}
+  .tier .price{font-family:var(--font-display);font-weight:700;font-size:28px;letter-spacing:-0.5px;}
+  .tier .hrs{font-family:var(--font-mono);font-size:13px;color:var(--text-muted);}
+  .tier .per{font-family:var(--font-body);font-size:13px;color:var(--text-faint);font-weight:500;}
+  .tier .sub{font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--text-faint);margin:18px 0 6px;}
+  .tier .fit{font-size:13.5px;line-height:1.55;color:var(--text-body);margin:0;}
+  .tier ul{list-style:none;margin:6px 0 0;padding:0;}
+  .tier li{position:relative;padding-left:18px;font-size:13.5px;line-height:1.5;color:var(--text-body);margin-bottom:7px;}
+  .tier li::before{content:"›";position:absolute;left:2px;top:-1px;color:var(--accent);font-weight:700;}
+  .tier.coral li::before{color:var(--signal);}
+  .tier .spacer{flex:1;}
+
+  /* ---- Three info panels ---- */
+  .info{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px;}
+  .info .card{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:24px;}
+  .info .chip{width:40px;height:40px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;margin-bottom:14px;background:var(--accent);box-shadow:var(--shadow-blue);}
+  .info .card.s2 .chip{background:var(--signal);box-shadow:var(--shadow-coral);}
+  .info h4{font-size:17px;font-weight:600;margin:0 0 12px;}
+  .info ul{list-style:none;margin:0;padding:0;}
+  .info li{position:relative;padding-left:18px;font-size:14px;line-height:1.55;color:var(--text-body);margin-bottom:9px;}
+  .info li::before{content:"›";position:absolute;left:2px;top:0;color:var(--accent);font-weight:700;}
+  .info .card.s2 li::before{color:var(--signal);}
+
+  /* ---- Positioning line ---- */
+  .positioning{margin:44px 0 8px;text-align:center;padding:38px 24px;background:var(--gradient-ink);border-radius:var(--radius-xl);}
+  .positioning .label{font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--text-on-dark-dim);}
+  .positioning .line{font-family:var(--font-display);font-weight:700;font-size:30px;line-height:1.2;letter-spacing:-0.4px;color:#fff;margin:12px 0 24px;}
+  .positioning .line .grad{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .positioning .cta{display:inline-block;font-family:var(--font-display);font-weight:600;font-size:15px;color:#fff;background:var(--accent);padding:13px 26px;border-radius:var(--radius-md);text-decoration:none;box-shadow:var(--shadow-blue);transition:transform var(--dur-normal) var(--ease-out),box-shadow var(--dur-normal);}
+  .positioning .cta:hover{transform:var(--lift-sm);box-shadow:var(--shadow-blue-lg);}
+
+  /* ---- Footer ---- */
+  .site-footer{background:var(--gradient-ink);color:var(--text-on-dark-dim);padding:34px 60px;margin-top:8px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;font-size:13px;}
+  .site-footer .org{font-family:var(--font-display);font-weight:600;color:#fff;font-size:14px;}
+  .site-footer a{color:var(--text-on-dark-dim);text-decoration:none;font-family:var(--font-mono);}
+  .site-footer a:hover{color:#fff;}
+
+  /* ---- Responsive ---- */
+  @media (max-width:860px){
+    .site-header{padding:14px 20px;}
+    .wrap{padding:0 20px;}
+    .sheet{padding:36px 0 16px;}
+    .hero h1{font-size:32px;}
+    .band,.tiers,.info{grid-template-columns:1fr;}
+    .positioning .line{font-size:24px;}
+    .site-footer{padding:28px 20px;}
+  }
+
+  /* ---- Print: true one-pager ---- */
+  @page{size:A4 portrait;margin:9mm;}
+  @media print{
+    body{background:#fff;}
+    .hero h1 .grad{background:none;-webkit-text-fill-color:var(--accent);color:var(--accent);}
+    .positioning .line .grad{background:none;-webkit-text-fill-color:var(--blue-300);color:var(--blue-300);}
+    .band{grid-template-columns:1.6fr 1fr;}
+    .tiers,.info{grid-template-columns:repeat(3,1fr);}
+    .tier:hover{transform:none;box-shadow:none;}
+    .site-header{position:static;border:none;padding:0 0 10px;}
+    .header-cta{display:none;}
+    .wrap{max-width:none;padding:0;}
+    .sheet{padding:10px 0 0;}
+    .hero h1{font-size:23px;}
+    .hero .lead{font-size:11.5px;margin-top:6px;}
+    .eyebrow{font-size:10px;}
+    .band{margin-top:11px;gap:12px;}
+    .band .panel{padding:13px 16px;}
+    .band .label{margin-bottom:5px;}
+    .band p{font-size:11px;}
+    .tiers{margin-top:12px;gap:12px;}
+    .tier{box-shadow:none;border:1px solid var(--border-subtle);padding:13px 13px 11px;}
+    .tier h3{font-size:16px;}
+    .tier .price{font-size:19px;}
+    .tier .tag{min-height:0;font-size:11px;margin-top:5px;}
+    .tier .fit,.tier li,.info li,.info ul{font-size:10.5px;}
+    .tier li{margin-bottom:5px;}
+    .tier .meta{margin:8px 0 2px;padding-top:8px;}
+    .tier .sub{margin:8px 0 4px;}
+    .info{margin-top:12px;gap:12px;}
+    .info .card{box-shadow:none;border:1px solid var(--border-subtle);padding:12px;}
+    .info .chip{width:26px;height:26px;font-size:14px;box-shadow:none;margin-bottom:7px;}
+    .info h4{font-size:12.5px;margin-bottom:7px;}
+    .info li{margin-bottom:6px;}
+    .positioning{margin:12px 0 0;padding:16px;break-inside:avoid;}
+    .positioning .line{font-size:17px;margin:7px 0 0;}
+    .positioning .cta{display:none;}
+    .site-footer{padding:12px 0 0;margin-top:14px;background:none;color:var(--text-muted);}
+    .site-footer .org{color:var(--text-strong);}
+    .tier,.info .card,.band .panel{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label="SFV9 — home">
+    <img src="/assets/logo-mark.png" alt="SFV9">
+    <b>SFV9</b>
+  </a>
+  <a class="header-cta" href="mailto:info@sfv9.com?subject=Federal%20GTM%20retainer%20inquiry">Get Started →</a>
+</header>
+
+<main class="wrap sheet">
+
+  <section class="hero">
+    <span class="eyebrow">Federal GTM Retainers · Dual-Use &amp; Critical Infrastructure</span>
+    <h1>From technical capability to <span class="grad">qualified federal pipeline.</span></h1>
+    <p class="lead">Three engagement levels built to move from market interest to qualified U.S. government pipeline. SFV9 helps founders and GTM teams translate technical capability into U.S. government demand, buyer maps, partner strategy, and deal execution.</p>
+  </section>
+
+  <section class="band">
+    <div class="panel">
+      <p class="label">The offer</p>
+      <p>SFV9 helps founders and GTM teams translate technical capability into U.S. government demand, buyer maps, partner strategy, and deal execution — without standing up a full federal team on day one.</p>
+    </div>
+    <div class="panel signal">
+      <p class="label">Best for</p>
+      <p>Companies with <strong>TRL 7–9</strong> products, early U.S. traction, and a need to scale federal sales without immediately hiring a full team.</p>
+    </div>
+  </section>
+
+  <section class="tiers">
+
+    <article class="tier blue">
+      <span class="lvl">Level 1</span>
+      <h3>Advisor Retainer</h3>
+      <p class="tag">Executive-level guidance and targeted federal GTM acceleration.</p>
+      <div class="meta">
+        <span class="price">$15,000</span><span class="per">/ month</span>
+      </div>
+      <span class="hrs">5 hrs / week</span>
+      <p class="sub">Best fit</p>
+      <p class="fit">Founder/CEO support, board-level strategy, investor diligence, quick-turn positioning, and priority account guidance.</p>
+      <p class="sub">Core outputs</p>
+      <ul>
+        <li>Weekly strategy call</li>
+        <li>Buyer / partner recommendations</li>
+        <li>Message refinement</li>
+        <li>Warm-intro prioritization</li>
+        <li>Review of decks, emails &amp; pricing</li>
+      </ul>
+      <div class="spacer"></div>
+    </article>
+
+    <article class="tier coral">
+      <span class="lvl">Level 2</span>
+      <h3>GTM Builder</h3>
+      <p class="tag">Hands-on buildout of U.S. government market-entry motions.</p>
+      <div class="meta">
+        <span class="price">$25,000</span><span class="per">/ month</span>
+      </div>
+      <span class="hrs">10 hrs / week</span>
+      <p class="sub">Best fit</p>
+      <p class="fit">Companies ready to map accounts, structure pilots, pressure-test ICPs, and begin partner-led pipeline creation.</p>
+      <p class="sub">Core outputs</p>
+      <ul>
+        <li>Buyer map &amp; partner map</li>
+        <li>Account briefs</li>
+        <li>Pilot strategy</li>
+        <li>Federal sales narrative</li>
+        <li>Meeting prep &amp; follow-up ghostwriting</li>
+        <li>CRM hygiene guidance</li>
+      </ul>
+      <div class="spacer"></div>
+    </article>
+
+    <article class="tier blue">
+      <span class="lvl">Level 3</span>
+      <h3>Embedded Federal Lead</h3>
+      <p class="tag">Fractional federal sales leadership while the company hires or scales.</p>
+      <div class="meta">
+        <span class="price">$40,000</span><span class="per">/ month</span>
+      </div>
+      <span class="hrs">20 hrs / week</span>
+      <p class="sub">Best fit</p>
+      <p class="fit">Companies needing an operating leader for federal pipeline, partner execution, customer discovery, and early sales discipline.</p>
+      <p class="sub">Core outputs</p>
+      <ul>
+        <li>Weekly operating cadence</li>
+        <li>Pipeline reviews</li>
+        <li>Partner / customer meetings</li>
+        <li>Capture strategy &amp; executive prep</li>
+        <li>GTM assets &amp; CS handoff design</li>
+        <li>Hiring support</li>
+      </ul>
+      <div class="spacer"></div>
+    </article>
+
+  </section>
+
+  <section class="info">
+    <div class="card s1">
+      <div class="chip">⌖</div>
+      <h4>What SFV9 brings</h4>
+      <ul>
+        <li>Federal buyer mapping across DHS, DoD, IC, and critical infrastructure</li>
+        <li>Defense-tech sales narrative: outcome, mission need, budget owner, contract path</li>
+        <li>Executive ghostwriting, partner strategy, pricing and pilot packaging</li>
+      </ul>
+    </div>
+    <div class="card s2">
+      <div class="chip">◎</div>
+      <h4>Typical first 30 days</h4>
+      <ul>
+        <li>Refine ICP and federal wedge</li>
+        <li>Build priority account and partner map</li>
+        <li>Convert technical story into buyer-specific messaging</li>
+        <li>Create meeting prep and follow-up cadence</li>
+      </ul>
+    </div>
+    <div class="card s1">
+      <div class="chip">⇄</div>
+      <h4>Engagement model</h4>
+      <ul>
+        <li>Weekly operating rhythm matched to chosen tier</li>
+        <li>Founder-facing, partner-facing, or customer-facing support</li>
+        <li>Flexible across sales, capture, CS design, and hiring transition</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="positioning">
+    <p class="label">Positioning line</p>
+    <p class="line">From technical capability to <span class="grad">qualified federal pipeline.</span></p>
+    <a class="cta" href="mailto:info@sfv9.com?subject=Federal%20GTM%20retainer%20inquiry">Start a conversation →</a>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <span class="org">SFV9 LLC</span>
+  <span>Federal GTM, AI &amp; Defense-Tech Strategy</span>
+  <a href="mailto:info@sfv9.com">info@sfv9.com</a>
+</footer>
+
+</body></html>
