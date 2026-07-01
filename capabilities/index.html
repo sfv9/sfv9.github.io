@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>SFV9 — Federal GTM for Venture-Backed Companies</title>
+<meta name="description" content="SFV9 turns technical capability into qualified U.S. federal pipeline for venture-backed product companies — positioning, partnerships, and sales enablement, powered by FRIS.">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/fonts.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/colors.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/typography.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/spacing.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/effects.css?v=1">
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font-body);background:var(--ground);color:var(--text-strong);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  h1,h2,h3,h4{font-family:var(--font-display);margin:0;}
+
+  /* ---- Header ---- */
+  .site-header{display:flex;justify-content:space-between;align-items:center;padding:20px 60px;background:var(--paper);border-bottom:1px solid var(--border-subtle);position:sticky;top:0;z-index:10;}
+  .brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:inherit;}
+  .brand img{height:32px;width:auto;display:block;}
+  .brand b{font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:-0.3px;}
+  .header-cta{font-family:var(--font-display);font-weight:600;font-size:14px;color:#fff;background:var(--accent);padding:10px 18px;border-radius:var(--radius-md);text-decoration:none;box-shadow:var(--shadow-blue);transition:transform var(--dur-normal) var(--ease-out),box-shadow var(--dur-normal);}
+  .header-cta:hover{transform:var(--lift-sm);box-shadow:var(--shadow-blue-lg);}
+
+  /* ---- Layout ---- */
+  .wrap{max-width:1140px;margin:0 auto;padding:0 60px;}
+  .sheet{padding-top:52px;padding-bottom:24px;}
+  .eyebrow{font-family:var(--font-display);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--accent);}
+  .section-label{font-family:var(--font-display);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--text-muted);margin:0 0 16px;}
+
+  /* ---- Hero ---- */
+  .hero h1{font-weight:700;font-size:44px;line-height:1.08;letter-spacing:-0.5px;margin:0;max-width:900px;}
+  .hero h1 .grad{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero .lead{font-size:18px;line-height:1.6;color:var(--text-body);margin:20px 0 0;max-width:760px;}
+
+  /* ---- Stat strip (proof) ---- */
+  .stats{margin-top:32px;background:var(--gradient-ink);border-radius:var(--radius-xl);padding:30px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;box-shadow:var(--shadow-lg);}
+  .stat{text-align:left;}
+  .stat .n{font-family:var(--font-display);font-weight:700;font-size:34px;letter-spacing:-0.5px;line-height:1;}
+  .stat.blue .n{color:var(--blue-300);}
+  .stat.coral .n{color:var(--coral-300);}
+  .stat .l{font-family:var(--font-body);font-size:12.5px;color:var(--text-on-dark-dim);margin-top:8px;line-height:1.4;}
+
+  /* ---- Section spacing ---- */
+  .block{margin-top:34px;}
+
+  /* ---- 3-up service cards ---- */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .svc{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:22px 22px 24px;border-top:3px solid var(--accent);}
+  .svc.coral{border-top-color:var(--signal);}
+  .svc .chip{width:38px;height:38px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:19px;color:#fff;background:var(--accent);margin-bottom:14px;}
+  .svc.coral .chip{background:var(--signal);}
+  .svc h3{font-size:18px;font-weight:600;margin:0 0 8px;}
+  .svc p{font-size:13.5px;line-height:1.55;color:var(--text-muted);margin:0;}
+
+  /* ---- FRIS steps ---- */
+  .fris .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
+  .fris .head h2{font-size:22px;font-weight:700;letter-spacing:-0.3px;}
+  .fris .head span{font-size:14px;color:var(--text-muted);}
+  .step{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px 20px 22px;}
+  .step .num{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:15px;color:#fff;background:var(--accent);margin-bottom:14px;}
+  .step.coral .num{background:var(--signal);}
+  .step h3{font-size:15.5px;font-weight:600;margin:0 0 7px;}
+  .step p{font-size:13px;line-height:1.55;color:var(--text-muted);margin:0;}
+
+  /* ---- Engagement tiers ---- */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .tier{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px 22px 22px;border-top:3px solid var(--accent);}
+  .tier.coral{border-top-color:var(--signal);}
+  .tier .name{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:-0.2px;margin:0;}
+  .tier .meta{font-family:var(--font-mono);font-size:12.5px;color:var(--text-muted);margin:6px 0 10px;}
+  .tier .meta b{color:var(--text-strong);font-weight:600;}
+  .tier p{font-size:13px;line-height:1.5;color:var(--text-body);margin:0;}
+  .engage-note{text-align:center;font-size:13px;color:var(--text-muted);margin:16px 0 0;}
+  .engage-note b{color:var(--text-strong);font-weight:600;}
+
+  /* ---- CTA band ---- */
+  .cta{margin-top:34px;background:var(--gradient-ink);border-radius:var(--radius-xl);padding:34px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .cta .msg h2{font-size:24px;font-weight:700;letter-spacing:-0.3px;color:#fff;margin:0;}
+  .cta .msg h2 .grad{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .cta .msg p{font-size:14px;color:var(--text-on-dark-dim);margin:8px 0 0;}
+  .cta .act{display:inline-block;font-family:var(--font-display);font-weight:600;font-size:15px;color:#fff;background:var(--accent);padding:13px 26px;border-radius:var(--radius-md);text-decoration:none;white-space:nowrap;box-shadow:var(--shadow-blue);transition:transform var(--dur-normal) var(--ease-out),box-shadow var(--dur-normal);}
+  .cta .act:hover{transform:var(--lift-sm);box-shadow:var(--shadow-blue-lg);}
+
+  /* ---- Footer ---- */
+  .site-footer{padding:22px 60px 30px;display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--text-muted);}
+  .site-footer .allied{display:flex;flex-wrap:wrap;align-items:center;gap:8px;}
+  .site-footer .allied .k{font-family:var(--font-display);font-weight:600;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);font-size:11px;color:var(--text-faint);}
+  .site-footer .allied .chip{font-family:var(--font-mono);font-size:11px;background:var(--ink-100);color:var(--text-body);padding:3px 9px;border-radius:var(--radius-pill);}
+  .site-footer .org{font-family:var(--font-display);font-weight:600;color:var(--text-strong);}
+  .site-footer a{font-family:var(--font-mono);text-decoration:none;}
+  .site-footer a:hover{color:var(--accent);}
+
+  /* ---- Responsive ---- */
+  @media (max-width:860px){
+    .site-header{padding:14px 20px;}
+    .wrap{padding:0 20px;}
+    .sheet{padding-top:34px;padding-bottom:16px;}
+    .hero h1{font-size:32px;}
+    .stats{grid-template-columns:repeat(2,1fr);gap:22px 16px;padding:26px 24px;}
+    .grid3,.tiers{grid-template-columns:1fr;}
+    .cta{flex-direction:column;align-items:flex-start;}
+    .site-footer{padding:20px 20px 26px;}
+  }
+
+  /* ---- Print: single page ---- */
+  @page{size:A4 portrait;margin:9mm;}
+  @media print{
+    body{background:#fff;}
+    .site-header{position:static;border:none;padding:0 0 14px;}
+    .header-cta{display:none;}
+    .wrap{max-width:none;padding:0;}
+    .stats{grid-template-columns:repeat(4,1fr);}
+    .grid3,.tiers{grid-template-columns:repeat(3,1fr);}
+    .cta{flex-direction:row;align-items:center;}
+    .sheet{padding-top:10px;padding-bottom:0;}
+    .hero h1{font-size:26px;}
+    .hero .lead{font-size:12px;line-height:1.55;margin-top:10px;}
+    .stats{margin-top:18px;padding:17px 28px;gap:16px;}
+    .stat .n{font-size:25px;}
+    .stat .l{font-size:10.5px;margin-top:5px;}
+    .block{margin-top:18px;}
+    .section-label{margin-bottom:12px;}
+    .grid3,.tiers{gap:16px;}
+    .svc,.step,.tier{box-shadow:none;border:1px solid var(--border-subtle);}
+    .svc{padding:15px 17px 16px;}
+    .svc .chip,.step .num{width:33px;height:33px;font-size:16px;margin-bottom:11px;}
+    .svc h3{font-size:15.5px;}
+    .svc p,.step p,.tier p{font-size:11.8px;line-height:1.5;}
+    .fris .head{margin-bottom:12px;}
+    .fris .head h2{font-size:18px;}
+    .fris .head span{font-size:11.5px;}
+    .step{padding:14px 16px 15px;}
+    .step h3{font-size:13.5px;}
+    .tier{padding:14px 17px 15px;}
+    .tier .name{font-size:15px;}
+    .tier .meta{font-size:11.5px;margin:5px 0 8px;}
+    .engage-note{margin-top:12px;font-size:11.8px;}
+    .cta{margin-top:18px;padding:20px 30px;break-inside:avoid;}
+    .cta .msg h2{font-size:18px;}
+    .cta .msg p{font-size:11.5px;margin-top:6px;}
+    .cta .act{display:none;}
+    .svc,.step,.tier,.stats,.cta{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .site-footer{padding:13px 0 0;margin-top:16px;border-top:1px solid var(--border-subtle);font-size:11.5px;}
+    .site-footer .allied .chip{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label="SFV9 — home">
+    <img src="/assets/logo-mark.png" alt="SFV9">
+    <b>SFV9</b>
+  </a>
+  <a class="header-cta" href="mailto:info@sfv9.com?subject=Federal%20GTM%20conversation">Start a conversation →</a>
+</header>
+
+<main class="wrap sheet">
+
+  <section class="hero">
+    <h1>Win the federal market <span class="grad">without the guesswork.</span></h1>
+    <p class="lead">You've built technology the U.S. government needs. SFV9 turns that capability into qualified federal pipeline — buyer maps, partner strategy, and closed deals — without you standing up a full federal team. Twenty years of federal go-to-market experience, on a focused monthly retainer.</p>
+  </section>
+
+  <section class="stats" aria-label="Track record">
+    <div class="stat blue"><div class="n">20+</div><div class="l">Years of federal GTM experience</div></div>
+    <div class="stat coral"><div class="n">$3B+</div><div class="l">Federal pipeline influenced</div></div>
+    <div class="stat blue"><div class="n">50+</div><div class="l">Federal agencies mapped</div></div>
+    <div class="stat coral"><div class="n">$500M+</div><div class="l">Contracts won</div></div>
+  </section>
+
+  <section class="block">
+    <p class="section-label">What we do</p>
+    <div class="grid3">
+      <article class="svc blue">
+        <div class="chip">⌖</div>
+        <h3>Positioning</h3>
+        <p>Differentiated messaging that lands with federal buyers and mission stakeholders — so your value is obvious to the people who actually hold the budget.</p>
+      </article>
+      <article class="svc coral">
+        <div class="chip">⇄</div>
+        <h3>Partnership development</h3>
+        <p>Warm paths to the primes, integrators, and program offices that move federal deals — relationships brokered, not cold-called.</p>
+      </article>
+      <article class="svc blue">
+        <div class="chip">◎</div>
+        <h3>Sales enablement</h3>
+        <p>Battlecards, win/loss analysis, and competitive intelligence that make every federal pursuit sharper than the last.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="block fris">
+    <div class="head">
+      <p class="section-label" style="margin:0;">How we work</p>
+      <h2>Powered by FRIS</h2>
+      <span>— a federal revenue engine configured to your business, so you're chasing real opportunities from day one.</span>
+    </div>
+    <div class="grid3">
+      <article class="step blue">
+        <div class="num">01</div>
+        <h3>Configured to your business</h3>
+        <p>FRIS builds a revenue brain around your capabilities, contract vehicles, and win themes — so every recommendation fits how you actually sell.</p>
+      </article>
+      <article class="step coral">
+        <div class="num">02</div>
+        <h3>A proven research playbook</h3>
+        <p>Battle-tested research and qualification plays mean no ramp-up — just the next move, from day one.</p>
+      </article>
+      <article class="step blue">
+        <div class="num">03</div>
+        <h3>Opportunities pushed to you</h3>
+        <p>Matched, scored, and briefed pursuits land in your inbox — before your competitors are even looking.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="section-label">How we engage</p>
+    <div class="tiers">
+      <article class="tier blue">
+        <h3 class="name">Advisor Retainer</h3>
+        <p class="meta"><b>20 hrs / month</b> · $15,000/mo</p>
+        <p>Executive-level guidance for founders and boards — positioning, priority accounts, and investor-ready federal strategy.</p>
+      </article>
+      <article class="tier coral">
+        <h3 class="name">GTM Builder</h3>
+        <p class="meta"><b>40 hrs / month</b> · $25,000/mo</p>
+        <p>Hands-on buildout of your federal market-entry motion — buyer and partner maps, pilot strategy, and pipeline creation.</p>
+      </article>
+      <article class="tier blue">
+        <h3 class="name">Embedded Federal Lead</h3>
+        <p class="meta"><b>80 hrs / month</b> · $40,000/mo</p>
+        <p>Fractional federal sales leadership while you hire and scale — operating cadence, capture strategy, and execution.</p>
+      </article>
+    </div>
+    <p class="engage-note">Every engagement starts with a <b>three-month minimum</b>. Not sure which tier fits? That's the first conversation.</p>
+  </section>
+
+  <section class="cta">
+    <div class="msg">
+      <h2>From technical capability to <span class="grad">qualified federal pipeline.</span></h2>
+      <p>Tell us where you're headed in the federal market — we'll be in touch within one business day.</p>
+    </div>
+    <a class="act" href="mailto:info@sfv9.com?subject=Federal%20GTM%20conversation">Start a conversation →</a>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <span class="allied">
+    <span class="k">Allied markets</span>
+    <span class="chip">Five Eyes</span><span class="chip">NATO</span><span class="chip">AUKUS</span><span class="chip">Japan</span><span class="chip">SE Asia</span><span class="chip">Taiwan</span>
+  </span>
+  <span style="display:inline-flex;gap:16px;align-items:center;">
+    <span class="org">SFV9 LLC</span>
+    <a href="mailto:info@sfv9.com">info@sfv9.com</a>
+    <a href="https://sfv9.com">sfv9.com</a>
+  </span>
+</footer>
+
+</body></html>
