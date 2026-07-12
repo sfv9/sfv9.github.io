@@ -56,14 +56,7 @@ function SiteFooter() {
         fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-on-dark-dim)',
       }}>
         <span>&copy; 2026 SFV9 LLC. All rights reserved.</span>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 12 }}>
-          <span>Federal go-to-market strategy</span>
-          <a href="/chinese/" title="漢字配對 · Mandarin practice"
-            style={{ color: 'var(--text-on-dark-dim)', textDecoration: 'none', transition: 'color var(--dur-fast)' }}
-            onMouseEnter={(e) => (e.target.style.color = '#fff')}
-            onMouseLeave={(e) => (e.target.style.color = 'var(--text-on-dark-dim)')}
-          >中文</a>
-        </span>
+        <span>Federal go-to-market strategy</span>
       </div>
     </footer>
   );
