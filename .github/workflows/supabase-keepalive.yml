@@ -1,0 +1,68 @@
+name: Supabase keep-alive
+
+# Free-tier Supabase projects are paused after 7 days with no requests.
+# This workflow pings the project's REST endpoint daily so the FRIS
+# backend (project sfv9-fris) never idles into a pause.
+#
+# Required repository secret:
+#   SUPABASE_URL       e.g. https://cgyufavxtyvhqzhlnhyy.supabase.co
+# Optional repository secret (recommended):
+#   SUPABASE_ANON_KEY  the project's anon/public API key
+#
+# Add these under: Settings > Secrets and variables > Actions.
+
+on:
+  schedule:
+    # 06:17 UTC daily. Daily cadence leaves a wide margin against the
+    # 7-day pause even if GitHub delays or skips some scheduled runs.
+    - cron: '17 6 * * *'
+  workflow_dispatch: {}
+
+# Never let two pings overlap.
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping Supabase REST endpoint
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${SUPABASE_URL:-}" ]; then
+            echo "::error::SUPABASE_URL secret is not set."
+            exit 1
+          fi
+
+          # Strip any trailing slash so we build a clean URL.
+          base="${SUPABASE_URL%/}"
+          url="$base/rest/v1/"
+
+          # Any HTTP response from the project host counts as activity and
+          # resets the inactivity timer. The anon key is optional: without it
+          # the endpoint answers 401, which still keeps the project awake.
+          headers=()
+          if [ -n "${SUPABASE_ANON_KEY:-}" ]; then
+            headers+=(-H "apikey: $SUPABASE_ANON_KEY" -H "Authorization: Bearer $SUPABASE_ANON_KEY")
+          fi
+
+          code="$(curl -sS -m 60 --retry 3 --retry-delay 5 \
+            -o /dev/null -w '%{http_code}' \
+            "${headers[@]}" "$url" || echo 000)"
+
+          echo "Pinged $url -> HTTP $code"
+
+          # 2xx/3xx/4xx => project responded and is awake (good).
+          # 000 (no connection) or 5xx => project is unreachable/down.
+          if [ "$code" = "000" ] || [ "$code" -ge 500 ]; then
+            echo "::error::Supabase project did not respond healthily (HTTP $code). It may be paused or down."
+            exit 1
+          fi
+
+          echo "Supabase project is awake."
