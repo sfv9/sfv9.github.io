@@ -119,6 +119,9 @@
     .cta{flex-direction:row;align-items:center;}
     .sheet{padding-top:10px;padding-bottom:0;}
     .hero h1{font-size:26px;}
+    /* Gradient-clipped text renders as a boxed block in the PDF engine — use a solid brand color in print. */
+    .hero h1 .grad{background:none;-webkit-text-fill-color:var(--accent);color:var(--accent);}
+    .cta .msg h2 .grad{background:none;-webkit-text-fill-color:var(--blue-300);color:var(--blue-300);}
     .hero .lead{font-size:12px;line-height:1.55;margin-top:10px;}
     .stats{margin-top:18px;padding:17px 28px;gap:16px;}
     .stat .n{font-size:25px;}
