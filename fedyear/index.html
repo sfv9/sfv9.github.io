@@ -1,0 +1,694 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>SFV9 — The Federal Money Wheel</title>
+<meta name="description" content="The Federal Year — a live map of the U.S. federal fiscal calendar for venture-backed founders: where the money is, what buyers are doing, and when to start if you want a contract by a given date.">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/fonts.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/colors.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/typography.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/spacing.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/effects.css?v=1">
+<style>
+  *{box-sizing:border-box;}
+  html{color-scheme:light;}
+  body{margin:0;font-family:var(--font-body);background:var(--ground);color:var(--text-strong);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  h1,h2,h3,h4{font-family:var(--font-display);margin:0;}
+  button,select,input{font:inherit;}
+
+  /* ---- Header ---- */
+  .site-header{display:flex;justify-content:space-between;align-items:center;padding:20px 60px;background:var(--paper);border-bottom:1px solid var(--border-subtle);position:sticky;top:0;z-index:10;}
+  .brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:inherit;}
+  .brand img{height:32px;width:auto;display:block;}
+  .brand b{font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:-0.3px;}
+  .header-cta{font-family:var(--font-display);font-weight:600;font-size:14px;color:#fff;background:var(--accent);padding:10px 18px;border-radius:var(--radius-md);text-decoration:none;box-shadow:var(--shadow-blue);transition:transform var(--dur-normal) var(--ease-out),box-shadow var(--dur-normal);}
+  .header-cta:hover{transform:var(--lift-sm);box-shadow:var(--shadow-blue-lg);}
+
+  /* ---- Layout ---- */
+  .wrap{max-width:1140px;margin:0 auto;padding:0 60px;}
+  section{margin-top:72px;}
+  .eyebrow{font-family:var(--font-display);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--accent);}
+  .eyebrow.signal{color:var(--signal-hover);}
+  .sec-title{font-weight:700;font-size:32px;line-height:1.15;letter-spacing:-0.4px;margin:10px 0 0;}
+  .sec-lead{font-size:16px;line-height:1.6;color:var(--text-body);margin:12px 0 0;max-width:720px;}
+  .grad{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+
+  /* ---- Hero ---- */
+  .hero{margin-top:0;padding-top:56px;}
+  .hero h1{font-weight:700;font-size:48px;line-height:1.08;letter-spacing:-0.6px;margin:12px 0 0;max-width:900px;}
+  .hero .lead{font-size:18px;line-height:1.6;color:var(--text-body);margin:18px 0 0;max-width:720px;}
+
+  /* ---- Live status strip ---- */
+  .status{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;}
+  .stat{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:18px 20px;border-top:3px solid var(--accent);}
+  .stat.signal{border-top-color:var(--signal);}
+  .stat.ink{border-top-color:var(--ink-800);}
+  .stat .k{font-family:var(--font-display);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--text-muted);}
+  .stat .v{font-family:var(--font-display);font-weight:700;font-size:30px;letter-spacing:-0.5px;margin-top:6px;line-height:1.05;}
+  .stat .v small{font-size:15px;font-weight:600;color:var(--text-muted);letter-spacing:0;margin-left:4px;}
+  .stat .d{font-size:13px;line-height:1.45;color:var(--text-body);margin-top:6px;}
+  .note{display:flex;gap:10px;align-items:flex-start;margin-top:16px;padding:12px 16px;background:var(--warning-bg);border-radius:var(--radius-md);font-size:13.5px;line-height:1.5;color:var(--ink-700);}
+  .note b{color:var(--warning-fg);font-family:var(--font-display);font-weight:600;}
+
+  /* ---- Wheel + month panel ---- */
+  .clock{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:start;margin-top:28px;}
+  .wheel-card{background:var(--paper);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:20px;position:relative;}
+  .wheel-card svg{display:block;width:100%;height:auto;user-select:none;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin-top:8px;font-size:12.5px;color:var(--text-muted);}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+  .wedge{cursor:pointer;fill:transparent;transition:fill var(--dur-fast);}
+  .wedge:hover{fill:rgba(37,99,235,0.07);}
+  .wedge.sel{fill:rgba(37,99,235,0.10);stroke:var(--accent);stroke-width:2;}
+  .wedge:focus{outline:none;stroke:var(--accent);stroke-width:2;}
+  .ring-label{font-family:var(--font-display);font-weight:600;font-size:11px;letter-spacing:0.3px;pointer-events:none;}
+  .mon-label{font-family:var(--font-display);font-weight:700;font-size:13px;pointer-events:none;}
+  .marker-label{font-family:var(--font-body);font-weight:600;font-size:10px;fill:var(--ink-600);pointer-events:none;}
+
+  .month{background:var(--paper);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);overflow:hidden;}
+  .month-head{background:var(--gradient-ink);color:#fff;padding:22px 26px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .month-head .q{font-family:var(--font-mono);font-size:12px;color:var(--text-on-dark-dim);}
+  .month-head h3{font-size:28px;font-weight:700;letter-spacing:-0.4px;margin-top:4px;}
+  .month-head .mood{font-size:14px;color:var(--ink-300);margin-top:4px;}
+  .month-nav{display:flex;gap:6px;}
+  .month-nav button{width:34px;height:34px;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);color:#fff;cursor:pointer;font-size:16px;}
+  .month-nav button:hover{background:rgba(255,255,255,0.14);}
+  .meter{height:6px;background:rgba(255,255,255,0.12);border-radius:99px;margin-top:12px;width:180px;overflow:hidden;}
+  .meter span{display:block;height:100%;background:var(--gradient-brand);border-radius:99px;transition:width var(--dur-normal) var(--ease-out);}
+  .month-body{padding:20px 26px 24px;}
+  .row{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border-subtle);}
+  .row .lbl{font-family:var(--font-display);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--text-muted);padding-top:2px;}
+  .row p{margin:0;font-size:14.5px;line-height:1.55;color:var(--text-body);}
+  .move{margin-top:18px;background:var(--accent-soft);border-radius:var(--radius-lg);padding:16px 18px;border-left:3px solid var(--accent);}
+  .move .lbl,.trap .lbl{font-family:var(--font-display);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--accent-press);}
+  .move ul{list-style:none;margin:8px 0 0;padding:0;}
+  .move li{position:relative;padding-left:18px;font-size:14.5px;line-height:1.5;color:var(--ink-800);margin-bottom:7px;}
+  .move li::before{content:"›";position:absolute;left:2px;top:-1px;color:var(--accent);font-weight:700;}
+  .trap{margin-top:12px;background:var(--signal-soft);border-radius:var(--radius-lg);padding:14px 18px;border-left:3px solid var(--signal);}
+  .trap .lbl{color:var(--coral-700);}
+  .trap p{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--ink-800);}
+  .now-pill{display:inline-block;font-family:var(--font-display);font-weight:600;font-size:11px;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;background:var(--signal);color:#fff;padding:3px 8px;border-radius:var(--radius-pill);margin-left:8px;vertical-align:4px;}
+
+  /* ---- Reverse planner ---- */
+  .planner{background:var(--paper);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:28px;margin-top:28px;}
+  .controls{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:16px;}
+  .field label{display:block;font-family:var(--font-display);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--text-muted);margin-bottom:6px;}
+  .field select,.field input{width:100%;height:44px;border:1px solid var(--border-default);border-radius:var(--radius-md);padding:0 12px;background:var(--paper);color:var(--text-strong);font-size:15px;}
+  .field select:focus,.field input:focus{outline:none;border-color:var(--accent);box-shadow:var(--focus-ring);}
+  .path-desc{font-size:14px;line-height:1.55;color:var(--text-body);margin:14px 0 0;}
+  .verdict{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-top:22px;padding:18px 20px;background:var(--gradient-ink);border-radius:var(--radius-lg);color:#fff;}
+  .verdict .big{font-family:var(--font-display);font-weight:700;font-size:26px;letter-spacing:-0.4px;}
+  .verdict .big .grad{background:linear-gradient(135deg,var(--blue-300),var(--coral-300));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .verdict .sub{font-size:14px;color:var(--ink-300);}
+  .track{position:relative;margin-top:26px;height:44px;}
+  .track .seg{position:absolute;top:0;height:44px;border-radius:6px;display:flex;align-items:center;padding:0 10px;font-family:var(--font-display);font-weight:600;font-size:12px;color:#fff;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+  .track .today{position:absolute;top:-8px;bottom:-8px;width:2px;background:var(--signal);}
+  .track .today::after{content:"Today";position:absolute;top:-16px;left:-14px;font-family:var(--font-display);font-size:10.5px;font-weight:600;color:var(--signal-hover);}
+  .axis{position:relative;height:22px;margin-top:6px;border-top:1px solid var(--border-subtle);}
+  .axis span{position:absolute;top:4px;font-family:var(--font-mono);font-size:10.5px;color:var(--text-faint);transform:translateX(-50%);white-space:nowrap;}
+  .steps{list-style:none;margin:22px 0 0;padding:0;counter-reset:s;}
+  .steps li{display:grid;grid-template-columns:28px 120px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-subtle);align-items:start;}
+  .steps li::before{counter-increment:s;content:counter(s);width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--font-display);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;}
+  .steps li.award::before{content:"★";background:var(--signal);}
+  .steps .when{font-family:var(--font-mono);font-size:13px;color:var(--text-strong);padding-top:3px;}
+  .steps .when.past{color:var(--danger-fg);}
+  .steps b{font-family:var(--font-display);font-weight:600;font-size:15px;}
+  .steps p{margin:3px 0 0;font-size:13.5px;line-height:1.5;color:var(--text-body);}
+  .flags{display:grid;gap:10px;margin-top:18px;}
+  .flag{padding:12px 16px;border-radius:var(--radius-md);font-size:14px;line-height:1.5;}
+  .flag b{font-family:var(--font-display);font-weight:600;}
+  .flag.warn{background:var(--warning-bg);color:var(--ink-800);} .flag.warn b{color:var(--warning-fg);}
+  .flag.bad{background:var(--danger-bg);color:var(--ink-800);} .flag.bad b{color:var(--danger-fg);}
+  .flag.good{background:var(--success-bg);color:var(--ink-800);} .flag.good b{color:var(--success-fg);}
+  .flag.info{background:var(--info-bg);color:var(--ink-800);} .flag.info b{color:var(--info-fg);}
+
+  /* ---- Colors of money ---- */
+  .money{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:28px;}
+  .coin{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:22px;position:relative;overflow:hidden;}
+  .coin .yrs{font-family:var(--font-display);font-weight:700;font-size:40px;letter-spacing:-1px;line-height:1;}
+  .coin .yrs small{font-size:14px;font-weight:600;color:var(--text-muted);letter-spacing:0;margin-left:4px;}
+  .coin h4{font-size:16px;font-weight:600;margin:10px 0 0;}
+  .coin .abbr{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);}
+  .coin p{font-size:13.5px;line-height:1.55;color:var(--text-body);margin:10px 0 0;}
+  .coin .bars{display:flex;gap:3px;margin-top:14px;}
+  .coin .bars span{flex:1;height:6px;border-radius:3px;background:var(--ink-200);}
+  .coin .bars span.on{background:var(--accent);}
+  .coin.c2 .bars span.on{background:var(--blue-700);} .coin.c3 .bars span.on{background:var(--signal);} .coin.c4 .bars span.on{background:var(--ink-800);}
+  .coin .exp{font-size:12.5px;color:var(--text-muted);margin-top:8px;font-family:var(--font-mono);}
+
+  /* ---- Truths ---- */
+  .truths{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px;}
+  .truth{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:22px 22px 20px;transition:transform var(--dur-normal) var(--ease-out),box-shadow var(--dur-normal);}
+  .truth:last-child{grid-column:1/-1;background:var(--gradient-ink);}
+  .truth:last-child h4{color:#fff;} .truth:last-child p{color:var(--ink-300);}
+  .truth:hover{transform:var(--lift);box-shadow:var(--shadow-lg);}
+  .truth .n{font-family:var(--font-mono);font-size:12px;color:var(--signal-hover);font-weight:600;}
+  .truth h4{font-size:18px;font-weight:700;letter-spacing:-0.2px;line-height:1.25;margin:8px 0 0;}
+  .truth p{font-size:14px;line-height:1.55;color:var(--text-body);margin:10px 0 0;}
+
+  /* ---- Positioning ---- */
+  .positioning{margin:80px 0 8px;text-align:center;padding:44px 24px;background:var(--gradient-ink);border-radius:var(--radius-xl);}
+  .positioning .label{font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--text-on-dark-dim);}
+  .positioning .line{font-family:var(--font-display);font-weight:700;font-size:32px;line-height:1.2;letter-spacing:-0.4px;color:#fff;margin:12px auto 12px;max-width:760px;}
+  .positioning .sub{color:var(--ink-300);font-size:15.5px;line-height:1.6;max-width:640px;margin:0 auto 26px;}
+  .positioning .cta{display:inline-block;font-family:var(--font-display);font-weight:600;font-size:15px;color:#fff;background:var(--accent);padding:13px 26px;border-radius:var(--radius-md);text-decoration:none;box-shadow:var(--shadow-blue);transition:transform var(--dur-normal) var(--ease-out),box-shadow var(--dur-normal);}
+  .positioning .cta:hover{transform:var(--lift-sm);box-shadow:var(--shadow-blue-lg);}
+  .fine{font-size:12.5px;line-height:1.6;color:var(--text-muted);margin:28px 0 48px;max-width:860px;}
+
+  .site-footer{background:var(--gradient-ink);color:var(--text-on-dark-dim);padding:34px 60px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;font-size:13px;}
+  .site-footer .org{font-family:var(--font-display);font-weight:600;color:#fff;font-size:14px;}
+  .site-footer a{color:var(--text-on-dark-dim);text-decoration:none;font-family:var(--font-mono);}
+  .site-footer a:hover{color:#fff;}
+
+  @media (max-width:980px){
+    .clock{grid-template-columns:1fr;}
+    .status,.money{grid-template-columns:repeat(2,1fr);}
+    .truths{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){
+    .site-header{padding:14px 16px;}
+    .wrap{padding:0 16px;}
+    section{margin-top:56px;}
+    .hero{padding-top:36px;}
+    .hero h1{font-size:34px;}
+    .sec-title{font-size:26px;}
+    .status{grid-template-columns:1fr 1fr;gap:12px;}
+    .stat{padding:14px 14px;}
+    .stat .v{font-size:24px;}
+    .money,.truths,.controls{grid-template-columns:1fr;}
+    .wheel-card{padding:8px;}
+    .row{grid-template-columns:1fr;gap:4px;}
+    .month-head,.month-body{padding-left:18px;padding-right:18px;}
+    .planner{padding:20px 16px;}
+    .steps li{grid-template-columns:28px 1fr;}
+    .steps li > div{grid-column:2;}
+    .positioning .line{font-size:24px;}
+    .site-footer{padding:28px 16px;}
+  }
+  @media print{
+    .site-header{position:static;} .header-cta,.month-nav{display:none;}
+    .wheel-card,.month,.planner,.coin,.truth,.stat{box-shadow:none;border:1px solid var(--border-subtle);}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label="SFV9 — home">
+    <img src="/assets/logo-mark.png" alt="SFV9">
+    <b>SFV9</b>
+  </a>
+  <a class="header-cta" href="mailto:info@sfv9.com?subject=The%20Federal%20Year%20%E2%80%94%20let%27s%20talk">Talk to SFV9 →</a>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">The Federal Year</div>
+    <h1>Federal money runs on a clock. <span class="grad">Most founders can't see it.</span></h1>
+    <p class="lead">Congress, agency contracting offices and the Pentagon's planners each run their own calendar. Your deal moves when all three line up. This page shows where we are on that clock today, what each month is for, and when to start if you need a contract by a certain date.</p>
+
+    <div class="status" id="status" aria-live="polite"></div>
+    <div class="note" id="note" hidden></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">The Federal Money Wheel</div>
+    <h2 class="sec-title">Twelve months, three calendars, one wheel</h2>
+    <p class="sec-lead">The year starts October 1. The outer ring is Congress (where the money comes from), the middle ring is buyers (how much contracting offices are spending), and the inner ring is DoD planning (the budget two years out). Tap a month to see what it's for.</p>
+
+    <div class="clock">
+      <div class="wheel-card">
+        <svg id="wheel" viewBox="-390 -312 780 624" role="group" aria-label="The Federal Money Wheel: the federal fiscal year"></svg>
+        <div class="legend">
+          <span><i style="background:var(--ink-800)"></i>Congress</span>
+          <span><i style="background:linear-gradient(90deg,var(--blue-100),var(--blue-600))"></i>Buying activity</span>
+          <span><i style="background:var(--coral-300)"></i>DoD planning (FY+2)</span>
+          <span><i style="background:var(--signal);border-radius:50%"></i>Today</span>
+        </div>
+      </div>
+      <article class="month" id="month" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow signal">Reverse planner</div>
+    <h2 class="sec-title">When do I need to start?</h2>
+    <p class="sec-lead">Choose how you plan to get bought and when you need the award. The planner works back from that date, using typical lead times, and flags dates that land in a bad part of the year.</p>
+
+    <div class="planner">
+      <div class="controls">
+        <div class="field">
+          <label for="path">Path to contract</label>
+          <select id="path"></select>
+        </div>
+        <div class="field">
+          <label for="target">Award needed by</label>
+          <input type="month" id="target">
+        </div>
+        <div class="field">
+          <label for="pace">Your pace</label>
+          <select id="pace">
+            <option value="0.8">Fast — warm champion already</option>
+            <option value="1" selected>Typical</option>
+            <option value="1.35">Cautious — new to this agency</option>
+          </select>
+        </div>
+      </div>
+      <p class="path-desc" id="pathDesc"></p>
+      <div class="verdict" id="verdict"></div>
+      <div class="track" id="track" aria-hidden="true"></div>
+      <div class="axis" id="axis" aria-hidden="true"></div>
+      <div class="flags" id="flags"></div>
+      <ol class="steps" id="steps"></ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Colors of money</div>
+    <h2 class="sec-title">Not all dollars expire on the same day</h2>
+    <p class="sec-lead">Each type of appropriation can only be committed for a fixed number of years. That's why September is so busy, and why the kind of money matters as much as how much there is.</p>
+    <div class="money" id="money"></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Field notes</div>
+    <h2 class="sec-title">Seven truths of the federal calendar</h2>
+    <div class="truths" id="truths"></div>
+  </section>
+
+  <div class="positioning">
+    <div class="label">FRIS · Federal Revenue Intelligence</div>
+    <div class="line">The calendar is public. <span class="grad">Timing it is the edge.</span></div>
+    <p class="sub">Every SFV9 retainer runs on FRIS, which matches, scores and briefs federal opportunities against your business, timed to when buyers can actually spend.</p>
+    <a class="cta" href="mailto:info@sfv9.com?subject=Timing%20our%20federal%20pipeline">Plan your federal year with SFV9 →</a>
+    <p class="sub" style="margin:22px auto 0;font-size:14px">Want to know where your pursuit is stuck? Take the two-minute <a href="/bidpath/#check" style="color:var(--blue-300)">Bid Path readiness check →</a></p>
+    <p class="sub" style="margin:10px auto 0;font-size:14px">Every week: the <b style="color:#fff">SFV9 Defense &amp; Acquisition Brief</b>, with where we are on the wheel. <a href="mailto:info@sfv9.com?subject=Subscribe%20me%20to%20the%20SFV9%20Brief&amp;body=Please%20add%20me%20to%20the%20weekly%20SFV9%20Defense%20%26%20Acquisition%20Brief.%0A%0AName%3A%0ACompany%3A" style="color:var(--blue-300)">Get the weekly Brief →</a></p>
+  </div>
+
+  <p class="fine">Timelines are typical patterns from two decades of federal selling, not guarantees. Agencies, vehicles and years vary. Statutory dates (fiscal year, President's Budget deadline, budget resolution target) come from law; the rest are recurring patterns. Planning-ring timing follows the DoD PPBE cycle; civilian agencies run similar but less formal cycles. Not legal or contracting advice.</p>
+</main>
+
+<footer class="site-footer">
+  <span class="org">SFV9 · Federal GTM Strategy</span>
+  <span>© <span id="yr"></span> SFV9 &nbsp;·&nbsp; <a href="mailto:info@sfv9.com">info@sfv9.com</a></span>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ------------------------------------------------------------------
+   CURRENT STATUS — the only part that needs updating by hand.
+   Edit when Congress acts. If `cr.through` has passed, the CR card
+   falls back to a generic message.
+   ------------------------------------------------------------------ */
+var STATUS = {
+  fy: 2027,
+  asOf: "2026-10-31",
+  cr: { through: "2026-12-11", law: "P.L. 119-103" },
+  note: "FY27 is running on a continuing resolution at FY26 levels through December 11, after the November 3 midterms. None of the 12 regular appropriations bills has passed yet. Expect new starts to wait until full-year funding."
+};
+
+/* ------------------------------------------------------------------
+   Months, October first.
+   buy: illustrative 1–10 index of contracting activity.
+   ------------------------------------------------------------------ */
+var MONTHS = [
+  { m:"October", s:"Oct", buy:3, mood:"New year, old money",
+    congress:"Fiscal year begins October 1, usually under a continuing resolution (CR). A CR funds last year's activities at last year's levels and generally bars new starts.",
+    buyers:"Contracting offices are closing out September's awards. New-year money arrives in small slices, so spending is thin.",
+    dod:"Program and budget review: the Pentagon's budget office scrubs the services' plans into next year's President's Budget request.",
+    move:["Book meetings, not deals. Program offices have time to talk and nothing to spend.","Ask: “What's in your next budget request, and what got cut?” The cut list is your opening.","Line up the contract vehicles you'll need in the spring."],
+    trap:"Putting Q1 revenue in your forecast from a buyer who is on a CR." },
+  { m:"November", s:"Nov", buy:3, mood:"Talk season",
+    congress:"CR extensions and end-of-year negotiations. The NDAA conference works out House and Senate differences.",
+    buyers:"Still slow, and the holidays start eating the calendar. A good month for technical exchanges and demos.",
+    dod:"Budget review continues; issue papers decide what survives into the request.",
+    move:["Turn October's meetings into a one-page problem statement your champion can forward internally.","Offer a no-cost demo or a short technical exchange while people have time.","Map who signs, who pays and who uses. They are rarely the same person."],
+    trap:"Mistaking a friendly meeting for a funded requirement." },
+  { m:"December", s:"Dec", buy:2, mood:"Deadlines and dark weeks",
+    congress:"The NDAA is typically signed in December. CR deadline brinkmanship, with another CR, an omnibus, or a shutdown.",
+    buyers:"The last two weeks of the year go quiet. Little gets awarded unless it was already in motion.",
+    dod:"The President's Budget request locks. What's in it is mostly settled now.",
+    move:["Read the NDAA for new authorities, pilot programs and reports that name your space. Each one is a reason to call.","Plan January outreach now, while everyone else is offline.","Check your registrations (SAM.gov, CAGE) before the new year rush."],
+    trap:"Treating a December verbal “yes” as booked when funds aren't released." },
+  { m:"January", s:"Jan", buy:4, mood:"Doors start opening",
+    congress:"Full-year appropriations often land between January and March, unless Congress settles for a full-year CR.",
+    buyers:"Once appropriations pass, agencies build spend plans and new starts unlock.",
+    dod:"POM build kicks off: the services start shaping programs for the budget two years out.",
+    move:["This is the window to get into the budget two years out. Give your champion a sized, costed requirement.","Ask program offices what they can fund this year once appropriations clear.","Line up your prime and partner conversations for the spring solicitations."],
+    trap:"Waiting for the RFP. By the time it's public, the requirement was written months ago." },
+  { m:"February", s:"Feb", buy:5, mood:"The budget drops",
+    congress:"The President's Budget request is due by law on the first Monday in February (it is often late). Posture hearings begin.",
+    buyers:"Q2 planning. With the budget come the justification books (J-books), the most useful public documents in federal sales.",
+    dod:"Budget released; the POM build for two years out is in full swing.",
+    move:["Read the J-books. Find program lines where your capability fits and the funding is growing.","Brief champions on how your offer maps to specific budget lines.","Watch posture testimony for the problems leaders say out loud."],
+    trap:"Pitching a capability without naming the budget line that pays for it." },
+  { m:"March", s:"Mar", buy:6, mood:"Spend plans go live",
+    congress:"Posture hearings continue. Member offices collect programmatic and report-language requests, typically due in spring.",
+    buyers:"Spend plans are approved and solicitations start flowing.",
+    dod:"POM build continues; the services decide trades between programs.",
+    move:["Engage Hill staff where you have a district or state footprint. Requests close soon.","Respond to every relevant RFI. That's how you shape the requirement.","Schedule capability briefs with contracting officers, not just users."],
+    trap:"Skipping RFIs because they aren't a real opportunity yet." },
+  { m:"April", s:"Apr", buy:6, mood:"Planning for September",
+    congress:"The budget resolution is due April 15, a target Congress rarely meets.",
+    buyers:"Q3 begins. Acquisition plans for end-of-year awards take shape now.",
+    dod:"POM issues are argued and settled.",
+    move:["Ask contracting officers what they plan to award in Q4 and on which vehicle, then get onto that vehicle.","Pair with a prime or a small-business partner if you lack the vehicle.","Put a September close plan in writing with your champion."],
+    trap:"Assuming you'll be eligible for an award without the right vehicle." },
+  { m:"May", s:"May", buy:7, mood:"Markup season",
+    congress:"House NDAA and appropriations markups begin. This is where report language gets written.",
+    buyers:"Solicitations for Q4 awards are out. Proposal season.",
+    dod:"POM nearly final; reprogramming discussions start.",
+    move:["A line of report language can legitimize a whole program. Work with your champion and the Hill.","Write proposals now for awards you want in September.","Price to the vehicle's labor categories before you're asked."],
+    trap:"Ignoring markups because they aren't law yet. Report language steers money anyway." },
+  { m:"June", s:"Jun", buy:7, mood:"Get ready-to-award",
+    congress:"Appropriations markups and NDAA floor action.",
+    buyers:"Mid-year reviews find money that hasn't been spent. Some gets moved (reprogrammed) to programs that can spend it fast.",
+    dod:"The Pentagon's mid-year reprogramming request goes to Congress.",
+    move:["Have a ready-to-award package: draft statement of work, pricing, vehicle, points of contact.","Tell your champion you can absorb unspent money if it frees up.","Make sure finance and legal can sign quickly in Q4."],
+    trap:"Arriving in August with a slide deck instead of a priced, award-ready package." },
+  { m:"July", s:"Jul", buy:8, mood:"The surge begins",
+    congress:"Senate markups. The August recess looms, and CR talk starts.",
+    buyers:"Q4 begins and so does the buying surge. Contracting offices prioritize whatever is easiest to award.",
+    dod:"The POM goes to the Secretary's office for review.",
+    move:["Be easy to buy. Quote fast and use whatever vehicle they already have.","Follow up weekly on every live opportunity.","Check that everyone on your side knows the award paperwork."],
+    trap:"Insisting on your own contract terms in a quarter when speed wins." },
+  { m:"August", s:"Aug", buy:9, mood:"Peak workload",
+    congress:"Recess. Back home, members hear from constituents and the CR plan forms.",
+    buyers:"Contracting offices are at peak workload. Many cut off new actions in late August or early September.",
+    dod:"Program review of the POM begins.",
+    move:["Help, don't burden. Offer the facts the contracting officer needs: market research answers, sole-source rationale, capability statements.","Ask about each office's internal cutoff date for new actions.","Line up a backup vehicle in case the first one stalls."],
+    trap:"Missing the office's internal cutoff, which comes weeks before September 30." },
+  { m:"September", s:"Sep", buy:10, mood:"Use it or lose it",
+    congress:"Funding deadline September 30: a CR, an appropriations deal, or a shutdown.",
+    buyers:"Typically the biggest month of the year for contract obligations. One-year money expires at midnight September 30.",
+    dod:"Expiring money gets swept into anything ready to go.",
+    move:["Answer your phone on September 29.","Have an order-ready quote on every vehicle you hold.","Know which of your deals use expiring money, and follow those hardest."],
+    trap:"Assuming a September yes carries into October if the paperwork isn't done." }
+];
+
+var RING_CONGRESS = [
+  { a:0, b:3, t:"CR season" },
+  { a:3, b:4.2, t:"Final approps?" },
+  { a:4.2, b:7, t:"President's Budget & hearings" },
+  { a:7, b:10, t:"Markups · NDAA" },
+  { a:10, b:12, t:"Deadline" }
+];
+var RING_DOD = [
+  { a:0, b:3, t:"Budget review" },
+  { a:3, b:9.6, t:"POM build — FY+2" },
+  { a:9.6, b:12, t:"POM review" }
+];
+var MARKERS = [
+  { at:0, t:"Oct 1 · new fiscal year" },
+  { at:2.4, t:"NDAA (typical)" },
+  { at:4.05, t:"Budget request" },
+  { at:6.47, t:"Budget res. Apr 15" }
+];
+
+/* ------------------------------------------------------------------
+   Paths to contract. Phases in weeks before the award (typical pace).
+   ------------------------------------------------------------------ */
+var PATHS = {
+  micro: { name:"Micro-purchase (government purchase card)", color:"var(--blue-400)",
+    desc:"A user with a purchase card buys under the micro-purchase threshold. Fastest path, small dollars, and a good first proof point.",
+    phases:[ ["Find a card holder with a need",4,"Usually an end user or a lab, not a program office."], ["Quote, approval, swipe",2,"Simple quote; pricing that's easy to justify."] ] },
+  vehicle: { name:"Order on an existing vehicle (GSA MAS, BPA, IDIQ)", color:"var(--blue-500)",
+    desc:"The agency orders off a contract you (or your partner) already hold. Fast, because the hard competition already happened.",
+    phases:[ ["Champion + requirement",8,"A named user with a problem and a rough budget."], ["Funding identified",4,"The money exists in this fiscal year and is set aside."], ["RFQ, quotes, evaluation",6,"Often a quick competition among vehicle holders."] ] },
+  ota: { name:"OTA prototype (via a consortium)", color:"var(--blue-700)",
+    desc:"An Other Transaction agreement for a prototype, often through a consortium. Flexible and fast by federal standards, and can lead to follow-on production.",
+    phases:[ ["Frame the problem with a sponsor",8,"A government sponsor who owns the problem."], ["White paper → pitch",8,"Consortium call for solutions, white paper, then a pitch."], ["Proposal & negotiation",10,"Prototype proposal, technical evaluation, agreement."] ] },
+  sbir: { name:"SBIR/STTR Phase III (sole source)", color:"var(--coral-500)",
+    desc:"Builds on a prior SBIR/STTR award covering the technology. Phase III can be awarded sole source, using any type of agency money.",
+    phases:[ ["Champion + requirement",8,"The prior SBIR work has to be tied to a current need."], ["Funding identified",8,"Find this-year money, often program money, not SBIR money."], ["Paperwork & negotiation",8,"Contracting office confirms Phase III status and negotiates."] ] },
+  rfp: { name:"Competitive RFP (full & open)", color:"var(--ink-700)",
+    desc:"A formal competition. The longest standard path. Most of it happens before the solicitation is public.",
+    phases:[ ["Shape the requirement",26,"RFIs, industry days, capability briefs. This is where competitions are won."], ["Draft → final RFP",12,"Comment on the draft; line up teammates and past performance."], ["Write the proposal",6,"Typically 30–45 days from release to due date."], ["Evaluation & award",16,"Evaluations, discussions, possible protest window."] ] },
+  pom: { name:"New program of record (budget line)", color:"var(--coral-700)",
+    desc:"Getting your capability its own line in the budget. Takes the longest and pays off the most. The money for any fiscal year gets set two years earlier.",
+    phases:null }
+};
+
+var DAY = 86400000;
+function d(y,m,dd){ return new Date(y,m,dd); }
+function fyOf(dt){ return dt.getMonth()>=9 ? dt.getFullYear()+1 : dt.getFullYear(); }
+function fyStart(fy){ return d(fy-1,9,1); }
+function fyIdx(dt){ return (dt.getMonth()+3)%12; }
+function fmt(dt){ return dt.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}); }
+function fmtMY(dt){ return dt.toLocaleDateString("en-US",{month:"short",year:"numeric"}); }
+function daysBetween(a,b){ return Math.round((b-a)/DAY); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];}); }
+
+var today = new Date(); today.setHours(0,0,0,0);
+var FY = fyOf(today);
+var start = fyStart(FY), end = fyStart(FY+1);
+var dayOfFY = daysBetween(start,today)+1;
+var fyLen = daysBetween(start,end);
+var frac = (dayOfFY-0.5)/fyLen;
+
+document.getElementById("yr").textContent = today.getFullYear();
+
+/* ---------------- Status strip ---------------- */
+(function(){
+  var q4 = d(FY,6,1); // July 1: start of Q4
+  var toQ4 = daysBetween(today,q4);
+  var cards = [];
+  cards.push({k:"Fiscal year", v:"FY"+String(FY).slice(2)+"<small>day "+dayOfFY+"</small>", d:Math.round(dayOfFY/fyLen*100)+"% through · ends Sep 30, "+FY, c:""});
+  var crThrough = STATUS.cr && new Date(STATUS.cr.through+"T00:00:00");
+  if (STATUS.fy===FY && crThrough && crThrough>=today){
+    cards.push({k:"Funding", v:daysBetween(today,crThrough)+"<small>days</small>", d:"left on the CR ("+STATUS.cr.law+"), through "+fmt(crThrough), c:"signal"});
+  } else {
+    cards.push({k:"Funding", v:fyIdx(today)<4?"CR season":"Check status", d:"Most fiscal years start on a continuing resolution", c:"signal"});
+  }
+  cards.push(toQ4>0
+    ? {k:"Q4 surge", v:toQ4+"<small>days</small>", d:"until July 1. Award-ready by June.", c:""}
+    : {k:"Q4 surge", v:"Live", d:daysBetween(today,end)+" days until one-year money expires", c:"signal"});
+  cards.push({k:"Pentagon is planning", v:"FY"+String(FY+2).slice(2), d:"Money for FY"+String(FY+2).slice(2)+" is decided in the POM built Jan–Jul "+(FY)+".", c:"ink"});
+  document.getElementById("status").innerHTML = cards.map(function(c){
+    return '<div class="stat '+c.c+'"><div class="k">'+c.k+'</div><div class="v">'+c.v+'</div><div class="d">'+esc(c.d)+'</div></div>';
+  }).join("");
+  if (STATUS.fy===FY && STATUS.note){
+    var n = document.getElementById("note");
+    n.hidden = false;
+    n.innerHTML = '<b>Now</b><span>'+esc(STATUS.note)+' <span style="color:var(--text-muted)">(as of '+fmt(new Date(STATUS.asOf+"T00:00:00"))+')</span></span>';
+  }
+})();
+
+/* ---------------- Wheel ---------------- */
+var NS = "http://www.w3.org/2000/svg";
+var svg = document.getElementById("wheel");
+function el(tag, attrs, parent){ var e=document.createElementNS(NS,tag); for (var k in attrs) e.setAttribute(k,attrs[k]); (parent||svg).appendChild(e); return e; }
+function ang(i){ return (i/12)*2*Math.PI - Math.PI/2; }
+function pt(r,a){ return [r*Math.cos(a), r*Math.sin(a)]; }
+function annulus(r0,r1,a0,a1){
+  var p0=pt(r1,a0),p1=pt(r1,a1),p2=pt(r0,a1),p3=pt(r0,a0),large=(a1-a0)>Math.PI?1:0;
+  return "M"+p0+"A"+r1+","+r1+" 0 "+large+" 1 "+p1+"L"+p2+"A"+r0+","+r0+" 0 "+large+" 0 "+p3+"Z";
+}
+function arcPath(r,a0,a1){
+  // Text reads left-to-right: reverse direction on the lower half.
+  var mid=(a0+a1)/2, lower=Math.sin(mid)>0.15, large=(a1-a0)>Math.PI?1:0;
+  if (lower){ var s=pt(r,a1), e=pt(r,a0); return "M"+s+"A"+r+","+r+" 0 "+large+" 0 "+e; }
+  var s2=pt(r,a0), e2=pt(r,a1); return "M"+s2+"A"+r+","+r+" 0 "+large+" 1 "+e2;
+}
+var R = { cO1:282, cO0:250, b1:244, b0:186, p1:180, p0:150, hub:138 };
+var defs = el("defs",{});
+var gapA = 0.006;
+
+// Congress ring
+RING_CONGRESS.forEach(function(s,i){
+  el("path",{d:annulus(R.cO0,R.cO1,ang(s.a)+gapA,ang(s.b)-gapA), fill: i%2?"var(--ink-700)":"var(--ink-800)"});
+  var id="cg"+i; el("path",{id:id,d:arcPath((R.cO0+R.cO1)/2-(Math.sin(ang((s.a+s.b)/2))>0.15?-4:4),ang(s.a),ang(s.b)),fill:"none"},defs);
+  var t=el("text",{"class":"ring-label",fill:"#fff"}); var tp=el("textPath",{href:"#"+id,startOffset:"50%","text-anchor":"middle"},t); tp.textContent=s.t;
+});
+// Buyer ring: heat by month
+function heat(v){ var c=["#EFF5FF","#DBE8FE","#BFD5FE","#93B8FD","#6097FA","#3B7BF3","#2563EB","#1D4ED8","#1E40AF","#E85D6D"]; return c[Math.max(0,Math.min(9,v-1))]; }
+MONTHS.forEach(function(mo,i){
+  el("path",{d:annulus(R.b0,R.b1,ang(i)+gapA,ang(i+1)-gapA), fill:heat(mo.buy)});
+  var id="mb"+i; el("path",{id:id,d:arcPath((R.b0+R.b1)/2-(Math.sin(ang(i+0.5))>0.15?-5:5),ang(i),ang(i+1)),fill:"none"},defs);
+  var t=el("text",{"class":"mon-label",fill: mo.buy>=5?"#fff":"var(--ink-800)"}); var tp=el("textPath",{href:"#"+id,startOffset:"50%","text-anchor":"middle"},t); tp.textContent=mo.s.toUpperCase();
+});
+// DoD planning ring
+RING_DOD.forEach(function(s,i){
+  el("path",{d:annulus(R.p0,R.p1,ang(s.a)+gapA,ang(s.b)-gapA), fill:["var(--coral-100)","var(--coral-300)","var(--coral-200)"][i]});
+  var id="pd"+i; el("path",{id:id,d:arcPath((R.p0+R.p1)/2-(Math.sin(ang((s.a+s.b)/2))>0.15?-4:4),ang(s.a),ang(s.b)),fill:"none"},defs);
+  var t=el("text",{"class":"ring-label",fill:"var(--coral-900)"}); var tp=el("textPath",{href:"#"+id,startOffset:"50%","text-anchor":"middle"},t); tp.textContent=s.t;
+});
+// Markers
+MARKERS.forEach(function(mk,i){
+  var a=ang(mk.at), p=pt(R.cO1+7,a), lp=pt(R.cO1+18,a);
+  el("circle",{cx:p[0],cy:p[1],r:3.2,fill:"var(--ink-500)"});
+  var anchor = Math.cos(a)>0.25?"start":(Math.cos(a)<-0.25?"end":"middle");
+  var t=el("text",{"class":"marker-label",x:lp[0],y:lp[1]+(Math.sin(a)<-0.9?-4:(Math.sin(a)>0.9?10:3)),"text-anchor":anchor}); t.textContent=mk.t;
+});
+// Hub
+el("circle",{r:R.hub,fill:"var(--paper)",stroke:"var(--border-subtle)"});
+var hubQ = el("text",{y:-46,"text-anchor":"middle",style:"font-family:var(--font-mono);font-size:12px;fill:var(--ink-500)"});
+var hubM = el("text",{y:-10,"text-anchor":"middle",style:"font-family:var(--font-display);font-weight:700;font-size:30px;fill:var(--ink-900);letter-spacing:-0.5px"});
+var hubS = el("text",{y:16,"text-anchor":"middle",style:"font-family:var(--font-body);font-size:13px;fill:var(--ink-600)"});
+var hubN = el("text",{y:52,"text-anchor":"middle",style:"font-family:var(--font-display);font-weight:600;font-size:11px;letter-spacing:0.8px;fill:var(--coral-600)"});
+// Hit wedges
+var wedges = MONTHS.map(function(mo,i){
+  var w = el("path",{d:annulus(R.p0-2,R.cO1+2,ang(i),ang(i+1)),"class":"wedge",tabindex:0,role:"button","aria-label":mo.m});
+  w.addEventListener("click",function(){ select(i); });
+  w.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); select(i);} if(e.key==="ArrowRight"){select((i+1)%12); wedges[(i+1)%12].focus();} if(e.key==="ArrowLeft"){select((i+11)%12); wedges[(i+11)%12].focus();} });
+  return w;
+});
+// Today needle
+(function(){
+  var a = frac*2*Math.PI - Math.PI/2, p0=pt(R.hub+2,a), p1=pt(R.cO1+4,a);
+  var g = el("g",{style:"pointer-events:none"});
+  el("line",{x1:p0[0],y1:p0[1],x2:p1[0],y2:p1[1],stroke:"var(--paper)","stroke-width":6,"stroke-linecap":"round"},g);
+  el("line",{x1:p0[0],y1:p0[1],x2:p1[0],y2:p1[1],stroke:"var(--signal)","stroke-width":3,"stroke-linecap":"round"},g);
+  var dot = el("circle",{cx:p1[0],cy:p1[1],r:7,fill:"var(--signal)",stroke:"#fff","stroke-width":2.5},g);
+  var pulse = el("circle",{cx:p1[0],cy:p1[1],r:7,fill:"none",stroke:"var(--signal)","stroke-width":2},g);
+  if (!window.matchMedia || !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    el("animate",{attributeName:"r",from:"7",to:"20",dur:"2s",repeatCount:"indefinite"},pulse);
+    el("animate",{attributeName:"opacity",from:"0.8",to:"0",dur:"2s",repeatCount:"indefinite"},pulse);
+  }
+})();
+
+/* ---------------- Month panel ---------------- */
+var cur = fyIdx(today), sel = cur;
+function select(i){
+  sel = i; var mo = MONTHS[i];
+  wedges.forEach(function(w,j){ w.classList.toggle("sel", j===i); });
+  var calY = i<3 ? FY-1 : FY;
+  hubQ.textContent = "Q"+(Math.floor(i/3)+1)+" · FY"+String(FY).slice(2);
+  hubM.textContent = mo.m;
+  hubS.textContent = mo.mood;
+  hubN.textContent = i===cur ? "YOU ARE HERE" : (i<cur ? "EARLIER THIS FY" : "COMING UP");
+  var h = '<div class="month-head"><div><div class="q">Q'+(Math.floor(i/3)+1)+' · FY'+String(FY).slice(2)+' · '+mo.s+' '+calY+'</div>'+
+    '<h3>'+mo.m+(i===cur?'<span class="now-pill">Now</span>':'')+'</h3><div class="mood">'+esc(mo.mood)+'</div>'+
+    '<div class="meter" title="Typical buying activity"><span style="width:'+(mo.buy*10)+'%"></span></div></div>'+
+    '<div class="month-nav"><button type="button" aria-label="Previous month" data-d="-1">‹</button><button type="button" aria-label="Next month" data-d="1">›</button></div></div>'+
+    '<div class="month-body">'+
+    '<div class="row"><div class="lbl">Congress</div><p>'+esc(mo.congress)+'</p></div>'+
+    '<div class="row"><div class="lbl">Buyers</div><p>'+esc(mo.buyers)+'</p></div>'+
+    '<div class="row"><div class="lbl">DoD planning</div><p>'+esc(mo.dod)+'</p></div>'+
+    '<div class="move"><div class="lbl">Your move</div><ul>'+mo.move.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+'</ul></div>'+
+    '<div class="trap"><div class="lbl">Common mistake</div><p>'+esc(mo.trap)+'</p></div></div>';
+  var box = document.getElementById("month"); box.innerHTML = h;
+  box.querySelectorAll(".month-nav button").forEach(function(b){ b.addEventListener("click",function(){ select((sel+Number(b.dataset.d)+12)%12); }); });
+}
+select(cur);
+
+/* ---------------- Reverse planner ---------------- */
+var pathSel = document.getElementById("path"), tgt = document.getElementById("target"), pace = document.getElementById("pace");
+Object.keys(PATHS).forEach(function(k){ var o=document.createElement("option"); o.value=k; o.textContent=PATHS[k].name; pathSel.appendChild(o); });
+pathSel.value = "vehicle";
+// Default target: September of the current FY (or next FY if we're already in Q4)
+var defT = d(FY,8,1);
+if (defT < today) defT = d(FY+1,8,1);
+tgt.value = defT.getFullYear()+"-"+String(defT.getMonth()+1).padStart(2,"0");
+
+function planFor(key, award, k){
+  var p = PATHS[key], steps = [];
+  if (key==="pom"){
+    var F = fyOf(award);
+    var pbDate = d(F-1,1,1), pomStart = d(F-2,0,1), pomEnd = d(F-2,6,15), champ = new Date(pomStart.getTime()-Math.round(26*k)*7*DAY), apprDate = d(F-1,9,1);
+    steps.push({t:"Find and arm a program champion", s:champ, e:pomStart, c:"var(--coral-300)", n:"A service sponsor who will put a costed requirement into the POM. Bring the problem, the cost and the evidence."});
+    steps.push({t:"POM build for FY"+String(F).slice(2), s:pomStart, e:pomEnd, c:"var(--coral-500)", n:"Your requirement competes for a line in the service's FY"+String(F).slice(2)+"–"+String(F+4).slice(2)+" program."});
+    steps.push({t:"Budget review → President's Budget", s:pomEnd, e:pbDate, c:"var(--coral-700)", n:"Defend it through OSD review. It shows up publicly in the FY"+String(F).slice(2)+" request in February "+(F-1)+"."});
+    steps.push({t:"Congress marks and appropriates", s:pbDate, e:apprDate, c:"var(--ink-700)", n:"Hill engagement protects the line through markups. Expect a CR at the start of FY"+String(F).slice(2)+"."});
+    steps.push({t:"Contract award", s:award, e:award, c:"var(--signal)", award:true, n:"Funds flow once FY"+String(F).slice(2)+" appropriations pass. Award timing still follows the buying calendar."});
+    return steps;
+  }
+  var tWeeks = 0; p.phases.forEach(function(ph){ tWeeks += Math.round(ph[1]*k); });
+  var cursor = new Date(award.getTime() - tWeeks*7*DAY);
+  var shades = { micro:["var(--blue-300)","var(--blue-500)"], vehicle:["var(--blue-300)","var(--blue-500)","var(--blue-700)"], ota:["var(--blue-300)","var(--blue-500)","var(--blue-800)"], sbir:["var(--coral-300)","var(--coral-500)","var(--coral-700)"], rfp:["var(--ink-400)","var(--ink-600)","var(--blue-600)","var(--ink-800)"] }[key];
+  p.phases.forEach(function(ph,i){
+    var w = Math.round(ph[1]*k), e = new Date(cursor.getTime()+w*7*DAY);
+    steps.push({t:ph[0], s:new Date(cursor), e:e, c:shades[i], n:ph[2]+" · ~"+w+" weeks", w:w});
+    cursor = e;
+  });
+  steps.push({t:"Contract award", s:award, e:award, c:"var(--signal)", award:true, n:"Funds obligated on FY"+String(fyOf(award)).slice(2)+" money."});
+  return steps;
+}
+
+function renderPlan(){
+  var key = pathSel.value, k = Number(pace.value);
+  var parts = (tgt.value||"").split("-");
+  if (parts.length<2) return;
+  var award = d(Number(parts[0]), Number(parts[1])-1, 15);
+  var steps = planFor(key, award, k);
+  var startD = steps[0].s, lead = daysBetween(startD, award), toStart = daysBetween(today, startD);
+  document.getElementById("pathDesc").textContent = PATHS[key].desc;
+
+  var big, sub;
+  if (award < today){ big = "That date has passed."; sub = "Pick a future month."; }
+  else if (toStart > 14){ big = 'Start by <span class="grad">'+fmt(startD)+'</span>'; sub = "That's "+toStart+" days from now · about "+Math.round(lead/30.4)+" months of lead time"; }
+  else if (toStart >= -14){ big = 'Start <span class="grad">now</span>.'; sub = "About "+Math.round(lead/30.4)+" months of lead time, and it starts this week."; }
+  else { big = 'You’re <span class="grad">'+Math.round(-toStart/7)+' weeks</span> behind.'; sub = "A typical start would have been "+fmt(startD)+". Compress, pick a faster path, or move the date."; }
+  document.getElementById("verdict").innerHTML = '<div class="big">'+big+'</div><div class="sub">'+sub+'</div>';
+
+  // Track
+  var t0 = Math.min(startD, today), t1 = Math.max(award.getTime()+20*DAY, today.getTime()+20*DAY), span = t1-t0;
+  var pos = function(t){ return ((t-t0)/span*100); };
+  var tr = document.getElementById("track"), html="";
+  steps.forEach(function(s){ if (s.award) return; var L=pos(s.s), W=Math.max(pos(s.e)-L,0.6); html+='<div class="seg" style="left:'+L+'%;width:calc('+W+'% - 2px);background:'+s.c+'" title="'+esc(s.t)+'">'+(W>9?esc(s.t):"")+'</div>'; });
+  html += '<div class="seg" style="left:calc('+pos(award)+'% - 6px);width:12px;padding:0;background:var(--signal)"></div>';
+  if (today>=t0 && today<=t1) html += '<div class="today" style="left:'+pos(today)+'%"></div>';
+  tr.innerHTML = html;
+  var ax = document.getElementById("axis"), ah = "", months = span/DAY/30.4, stepM = months>30?6:(months>14?3:(months>6?2:1));
+  var m = new Date(t0); m = d(m.getFullYear(), m.getMonth()+1, 1);
+  while (m.getTime() < t1){ var pp=pos(m); if (pp>3 && pp<97) ah += '<span style="left:'+pp+'%">'+fmtMY(m)+'</span>'; m = d(m.getFullYear(), m.getMonth()+stepM, 1); }
+  ax.innerHTML = ah;
+
+  // Steps
+  document.getElementById("steps").innerHTML = steps.map(function(s){
+    var past = !s.award && s.e < today;
+    var when = s.award ? fmtMY(s.s) : fmtMY(s.s)+(daysBetween(s.s,s.e)>40?" → "+fmtMY(s.e):"");
+    return '<li class="'+(s.award?"award":"")+'"><span class="when'+(past?" past":"")+'">'+when+'</span><div><b>'+esc(s.t)+'</b><p>'+esc(s.n)+'</p></div></li>';
+  }).join("");
+
+  // Flags
+  var f = [], ai = fyIdx(award), afy = fyOf(award);
+  if (award >= today){
+    if (ai<=2) f.push(["bad","Q1 award, under a likely CR.","Most fiscal years start on a continuing resolution, and CRs generally bar new starts. Unless this effort was funded the year before, aim for September of FY"+String(afy-1).slice(2)+" (expiring money) or March or later in FY"+String(afy).slice(2)+"."]);
+    else if (ai<=4) f.push(["warn","Early in the year.","If full-year appropriations haven't passed, new work may still be waiting. Confirm the money is actually released, not just budgeted."]);
+    else if (ai>=9) f.push(["good","Q4, the buying surge.","Good timing: offices are pushing money out. Be award-ready by June and know each office's internal cutoff, often weeks before September 30."]);
+    else f.push(["info","Mid-year.","Spend plans are live. Solid timing for orders on existing vehicles."]);
+    if (key==="pom") f.push(["info","Two years out is the norm.","Money for FY"+String(afy).slice(2)+" gets decided in the POM built January–July "+(afy-2)+". If that's already past, the earliest new line is FY"+String(Math.max(afy, fyOf(today)+2)).slice(2)+". Bridge with an OTA or an order on an existing vehicle."]);
+    if (key==="rfp" && lead > 0 && toStart < 0) f.push(["warn","The RFP is probably being shaped without you.","If a solicitation is coming soon, consider teaming with a prime who's already engaged."]);
+    if (key==="sbir") f.push(["info","Requires a prior SBIR/STTR award.","Phase III must derive from, extend or complete earlier SBIR/STTR work. Make that link explicit in every conversation."]);
+    if (key==="micro") f.push(["info","Small dollars, big signal.","A card purchase is a proof point. It puts your product on a government network and gives you a reference."]);
+  }
+  document.getElementById("flags").innerHTML = f.map(function(x){ return '<div class="flag '+x[0]+'"><b>'+esc(x[1])+'</b> '+esc(x[2])+'</div>'; }).join("");
+}
+[pathSel,tgt,pace].forEach(function(e){ e.addEventListener("change",renderPlan); e.addEventListener("input",renderPlan); });
+renderPlan();
+
+/* ---------------- Colors of money ---------------- */
+var MONEY = [
+  { y:1, h:"Operations & Maintenance", a:"O&M", c:"c1", p:"Pays for running things: services, sustainment, subscriptions, training. It expires fastest, and that's what drives the September rush.", ex:"FY"+String(FY).slice(2)+" O&M expires Sep 30, "+FY },
+  { y:2, h:"Research, Development, Test & Evaluation", a:"RDT&E", c:"c2", p:"Pays for prototypes, pilots and testing. Second-year money nearing expiration is often looking for a home.", ex:"FY"+String(FY-1).slice(2)+" RDT&E expires Sep 30, "+FY },
+  { y:3, h:"Procurement", a:"PROC", c:"c3", p:"Pays for buying production quantities of things. A prototype that works must move from RDT&E to procurement. Plan that move early.", ex:"FY"+String(FY-2).slice(2)+" procurement expires Sep 30, "+FY },
+  { y:5, h:"Military Construction", a:"MILCON", c:"c4", p:"Pays for buildings and facilities. Rarely the right money for software, but it matters if your product ships with infrastructure.", ex:"5-year availability" }
+];
+document.getElementById("money").innerHTML = MONEY.map(function(m){
+  var bars=""; for (var i=0;i<5;i++) bars += '<span class="'+(i<m.y?"on":"")+'"></span>';
+  return '<div class="coin '+m.c+'"><div class="yrs">'+m.y+'<small>'+(m.y===1?"year":"years")+'</small></div><h4>'+esc(m.h)+'</h4><div class="abbr">'+esc(m.a)+'</div><div class="bars">'+bars+'</div><div class="exp">'+esc(m.ex)+'</div><p>'+esc(m.p)+'</p></div>';
+}).join("");
+
+/* ---------------- Truths ---------------- */
+var TRUTHS = [
+  ["The budget you're selling into was written two years ago.","DoD builds each budget about two years ahead. If you aren't in the plan, you're selling to whatever money is left over or expiring."],
+  ["On-time appropriations are rare.","Congress has passed all regular appropriations bills on time only four times since the modern budget process began in 1977. Plan for a CR every October."],
+  ["Q1 is for relationships. Q4 is for paperwork.","The conversations that close in September start in October and November, when buyers have time and no money."],
+  ["Expiring money looks for a home.","The deal that's ready to award, on a vehicle the office can use, gets the money. Being ready matters more than having the best product."],
+  ["The RFP is the end, not the start.","By the time a solicitation is public, the requirement, the evaluation criteria and often the favorite are set. Shaping happens in RFIs and briefings."],
+  ["Report language is quiet leverage.","A sentence in a committee report can direct attention and money to a problem without being law. Few founders ever read one."],
+  ["Every office has its own deadline.","September 30 is the legal end of the year, but most contracting shops stop taking new actions weeks before. Ask for the date."]
+];
+document.getElementById("truths").innerHTML = TRUTHS.map(function(t,i){
+  return '<div class="truth"><div class="n">0'+(i+1)+'</div><h4>'+esc(t[0])+'</h4><p>'+esc(t[1])+'</p></div>';
+}).join("");
+})();
+</script>
+</body></html>
