@@ -1,0 +1,20 @@
+{
+ "title": "The BLUF",
+ "author": "Shannon Vaughn",
+ "issues": [
+  {
+   "as_of": "2026-10-29",
+   "subject": "Army automates ATOs and opens drone ranges; GSA reprices AI",
+   "lines": [
+    "Army's Project Gatekeeper goes live to cut software ATOs to near-real-time pipeline checks.",
+    "Army adds two Indiana sites to its list of permissive ranges for commercial drone and counter-drone testing.",
+    "SOCOM gives Smack Technologies an OT worth up to $7.5M to prototype AI campaign planning.",
+    "Office of Strategic Capital offers Stoke Space a $150M conditional loan for a Cape Canaveral launch pad.",
+    "GSA's new Anthropic OneGov deal moves Claude to consumption pricing at a 40% discount.",
+    "Pentagon says it obligated 97.5% of FY2026 reconciliation money; Iran war costs top $47B.",
+    "DHS takes its procurement forecast system offline Oct. 30 during a migration.",
+    "Air Force puts ARRW into production with a $694M Lockheed award and taps startup Castelion for F-16 hypersonics."
+   ]
+  }
+ ]
+}
