@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The BLUF by Shannon Vaughn</title>
+<meta name="description" content="The BLUF by Shannon Vaughn: a free weekly newsletter of federal defense and acquisition news for defense-tech and product companies entering the federal market. A bottom line up front for every story, what it means for new entrants, and my take.">
+<meta property="og:title" content="The BLUF by Shannon Vaughn">
+<meta property="og:description" content="Federal defense and acquisition news, bottom line up front. Free, every week.">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/fonts.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/colors.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/typography.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/spacing.css?v=1">
+<link rel="stylesheet" href="/_ds/sfv9-design-system-6362146f-437f-41dc-b194-b18b08ce9086/tokens/effects.css?v=1">
+<style>
+  *{box-sizing:border-box;}
+  html{color-scheme:light;}
+  body{margin:0;font-family:var(--font-body);background:var(--ground);color:var(--text-strong);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  h1,h2,h3,h4{font-family:var(--font-display);margin:0;}
+  button,input,select{font:inherit;}
+
+  .site-header{display:flex;justify-content:space-between;align-items:center;padding:20px 60px;background:var(--paper);border-bottom:1px solid var(--border-subtle);}
+  .wordmark{display:inline-flex;align-items:baseline;gap:10px;text-decoration:none;}
+  .wordmark b{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:-0.4px;}
+  .wordmark span{font-size:14px;color:var(--text-muted);}
+  .from{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);text-decoration:none;}
+  .from img{height:22px;}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 60px;}
+  section{margin-top:72px;}
+  .eyebrow{font-family:var(--font-display);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--accent);}
+  .eyebrow.signal{color:var(--signal-hover);}
+  .sec-title{font-weight:700;font-size:30px;line-height:1.15;letter-spacing:-0.4px;margin:10px 0 0;}
+  .sec-lead{font-size:16px;line-height:1.6;color:var(--text-body);margin:12px 0 0;max-width:700px;}
+  .grad{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+
+  /* Hero */
+  .hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr);gap:48px;align-items:center;margin-top:0;padding-top:64px;}
+  .hero h1{font-weight:700;font-size:52px;line-height:1.04;letter-spacing:-1px;margin:14px 0 0;}
+  .hero .lead{font-size:18px;line-height:1.6;color:var(--text-body);margin:18px 0 0;}
+  .facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;font-size:14px;color:var(--text-muted);}
+  .facts b{color:var(--text-strong);font-family:var(--font-display);}
+
+  .signup{background:var(--paper);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);padding:28px;border-top:4px solid var(--accent);}
+  .signup h2{font-size:22px;letter-spacing:-0.3px;}
+  .signup p{font-size:14px;color:var(--text-body);margin:6px 0 16px;line-height:1.5;}
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-family:var(--font-display);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--text-muted);margin-bottom:5px;}
+  .field input,.field select{width:100%;height:44px;border:1px solid var(--border-default);border-radius:var(--radius-md);padding:0 12px;background:var(--paper);color:var(--text-strong);font-size:15px;}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:var(--focus-ring);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .btn{display:block;width:100%;height:48px;border:none;border-radius:var(--radius-md);background:var(--accent);color:#fff;font-family:var(--font-display);font-weight:700;font-size:16px;cursor:pointer;box-shadow:var(--shadow-blue);margin-top:6px;}
+  .btn:hover{background:var(--accent-hover);}
+  .fine{font-size:12.5px;color:var(--text-muted);line-height:1.5;margin-top:10px;}
+  .err{font-size:13px;color:var(--danger-fg);margin-top:8px;min-height:1em;}
+
+  /* What's inside */
+  .inside{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px;}
+  .part{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:18px 18px 16px;border-top:3px solid var(--accent);}
+  .part.coral{border-top-color:var(--signal);}
+  .part.ink{border-top-color:var(--ink-800);}
+  .part h3{font-size:16px;font-weight:700;}
+  .part p{font-size:13.5px;line-height:1.55;color:var(--text-body);margin:6px 0 0;}
+
+  /* Sample */
+  .sample-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;align-items:start;margin-top:24px;}
+  .email{background:var(--paper);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:26px 28px;font-size:15px;line-height:1.55;}
+  .email .mast{display:flex;align-items:baseline;gap:8px;padding-bottom:8px;border-bottom:3px solid transparent;border-image:linear-gradient(90deg,var(--blue-500) 40%,var(--coral-500)) 1;}
+  .email .mast b{font-family:var(--font-display);font-size:20px;}
+  .email .mast span{font-size:13px;color:var(--text-muted);}
+  .email h4{font-size:17px;margin-top:16px;line-height:1.3;}
+  .email .src{font-size:12px;color:var(--text-muted);margin:2px 0 8px;}
+  .email .bluf b{color:var(--accent);}
+  .email ul{margin:6px 0 0;padding-left:18px;color:var(--text-body);font-size:14px;}
+  .email .ne{font-size:14px;color:var(--text-body);margin-top:8px;}
+  .email .take{margin-top:10px;background:var(--coral-50);border-left:3px solid var(--signal);padding:10px 14px;font-size:14px;}
+  .email .take b{font-family:var(--font-display);}
+  .why ol{margin:14px 0 0;padding:0;list-style:none;counter-reset:w;}
+  .why li{counter-increment:w;display:grid;grid-template-columns:32px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-subtle);}
+  .why li::before{content:counter(w);width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--font-display);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;}
+  .why b{font-family:var(--font-display);font-size:16px;}
+  .why p{margin:3px 0 0;font-size:14px;line-height:1.55;color:var(--text-body);}
+
+  /* About */
+  .about{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;background:var(--gradient-ink);color:#fff;border-radius:var(--radius-xl);padding:36px;}
+  .about h2{color:#fff;font-size:28px;letter-spacing:-0.4px;margin-top:8px;}
+  .about p{color:var(--ink-300);font-size:15.5px;line-height:1.65;margin:12px 0 0;}
+  .about .eyebrow{color:var(--blue-300);}
+  .tools{display:grid;gap:10px;align-content:start;}
+  .tool{display:block;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-lg);padding:14px 16px;text-decoration:none;color:#fff;transition:background var(--dur-fast);}
+  .tool:hover{background:rgba(255,255,255,0.12);}
+  .tool b{font-family:var(--font-display);font-size:15px;}
+  .tool span{display:block;font-size:13px;color:var(--ink-400);margin-top:2px;}
+
+  /* FAQ */
+  .faq{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:22px;}
+  .faq div{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-xs);padding:18px 20px;}
+  .faq h3{font-size:16px;}
+  .faq p{font-size:14px;line-height:1.55;color:var(--text-body);margin:6px 0 0;}
+
+  .closing{text-align:center;margin:72px 0 56px;}
+  .closing h2{font-size:30px;letter-spacing:-0.4px;}
+  .closing a{display:inline-block;margin-top:18px;font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;background:var(--accent);padding:14px 26px;border-radius:var(--radius-md);text-decoration:none;box-shadow:var(--shadow-blue);}
+
+  .site-footer{background:var(--gradient-ink);color:var(--text-on-dark-dim);padding:30px 60px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:13px;}
+  .site-footer b{font-family:var(--font-display);color:#fff;}
+  .site-footer a{color:var(--text-on-dark-dim);text-decoration:none;}
+  .site-footer a:hover{color:#fff;}
+
+  @media (max-width:960px){
+    .hero,.sample-wrap,.about{grid-template-columns:1fr;}
+    .inside{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){
+    .site-header{padding:14px 16px;}
+    .wordmark span{display:none;}
+    .wrap{padding:0 16px;}
+    section{margin-top:56px;}
+    .hero{padding-top:36px;gap:28px;}
+    .hero h1{font-size:36px;}
+    .sec-title{font-size:25px;}
+    .inside,.faq,.row2{grid-template-columns:1fr;}
+    .signup{padding:22px 18px;}
+    .email{padding:20px 18px;}
+    .about{padding:26px 20px;}
+    .site-footer{padding:26px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="wordmark" href="/thebluf/"><b>The BLUF</b><span>by Shannon Vaughn</span></a>
+  <a class="from" href="/"><img src="/assets/logo-mark.png" alt="">from SFV9</a>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Weekly · free · by Shannon Vaughn</div>
+      <h1>Federal defense and acquisition news, <span class="grad">bottom line up front.</span></h1>
+      <p class="lead">Every week, the stories that matter to defense-tech and product companies entering the federal market. Each story comes with a bottom line up front, what it means for new entrants, and my take on what to do about it.</p>
+      <div class="facts"><span><b>Weekly</b> in your inbox</span><span><b>~10 minutes</b> to read</span><span><b>Free</b>, unsubscribe anytime</span></div>
+    </div>
+
+    <form class="signup" id="signup" novalidate>
+      <h2>Get The BLUF</h2>
+      <p>Tell me a little about you so I can make it useful. This opens an email to me with your details filled in; just press send.</p>
+      <div class="row2">
+        <div class="field"><label for="name">Name</label><input id="name" autocomplete="name" required></div>
+        <div class="field"><label for="email">Work email</label><input id="email" type="email" autocomplete="email" required></div>
+      </div>
+      <div class="field"><label for="company">Company</label><input id="company" autocomplete="organization"></div>
+      <div class="field"><label for="role">Your role</label>
+        <select id="role">
+          <option value="">Choose one</option>
+          <option>Founder or CEO</option>
+          <option>Federal or GTM lead</option>
+          <option>Business development or capture</option>
+          <option>Investor</option>
+          <option>Government</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field"><label for="focus">Agency or mission you care about most</label><input id="focus" placeholder="For example: Army, SOCOM, the intelligence community"></div>
+      <button class="btn" type="submit">Subscribe →</button>
+      <div class="err" id="err" aria-live="polite"></div>
+      <div class="fine">No spam, and I never share your details. Every issue has an unsubscribe.</div>
+    </form>
+  </section>
+
+  <section>
+    <div class="eyebrow">Inside every issue</div>
+    <h2 class="sec-title">Built for a busy executive</h2>
+    <div class="inside">
+      <div class="part"><h3>This week</h3><p>The handful of things that happened, in one list at the top.</p></div>
+      <div class="part"><h3>A BLUF for every story</h3><p>The bottom line first, then the key facts, with a link to the source.</p></div>
+      <div class="part coral"><h3>For new entrants</h3><p>What the story means if you're a non-traditional company trying to sell to government.</p></div>
+      <div class="part coral"><h3>My Take</h3><p>My opinion as a federal go-to-market advisor and former acquisition program manager: what to do, watch or ignore.</p></div>
+      <div class="part ink"><h3>The Federal Money Wheel</h3><p>Where we are in the fiscal year, and the move that makes sense this month.</p></div>
+      <div class="part ink"><h3>Tracker</h3><p>The running stories (budget, reform, security rules) with what changed since last week.</p></div>
+      <div class="part"><h3>From the SFV9 Playbook</h3><p>A play of the week and a gap question to answer about your own pursuits.</p></div>
+      <div class="part"><h3>Worth your time</h3><p>Deep reads and reports worth the full download, with why they matter.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow signal">A taste</div>
+    <h2 class="sec-title">What a story looks like</h2>
+    <div class="sample-wrap">
+      <article class="email" aria-label="Sample story">
+        <div class="mast"><b>The BLUF</b><span>by Shannon Vaughn</span></div>
+        <h4>As Project Gatekeeper goes live, Army plans integration with frontier AI models</h4>
+        <div class="src">DefenseScoop · Oct 28, 2026</div>
+        <div class="bluf"><b>BLUF:</b> The Army switched on Project Gatekeeper, an effort to replace the months-long manual ATO process with automated checks on vendor code.</div>
+        <ul>
+          <li>Vendors share code with the Army's DevSecOps platform and get validated in near real time.</li>
+          <li>The stated goal: a company commits code and gets a pass from the pipeline within minutes.</li>
+        </ul>
+        <div class="ne"><b>For new entrants:</b> Security approval is often the longest step for a new software vendor. An automated ATO path can shorten the time from award to actual use.</div>
+        <div class="take"><b>My Take:</b> This is the most useful thing the Army has done for software startups this year, because the ATO is where good pilots go to die.</div>
+      </article>
+      <div class="why">
+        <div class="eyebrow">Why read it</div>
+        <h2 class="sec-title" style="font-size:26px">News is everywhere. What it means for you isn't.</h2>
+        <ol>
+          <li><div><b>It's filtered for one reader.</b><p>Companies with commercial products trying to win federal work, not the primes and not policy wonks.</p></div></li>
+          <li><div><b>Every story ends in a so-what.</b><p>The BLUF tells you what happened. For new entrants and My Take tell you what to do about it.</p></div></li>
+          <li><div><b>It's timed to the money.</b><p>Each issue places the week on the federal fiscal calendar, so you know whether to push, wait or get ready.</p></div></li>
+          <li><div><b>It's sourced.</b><p>Every summary links to the reporting or official source it came from. No made-up numbers.</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="about">
+      <div>
+        <div class="eyebrow">Who writes it</div>
+        <h2>Shannon Vaughn</h2>
+        <p>I run SFV9, a federal go-to-market consultancy for venture-backed technology companies. I've spent more than 20 years in federal go-to-market and business development, including time as an acquisition program manager, so I read the news the way buyers and program offices do.</p>
+        <p>The BLUF is the briefing I'd want if I were a founder trying to sell to government: short, direct and honest about what matters.</p>
+      </div>
+      <div class="tools">
+        <div class="eyebrow" style="margin-bottom:2px">Free tools from SFV9</div>
+        <a class="tool" href="/fedyear/"><b>The Federal Money Wheel →</b><span>When federal money moves, month by month</span></a>
+        <a class="tool" href="/bidpath/"><b>The Bid Path →</b><span>Six stages, the gaps to close, and a two-minute readiness check</span></a>
+        <a class="tool" href="/kit/"><b>Media kit →</b><span>Short videos and one-page reference sheets</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Questions</div>
+    <h2 class="sec-title">Good to know</h2>
+    <div class="faq">
+      <div><h3>How often?</h3><p>Once a week. The occasional flash alert goes out only when something can't wait.</p></div>
+      <div><h3>What does it cost?</h3><p>Nothing. The BLUF is free.</p></div>
+      <div><h3>Who is it for?</h3><p>Founders, GTM and BD leaders at defense-tech and product companies entering federal, and the investors who back them.</p></div>
+      <div><h3>How do I stop it?</h3><p>Reply "unsubscribe" to any issue and you're off the list.</p></div>
+    </div>
+  </section>
+
+  <div class="closing">
+    <h2>The bottom line, every week.</h2>
+    <a href="#signup">Get The BLUF →</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <span><b>The BLUF</b> by Shannon Vaughn · published by <a href="/">SFV9</a></span>
+  <span><a href="mailto:info@sfv9.com">info@sfv9.com</a></span>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById("signup"), err = document.getElementById("err");
+  function v(id){ return (document.getElementById(id).value || "").trim(); }
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var name = v("name"), email = v("email");
+    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = "Please add your name and a valid email."; return; }
+    err.textContent = "";
+    var body = ["Please add me to The BLUF.", "", "Name: " + name, "Email: " + email,
+      "Company: " + v("company"), "Role: " + v("role"), "Agency or mission I care about most: " + v("focus")].join("\n");
+    location.href = "mailto:info@sfv9.com?subject=" + encodeURIComponent("Subscribe me to The BLUF") + "&body=" + encodeURIComponent(body);
+    form.querySelector(".btn").textContent = "Email ready: press send ✓";
+  });
+})();
+</script>
+</body></html>
