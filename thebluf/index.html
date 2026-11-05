@@ -108,6 +108,19 @@
   .site-footer a{color:var(--text-on-dark-dim);text-decoration:none;}
   .site-footer a:hover{color:#fff;}
 
+  /* Recent issues */
+  .issues{display:grid;gap:16px;margin-top:24px;}
+  .issue{display:block;background:var(--paper);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);padding:22px 26px;text-decoration:none;color:inherit;border-left:4px solid var(--accent);transition:transform var(--dur-normal) var(--ease-out),box-shadow var(--dur-normal);}
+  .issue:hover{transform:var(--lift-sm);box-shadow:var(--shadow-md);}
+  .issue .when{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);}
+  .issue h3{font-size:19px;line-height:1.3;letter-spacing:-0.2px;margin-top:6px;}
+  .issue .tw{font-family:var(--font-display);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--accent);margin-top:14px;}
+  .issue ul{margin:6px 0 0;padding-left:18px;color:var(--text-body);font-size:14.5px;line-height:1.55;}
+  .issue li{margin:3px 0;}
+  .issue .locked{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--border-default);font-size:13.5px;color:var(--text-muted);}
+  .issue .locked b{font-family:var(--font-display);font-weight:700;font-size:14.5px;color:var(--accent);white-space:nowrap;}
+  .more{margin-top:14px;background:none;border:1px solid var(--border-default);border-radius:var(--radius-md);padding:10px 16px;font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--text-strong);cursor:pointer;}
+
   @media (max-width:960px){
     .hero,.sample-wrap,.about{grid-template-columns:1fr;}
     .inside{grid-template-columns:1fr 1fr;}
@@ -124,6 +137,7 @@
     .signup{padding:22px 18px;}
     .email{padding:20px 18px;}
     .about{padding:26px 20px;}
+    .issue{padding:18px;}
     .site-footer{padding:26px 16px;}
   }
 </style>
@@ -215,6 +229,14 @@
     </div>
   </section>
 
+  <section id="issues" hidden>
+    <div class="eyebrow">Recent issues</div>
+    <h2 class="sec-title">Recent issues, in brief</h2>
+    <p class="sec-lead">The "This week" summary from each issue. Subscribers also get a BLUF on every story, what it means for new entrants, My Take, the Money Wheel, the tracker and the play of the week.</p>
+    <div class="issues" id="issue-list"></div>
+    <button class="more" type="button" id="more" hidden>Show older issues</button>
+  </section>
+
   <section>
     <div class="about">
       <div>
@@ -268,6 +290,34 @@
     location.href = "mailto:info@sfv9.com?subject=" + encodeURIComponent("Subscribe me to The BLUF") + "&body=" + encodeURIComponent(body);
     form.querySelector(".btn").textContent = "Email ready: press send ✓";
   });
+})();
+</script>
+<script>
+(function(){
+  var box = document.getElementById("issue-list"), more = document.getElementById("more"), SHOW = 4;
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  function when(iso){ var p = iso.split("-"); return MONTHS[+p[1]-1] + " " + (+p[2]) + ", " + p[0]; }
+  function card(i){
+    var a = document.createElement("a"); a.className = "issue"; a.href = "#signup";
+    a.innerHTML = '<div class="when"></div><h3></h3><div class="tw">This week</div><ul></ul>' +
+      '<div class="locked"><span>The full issue went to subscribers' + "'" + ' inboxes.</span><b>Get the full issue free →</b></div>';
+    a.querySelector(".when").textContent = when(i.as_of);
+    a.querySelector("h3").textContent = i.subject;
+    var ul = a.querySelector("ul");
+    (i.lines || []).forEach(function(t){ var li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+    a.addEventListener("click", function(){ setTimeout(function(){ document.getElementById("name").focus({preventScroll:true}); }, 400); });
+    return a;
+  }
+  fetch("/thebluf/issues.json", {cache:"no-cache"}).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+    var list = (d && d.issues || []).filter(function(i){ return i.as_of && i.subject && (i.lines || []).length; });
+    if (!list.length) return;
+    list.forEach(function(i, n){ var c = card(i); if (n >= SHOW) c.hidden = true; box.appendChild(c); });
+    document.getElementById("issues").hidden = false;
+    if (list.length > SHOW) {
+      more.hidden = false;
+      more.addEventListener("click", function(){ Array.prototype.forEach.call(box.children, function(c){ c.hidden = false; }); more.hidden = true; });
+    }
+  }).catch(function(){});
 })();
 </script>
 </body></html>
