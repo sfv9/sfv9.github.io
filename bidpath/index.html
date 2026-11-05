@@ -329,7 +329,7 @@
   <section id="check">
     <div class="eyebrow">Readiness check</div>
     <h2 class="sec-title">Where are you on the path?</h2>
-    <p class="sec-lead">Twelve of the most important gap questions, about two minutes. Answer honestly: "Not sure" counts as a gap. Your answers stay in your browser.</p>
+    <p class="sec-lead">Thirteen of the most important gap questions, about two minutes. Answer honestly: "Not sure" counts as a gap. Your answers stay in your browser.</p>
     <div class="ready">
       <div class="qs" id="qs"></div>
       <aside class="result" id="result" aria-live="polite"></aside>
@@ -406,6 +406,16 @@ var STAGES = [
     "critical": true
    },
    {
+    "q": "Is this a new start? If it had no budget line last year, what money can fund it before full-year appropriations?",
+    "good": "Known whether the effort was funded last year. If it's a new start, a plan that doesn't wait on the CR: prior-year money still open, reconciliation money in the office's spend plan, or an award timed after full-year funding.",
+    "critical": false
+   },
+   {
+    "q": "Is this contract wired? Who are the competitors, and is there an entrenched incumbent?",
+    "good": "We know who does the work today, how long they've held it and how the customer feels about them; the requirement doesn't read like a competitor's product; and the customer has said why they'd consider someone new. If it's wired for someone else, we walk or target the next requirement.",
+    "critical": true
+   },
+   {
     "q": "Which contract vehicles does this office like to use?",
     "good": "The two or three vehicles the contracting office actually orders from.",
     "critical": true
@@ -469,6 +479,18 @@ var STAGES = [
     "sev": "stop",
     "why": "No budget line, no deal. Enthusiastic users without money are the most common false positive in federal pipelines.",
     "fix": "Ask who pays and from which line in the first meeting. Map the line in the budget documents."
+   },
+   {
+    "t": "Wired for someone else",
+    "sev": "stop",
+    "why": "Some requirements are written for an incumbent or a favored vendor before the solicitation is public. Bidding into one burns months and money for a near-zero chance.",
+    "fix": "Check who holds the work today (USAspending, FPDS) and ask the customer directly what would make them switch. If the answer is nothing, walk, or shape the next requirement."
+   },
+   {
+    "t": "A new start under a CR",
+    "sev": "slow",
+    "why": "A continuing resolution generally bars new starts: programs that had no funding the year before can't begin until full-year appropriations pass, which can take until spring or later.",
+    "fix": "Find money that isn't frozen (prior-year funds still open, or reconciliation money), attach to an existing program line, or time the award after full-year funding."
    },
    {
     "t": "No contract vehicle access",
@@ -1042,6 +1064,7 @@ var QUESTIONS = [
   {"s":1,"q":"Which office owns the mission this solves?","fix":"Good answer: A specific office or program, not just an agency."},
   {"s":1,"q":"Who is the champion, and have they said they will push for this?","fix":"Good answer: A named government person who will advocate internally, in their words, not ours."},
   {"s":1,"q":"Does the buyer have funds? Which budget line, which year, what type of money?","fix":"Good answer: A named budget line and fiscal year, and money of the right type (O&M, RDT&E or Procurement)."},
+  {"s":1,"q":"Is this contract wired? Who are the competitors, and is there an entrenched incumbent?","fix":"Good answer: We know who does the work today, how long they've held it and how the customer feels about them; the requirement doesn't read like a competitor's product; and the customer has said why they'd consider someone new. If it's wired for someone else, we walk or target the next requirement."},
   {"s":1,"q":"Are we on those vehicles, or do we have a signed partner who is?","fix":"Good answer: Our own vehicle, or a signed VAR/reseller or teaming agreement with a holder.","key":"vehicle"},
   {"s":1,"q":"Are we registered in SAM.gov with an active UEI and CAGE code?","fix":"Good answer: Active, and the renewal date is on someone's calendar."},
   {"s":1,"q":"Does the work need FedRAMP, an ATO, CMMC or a DoD impact level?","fix":"Good answer: Requirement confirmed, with our status and a path to meet it.","key":"fedramp","na":true},
@@ -1185,7 +1208,7 @@ function renderIndex(){
 }
 
 /* ---------------- Readiness check ---------------- */
-var KEY = "sfv9-bidpath-answers", ans = {};
+var KEY = "sfv9-bidpath-answers-v2", ans = {};
 try { ans = JSON.parse(localStorage.getItem(KEY)||"{}") || {}; } catch(e){ ans = {}; }
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(ans)); } catch(e){} }
 function renderQs(){

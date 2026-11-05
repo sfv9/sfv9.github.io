@@ -139,6 +139,20 @@
   .coin.c2 .bars span.on{background:var(--blue-700);} .coin.c3 .bars span.on{background:var(--signal);} .coin.c4 .bars span.on{background:var(--ink-800);}
   .coin .exp{font-size:12.5px;color:var(--text-muted);margin-top:8px;font-family:var(--font-mono);}
 
+  /* ---- Rules bending the clock ---- */
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px;}
+  .rule{background:var(--paper);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:26px 28px;border-top:4px solid var(--signal);}
+  .rule.blue{border-top-color:var(--accent);}
+  .rule .tag{font-family:var(--font-display);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--signal-hover);}
+  .rule.blue .tag{color:var(--accent);}
+  .rule h3{font-size:22px;font-weight:700;letter-spacing:-0.3px;line-height:1.2;margin:8px 0 0;}
+  .rule p{font-size:15px;line-height:1.6;color:var(--text-body);margin:12px 0 0;}
+  .rule h4{font-family:var(--font-display);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--text-muted);margin:18px 0 0;}
+  .rule ul{margin:8px 0 0;padding-left:18px;font-size:14.5px;line-height:1.55;color:var(--text-body);}
+  .rule li{margin:5px 0;}
+  .rule .ask{margin-top:16px;background:var(--surface-sunken);border-radius:var(--radius-md);padding:12px 14px;font-size:14px;line-height:1.5;}
+  .rule .ask b{font-family:var(--font-display);}
+
   /* ---- Truths ---- */
   .truths{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px;}
   .truth{background:var(--paper);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:22px 22px 20px;transition:transform var(--dur-normal) var(--ease-out),box-shadow var(--dur-normal);}
@@ -167,6 +181,7 @@
     .clock{grid-template-columns:1fr;}
     .status,.money{grid-template-columns:repeat(2,1fr);}
     .truths{grid-template-columns:1fr 1fr;}
+    .rules{grid-template-columns:1fr;}
   }
   @media (max-width:640px){
     .site-header{padding:14px 16px;}
@@ -183,6 +198,7 @@
     .row{grid-template-columns:1fr;gap:4px;}
     .month-head,.month-body{padding-left:18px;padding-right:18px;}
     .planner{padding:20px 16px;}
+    .rule{padding:22px 18px;}
     .steps li{grid-template-columns:28px 1fr;}
     .steps li > div{grid-column:2;}
     .positioning .line{font-size:24px;}
@@ -190,7 +206,7 @@
   }
   @media print{
     .site-header{position:static;} .header-cta,.month-nav{display:none;}
-    .wheel-card,.month,.planner,.coin,.truth,.stat{box-shadow:none;border:1px solid var(--border-subtle);}
+    .wheel-card,.month,.planner,.coin,.truth,.stat,.rule{box-shadow:none;border:1px solid var(--border-subtle);}
   }
 </style>
 </head>
@@ -231,6 +247,46 @@
         </div>
       </div>
       <article class="month" id="month" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="eyebrow">Right now</div>
+    <h2 class="sec-title">Two rules bending the clock this year</h2>
+    <p class="sec-lead">The wheel shows the normal rhythm. Two things change it: the "no new starts" rule that comes with every continuing resolution, and the reconciliation money that sits outside the annual cycle.</p>
+    <div class="rules">
+      <article class="rule" id="new-starts">
+        <div class="tag">Continuing resolutions</div>
+        <h3>No new starts</h3>
+        <p>A CR keeps agencies running at last year's rate, under last year's rules. For DoD, the CR's Section 102 generally bars three things until full-year appropriations pass:</p>
+        <ul>
+          <li><b>New starts:</b> any program or project that had no funding the year before.</li>
+          <li><b>Production increases:</b> buying more of something than last year's rate.</li>
+          <li><b>New multiyear contracts.</b></li>
+        </ul>
+        <p>Congress can grant exceptions, called anomalies, but they are rare and written for specific programs. Civilian agencies work under similar limits.</p>
+        <h4>What it means for you</h4>
+        <ul>
+          <li>If your effort had no budget line last year, it is a new start. It waits, often until January to March, and all year under a full-year CR.</li>
+          <li>Work that fits an existing, funded program can still move, in small slices.</li>
+          <li>Money that isn't frozen can still fund new work: prior-year funds that haven't expired, and reconciliation money.</li>
+        </ul>
+        <div class="ask"><b>Ask your champion:</b> "Is this a new start? Which line pays for it, and was that line funded last year?"</div>
+      </article>
+      <article class="rule blue" id="reconciliation">
+        <div class="tag">Reconciliation money</div>
+        <h3>The side door: about $150 billion outside the appropriations cycle</h3>
+        <p>The reconciliation law signed July 4, 2025 (P.L. 119-21, the One Big Beautiful Bill Act) provided about $156 billion in mandatory national-defense funding: roughly $152 billion for DoD and $4 billion for the Department of Energy's nuclear-security programs. Defense money on this scale has never come through reconciliation before.</p>
+        <p>It is already-enacted, mandatory money, not part of the annual discretionary bills. A CR only continues those bills, so it doesn't freeze reconciliation funds. Only a new law could restrict or rescind them. That gives agencies room to fund priorities outside the appropriations cycle, including work that would otherwise wait as a new start.</p>
+        <p>Congress set the amounts by purpose in the law, not by the usual Procurement, RDT&amp;E and O&amp;M accounts, so DoD has more say over which programs spend it. Its FY2026 request put most of it into acquisition: about $52 billion for procurement and $37 billion for RDT&amp;E.</p>
+        <h4>What it means for you</h4>
+        <ul>
+          <li><b>The priorities:</b> shipbuilding, integrated air and missile defense (Golden Dome), munitions and the supply chain, low-cost weapons and industrial-base financing, air superiority, nuclear forces, the Indo-Pacific, readiness and facilities, border and counterdrug support, and DoD financial management and cybersecurity. If your product maps to one, say so in those words.</li>
+          <li><b>The clock:</b> most of it must be put on contract by September 30, 2029. Money not obligated by then expires. Money already obligated can still be paid out through FY2034.</li>
+          <li><b>It comes once.</b> Treat it as a way in, and get into the regular budget for the years after.</li>
+        </ul>
+        <div class="ask"><b>Ask your champion:</b> "Is any of your work in the reconciliation spend plan? Could it fund this before full-year appropriations?"</div>
+      </article>
     </div>
   </section>
 
@@ -289,7 +345,7 @@
     <p class="sub" style="margin:10px auto 0;font-size:14px"><b style="color:#fff">The BLUF</b> by Shannon Vaughn: every week, with where we are on the wheel. <a href="/thebluf/" style="color:var(--blue-300)">Get The BLUF →</a></p>
   </div>
 
-  <p class="fine">Timelines are typical patterns from two decades of federal selling, not guarantees. Agencies, vehicles and years vary. Statutory dates (fiscal year, President's Budget deadline, budget resolution target) come from law; the rest are recurring patterns. Planning-ring timing follows the DoD PPBE cycle; civilian agencies run similar but less formal cycles. Not legal or contracting advice.</p>
+  <p class="fine">Timelines are typical patterns from two decades of federal selling, not guarantees. Agencies, vehicles and years vary. Statutory dates (fiscal year, President's Budget deadline, budget resolution target) come from law; the rest are recurring patterns. Planning-ring timing follows the DoD PPBE cycle; civilian agencies run similar but less formal cycles. Reconciliation figures come from <a href="https://www.congress.gov/crs_external_products/IN/PDF/IN12580/IN12580.2.pdf">CRS</a>, <a href="https://www.cbo.gov/publication/62396">CBO</a> and <a href="https://www.congress.gov/119/plaws/publ21/PLAW-119publ21.pdf">P.L. 119-21</a>. Not legal or contracting advice.</p>
 </main>
 
 <footer class="site-footer">
@@ -310,7 +366,7 @@ var STATUS = {
   fy: 2027,
   asOf: "2026-10-31",
   cr: { through: "2026-12-11", law: "P.L. 119-103" },
-  note: "FY27 is running on a continuing resolution at FY26 levels through December 11, after the November 3 midterms. None of the 12 regular appropriations bills has passed yet. Expect new starts to wait until full-year funding."
+  note: "FY27 is running on a continuing resolution at FY26 levels through December 11, after the November 3 midterms. None of the 12 regular appropriations bills has passed yet. Expect new starts to wait until full-year funding. Reconciliation money (P.L. 119-21) isn't frozen by the CR."
 };
 
 /* ------------------------------------------------------------------
@@ -319,10 +375,10 @@ var STATUS = {
    ------------------------------------------------------------------ */
 var MONTHS = [
   { m:"October", s:"Oct", buy:3, mood:"New year, old money",
-    congress:"Fiscal year begins October 1, usually under a continuing resolution (CR). A CR funds last year's activities at last year's levels and generally bars new starts.",
+    congress:"Fiscal year begins October 1, usually under a continuing resolution (CR). A CR funds last year's activities at last year's levels and generally bars new starts (see below).",
     buyers:"Contracting offices are closing out September's awards. New-year money arrives in small slices, so spending is thin.",
     dod:"Program and budget review: the Pentagon's budget office scrubs the services' plans into next year's President's Budget request.",
-    move:["Book meetings, not deals. Program offices have time to talk and nothing to spend.","Ask: “What's in your next budget request, and what got cut?” The cut list is your opening.","Line up the contract vehicles you'll need in the spring."],
+    move:["Book meetings, not deals. Program offices have time to talk and nothing to spend.","Ask: “What's in your next budget request, and what got cut?” The cut list is your opening.","Line up the contract vehicles you'll need in the spring.","If yours is a new start, ask whether reconciliation money can fund it while the CR holds."],
     trap:"Putting Q1 revenue in your forecast from a buyer who is on a CR." },
   { m:"November", s:"Nov", buy:3, mood:"Talk season",
     congress:"CR extensions and end-of-year negotiations. The NDAA conference works out House and Senate differences.",
@@ -650,7 +706,7 @@ function renderPlan(){
   // Flags
   var f = [], ai = fyIdx(award), afy = fyOf(award);
   if (award >= today){
-    if (ai<=2) f.push(["bad","Q1 award, under a likely CR.","Most fiscal years start on a continuing resolution, and CRs generally bar new starts. Unless this effort was funded the year before, aim for September of FY"+String(afy-1).slice(2)+" (expiring money) or March or later in FY"+String(afy).slice(2)+"."]);
+    if (ai<=2) f.push(["bad","Q1 award, under a likely CR.","Most fiscal years start on a continuing resolution, and CRs generally bar new starts. Unless this effort was funded the year before, aim for September of FY"+String(afy-1).slice(2)+" (expiring money) or March or later in FY"+String(afy).slice(2)+", or find money a CR doesn't freeze, such as reconciliation funds."]);
     else if (ai<=4) f.push(["warn","Early in the year.","If full-year appropriations haven't passed, new work may still be waiting. Confirm the money is actually released, not just budgeted."]);
     else if (ai>=9) f.push(["good","Q4, the buying surge.","Good timing: offices are pushing money out. Be award-ready by June and know each office's internal cutoff, often weeks before September 30."]);
     else f.push(["info","Mid-year.","Spend plans are live. Solid timing for orders on existing vehicles."]);
