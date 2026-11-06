@@ -296,7 +296,7 @@
     btn.disabled = false; btn.textContent = "Email ready: press send ✓";
   }
   function done(msg){
-    form.innerHTML = '<div class="done"><div class="tick">✓</div><h2>You\'re on the list</h2><p></p></div>';
+    form.innerHTML = '<div class="done"><div class="tick">✓</div><h2>Request received</h2><p></p></div>';
     form.querySelector(".done p").textContent = msg;
   }
   form.addEventListener("submit", function(e){
@@ -312,7 +312,7 @@
       .then(function(r){ return r.json().then(function(j){ return { status: r.status, j: j }; }); })
       .then(function(res){
         clearTimeout(timer);
-        if (res.j && res.j.ok) return done(res.j.message || "Thanks. The next issue arrives Thursday.");
+        if (res.j && res.j.ok) return done(res.j.message || "Thanks. I read every request myself. Once I\u2019ve added you, The BLUF arrives in your inbox every Thursday.");
         if (res.status >= 400 && res.status < 500 && res.j && res.j.message) {
           err.textContent = res.j.message; btn.disabled = false; btn.textContent = "Subscribe →"; return;
         }
