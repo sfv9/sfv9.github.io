@@ -289,11 +289,13 @@
   function v(id){ return (document.getElementById(id).value || "").trim(); }
   function fields(){ return { name: v("name"), email: v("email"), company: v("company"), role: v("role"),
                               focus: v("focus"), website: v("website") }; }
-  function byEmail(f){   // the fallback if the sign-up service can't be reached
+  function byEmail(f, why){   // the service couldn't be reached: say so, and offer email instead of opening it
+    if (window.console) console.warn("BLUF sign-up didn't go through:", why);
     var body = ["Please add me to The BLUF.", "", "Name: " + f.name, "Email: " + f.email, "Company: " + f.company,
       "Role: " + f.role, "Agency or mission I care about most: " + f.focus].join("\n");
-    location.href = "mailto:info@sfv9.com?subject=" + encodeURIComponent("Subscribe me to The BLUF") + "&body=" + encodeURIComponent(body);
-    btn.disabled = false; btn.textContent = "Email ready: press send ✓";
+    var href = "mailto:info@sfv9.com?subject=" + encodeURIComponent("Subscribe me to The BLUF") + "&body=" + encodeURIComponent(body);
+    err.innerHTML = "That didn\u2019t go through on our end. <a href=\"" + href + "\" style=\"color:inherit;font-weight:700;\">Email your details to info@sfv9.com</a> and I\u2019ll add you, or try again in a minute.";
+    btn.disabled = false; btn.textContent = "Try again →";
   }
   function done(msg){
     form.innerHTML = '<div class="done"><div class="tick">✓</div><h2>Request received</h2><p></p></div>';
@@ -316,9 +318,9 @@
         if (res.status >= 400 && res.status < 500 && res.j && res.j.message) {
           err.textContent = res.j.message; btn.disabled = false; btn.textContent = "Subscribe →"; return;
         }
-        byEmail(f);
+        byEmail(f, "status " + res.status);
       })
-      .catch(function(){ clearTimeout(timer); byEmail(f); });
+      .catch(function(e){ clearTimeout(timer); byEmail(f, e && e.message); });
   });
 })();
 </script>
