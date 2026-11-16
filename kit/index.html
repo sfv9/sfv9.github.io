@@ -70,15 +70,15 @@
     <div class="eyebrow">Prospect sheets</div>
     <h2 class="sec-title">One-pagers to share</h2>
     <div class="sheets">
-      <a class="sheet" href="sheets/SFV9-Plays-at-a-Glance.pdf" download><h3>Plays at a glance</h3><p>All 17 SFV9 plays against the six Bid Path stages. The menu for a first meeting.</p><span>PDF · 1 page</span></a>
-      <a class="sheet signal" href="sheets/SFV9-Federal-Money-Wheel.pdf" download><h3>The Federal Money Wheel</h3><p>The fiscal year as three calendars on one wheel, with the move for every month.</p><span>PDF · 1 page</span></a>
-      <a class="sheet" href="sheets/SFV9-Bid-Path.pdf" download><h3>The Bid Path</h3><p>Six stages, exit criteria, what you must answer at each, and the top blockers.</p><span>PDF · 1 page</span></a>
-      <a class="sheet signal" href="sheets/SFV9-Gap-Check-Worksheet.pdf" download><h3>Gap Check worksheet</h3><p>Every gap question, stage by stage, with space for the answer and who owns it.</p><span>PDF · 2 pages</span></a>
-      <a class="sheet" href="sheets/SFV9-Numbers-and-Deadlines.pdf" download><h3>Numbers &amp; deadlines</h3><p>Thresholds, fiscal dates, colors of money, award clocks and lead times.</p><span>PDF · 1 page</span></a>
-      <a class="sheet" href="sheets/SFV9-Contract-Vehicles-and-Channel.pdf" download><h3>Contract vehicles &amp; the channel</h3><p>Every common way to be bought, how resellers work, and the VAR checklist.</p><span>PDF · 1 page</span></a>
-      <a class="sheet signal" href="sheets/SFV9-Clearances-FOCI-DD254.pdf" download><h3>Clearances, FOCI &amp; the DD254</h3><p>The path to a facility clearance, FOCI mitigation, and the questions to answer early.</p><span>PDF · 1 page</span></a>
-      <a class="sheet" href="sheets/SFV9-Acronym-Decoder.pdf" download><h3>Acronym decoder</h3><p>Sixty-one federal sales terms in plain English.</p><span>PDF · 2 pages</span></a>
-      <a class="sheet signal" href="sheets/SFV9-Reference-Kit.pdf" download><h3>The full reference kit</h3><p>Money Wheel, numbers, vehicles, clearances and the decoder in one file.</p><span>PDF · 6 pages</span></a>
+      <a class="sheet" href="/kit/sheets/SFV9-Plays-at-a-Glance.pdf" target="_blank" rel="noopener"><h3>Plays at a glance</h3><p>All 17 SFV9 plays against the six Bid Path stages. The menu for a first meeting.</p><span>PDF · 1 page</span></a>
+      <a class="sheet signal" href="/kit/sheets/SFV9-Federal-Money-Wheel.pdf" target="_blank" rel="noopener"><h3>The Federal Money Wheel</h3><p>The fiscal year as three calendars on one wheel, with the move for every month.</p><span>PDF · 1 page</span></a>
+      <a class="sheet" href="/kit/sheets/SFV9-Bid-Path.pdf" target="_blank" rel="noopener"><h3>The Bid Path</h3><p>Six stages, exit criteria, what you must answer at each, and the top blockers.</p><span>PDF · 1 page</span></a>
+      <a class="sheet signal" href="/kit/sheets/SFV9-Gap-Check-Worksheet.pdf" target="_blank" rel="noopener"><h3>Gap Check worksheet</h3><p>Every gap question, stage by stage, with space for the answer and who owns it.</p><span>PDF · 2 pages</span></a>
+      <a class="sheet" href="/kit/sheets/SFV9-Numbers-and-Deadlines.pdf" target="_blank" rel="noopener"><h3>Numbers &amp; deadlines</h3><p>Thresholds, fiscal dates, colors of money, award clocks and lead times.</p><span>PDF · 1 page</span></a>
+      <a class="sheet" href="/kit/sheets/SFV9-Contract-Vehicles-and-Channel.pdf" target="_blank" rel="noopener"><h3>Contract vehicles &amp; the channel</h3><p>Every common way to be bought, how resellers work, and the VAR checklist.</p><span>PDF · 1 page</span></a>
+      <a class="sheet signal" href="/kit/sheets/SFV9-Clearances-FOCI-DD254.pdf" target="_blank" rel="noopener"><h3>Clearances, FOCI &amp; the DD254</h3><p>The path to a facility clearance, FOCI mitigation, and the questions to answer early.</p><span>PDF · 1 page</span></a>
+      <a class="sheet" href="/kit/sheets/SFV9-Acronym-Decoder.pdf" target="_blank" rel="noopener"><h3>Acronym decoder</h3><p>Sixty-one federal sales terms in plain English.</p><span>PDF · 2 pages</span></a>
+      <a class="sheet signal" href="/kit/sheets/SFV9-Reference-Kit.pdf" target="_blank" rel="noopener"><h3>The full reference kit</h3><p>Money Wheel, numbers, vehicles, clearances and the decoder in one file.</p><span>PDF · 6 pages</span></a>
     </div>
   </section>
 
@@ -98,9 +98,9 @@ var VIDEOS = [
 var box = document.getElementById("videos");
 VIDEOS.forEach(function(v, i){
   var el = document.createElement("article"); el.className = "vid";
-  el.innerHTML = '<video controls playsinline preload="metadata" poster="videos/'+v.file+'-cover.jpg" src="videos/'+v.file+'.mp4"></video>'+
+  el.innerHTML = '<video controls playsinline preload="metadata" poster="/kit/videos/'+v.file+'-cover.jpg" src="/kit/videos/'+v.file+'.mp4"></video>'+
     '<div class="body"><div class="meta">'+v.len+' · 1080×1350 · silent, captioned</div><h3></h3><pre></pre>'+
-    '<div class="row"><button class="btn primary" type="button">Copy post</button><a class="btn" download href="videos/'+v.file+'.mp4">Download MP4</a></div></div>';
+    '<div class="row"><button class="btn primary" type="button">Copy post</button><a class="btn" download href="/kit/videos/'+v.file+'.mp4">Download MP4</a></div></div>';
   el.querySelector("h3").textContent = v.title;
   el.querySelector("pre").textContent = v.post;
   var b = el.querySelector("button");
